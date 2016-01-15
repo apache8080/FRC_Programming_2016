@@ -21,7 +21,5 @@ public class DriveTrain {
 		rightFront.set(right);
 		rightRear.set(right);
 	}
-	}
-	
 	
 }
