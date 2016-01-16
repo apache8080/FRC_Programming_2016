@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team3256.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -20,6 +21,7 @@ public class Robot extends IterativeRobot {
 
 	public static OI oi;
 	public static DriveTrain drivetrain;
+	public static Compressor compressor;
 	
     Command autonomousCommand;
 
@@ -29,8 +31,9 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 		oi = new OI();
-        // instantiate the command used for the autonomous period
-        autonomousCommand = new ExampleCommand();
+		drivetrain = new DriveTrain();
+		compressor = new Compressor(0);
+		compressor.setClosedLoopControl(true);
     }
 	
 	public void disabledPeriodic() {
@@ -70,6 +73,10 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         //Scheduler.getInstance().run();
+    	System.out.println("/////////////////////////////////////////");
+    	System.out.println(oi.getLeftY());
+    	System.out.println(oi.getRightY());
+    	drivetrain.tankDrive(oi.getLeftY(),oi.getRightY());
     }
     
     /**
