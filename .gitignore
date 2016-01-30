@@ -45,3 +45,11 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+.classpath
+
+*.class
+
+2016Robot/bin/
+
+.project
