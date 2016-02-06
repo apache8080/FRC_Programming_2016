@@ -1,25 +1,35 @@
 package org.usfirst.frc.team3256.robot.subsystems;
 
-import org.usfirst.frc.team3256.robot.RobotMap;
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
-public class DriveTrain {
-	
-	private Victor leftFront, leftRear, rightFront, rightRear;
-	
-	public DriveTrain(){
-		leftFront = new Victor (RobotMap.leftFrontMotor);
-		rightFront = new Victor (RobotMap.rightFrontMotor);
-		leftRear = new Victor (RobotMap.leftRearMotor);
-		rightRear = new Victor (RobotMap.rightRearMotor);
-	}
-	
-	public void tankDrive(double left, double right){
-		leftFront.set(left);
-		leftRear.set(left);
-		rightFront.set(right);
-		rightRear.set(right);
-	}
+/**
+ *
+ */
+public class DriveTrain extends PIDSubsystem {
 
-	
+    // Initialize your subsystem here
+    public DriveTrain() {
+    	super(null, 0, 0, 0, 0);
+        // Use these to get going:
+        // setSetpoint() -  Sets where the PID controller should move the system
+        //                  to
+        // enable() - Enables the PID controller.
+    }
+    
+    public void initDefaultCommand() {
+        // Set the default command for a subsystem here.
+        //setDefaultCommand(new MySpecialCommand());
+    }
+    
+    protected double returnPIDInput() {
+        // Return your input value for the PID loop
+        // e.g. a sensor, like a potentiometer:
+        // yourPot.getAverageVoltage() / kYourMaxVoltage;
+    	return 0.0;
+    }
+    
+    protected void usePIDOutput(double output) {
+        // Use output to drive your system, like a motor
+        // e.g. yourMotor.set(output);
+    }
 }
