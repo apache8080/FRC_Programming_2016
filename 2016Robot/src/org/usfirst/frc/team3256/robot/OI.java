@@ -23,15 +23,22 @@ public class OI {
     Button buttonB = new JoystickButton(joystick, 2);
     Button buttonX = new JoystickButton(joystick, 3);
     Button buttonY = new JoystickButton(joystick, 4);
-    Button buttonLeftStick = new JoystickButton(joystick, 5);
+    Button leftBumper = new JoystickButton(joystick,5);
+    Button rightBumper = new JoystickButton(joystick,6);
+    Button buttonLeftStick = new JoystickButton(joystick, 7);
     Button buttonRightStick = new JoystickButton(joystick, 6);
-	
+    
+	//double check values
 	public static double getLeftY(){return joystick.getRawAxis(1);}
     public static double getLeftX(){return joystick.getRawAxis(2);}
     public static double getRightY(){return joystick.getRawAxis(5);}
     public static double getRightX(){return joystick.getRawAxis(4);}
+    public static double getRightTrigger() {return joystick.getRawAxis(3);}
     public boolean getButtonA(){return joystick.getRawButton(1);}
     public boolean getButtonB(){return joystick.getRawButton(2);}
+    public boolean getLeftBumper(){return joystick.getRawButton(5);}
+    public boolean getRightBumper(){return joystick.getRawButton(6);}
+    
     
 	
 		

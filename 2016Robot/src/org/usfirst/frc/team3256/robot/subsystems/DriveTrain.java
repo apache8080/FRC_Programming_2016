@@ -1,7 +1,6 @@
 package org.usfirst.frc.team3256.robot.subsystems;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import org.usfirst.frc.team3256.robot.RobotMap;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -41,6 +40,20 @@ public class DriveTrain extends PIDSubsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
+   
+    //shift transmissions
+    public static void shiftPancake(boolean getRightBumper){
+    	//test later which is which
+    	if (getRightBumper){
+    	rightPancake.set(DoubleSolenoid.Value.kReverse);
+    	leftPancake.set(DoubleSolenoid.Value.kReverse);
+    	}
+    	else{
+    	rightPancake.set(DoubleSolenoid.Value.kForward);
+    	leftPancake.set(DoubleSolenoid.Value.kForward);
+    	}
+    }
+    
     public static void tankDrive(double left, double right){
     	//determine which motor to reverse later. Left is reversed for now
     	leftFront.set(-left);
@@ -74,9 +87,6 @@ public class DriveTrain extends PIDSubsystem {
     	leftRear.set(left);
     	rightFront.set(right);
     	rightRear.set(right);
-    	
-    	
-    	
     }
     protected double returnPIDInput() {
         // Return your input value for the PID loop
