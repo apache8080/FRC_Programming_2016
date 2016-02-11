@@ -24,6 +24,15 @@ public class RobotMap {
 			rightRearMotor = 3;
 	
 	//encoders
-	public static final int rightDriveEncoder = 0,
-			leftDriveEncoder = 1;
+	public static final int rightDriveEncoderA = 0,
+			rightDriveEncoderB = 1,
+			leftDriveEncoderA = 2,
+			leftDriveEncoderB = 3;
+	//actuators
+	//tune port values
+	public static final int PancakeLeftIn = 0;
+	public static final int PancakeLeftOut = 1;
+	public static final int PancakeRightIn = 2;
+	public static final int PancakeRightOut = 3;
+	
 }

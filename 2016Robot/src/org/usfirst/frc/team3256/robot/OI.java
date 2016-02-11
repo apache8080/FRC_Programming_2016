@@ -14,11 +14,11 @@ public class OI {
 	
 	static Joystick joystick = new Joystick(0);
 	
-	/*
+	
 	public OI(int port) {
         joystick = new Joystick(port);
     }
-	*/
+	
 	Button buttonA = new JoystickButton(joystick, 1);
     Button buttonB = new JoystickButton(joystick, 2);
     Button buttonX = new JoystickButton(joystick, 3);

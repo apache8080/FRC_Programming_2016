@@ -2,6 +2,7 @@ package org.usfirst.frc.team3256.robot.subsystems;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import org.usfirst.frc.team3256.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.VictorSP;
 /**
@@ -17,10 +18,18 @@ public class DriveTrain extends PIDSubsystem {
 	static Encoder rightEncoder = new Encoder(RobotMap.rightDriveEncoderA, RobotMap.rightDriveEncoderB);
 	static Encoder leftEncoder = new Encoder(RobotMap.leftDriveEncoderA, RobotMap.leftDriveEncoderB);
 	
-    
+	static DoubleSolenoid leftPancake = new DoubleSolenoid (RobotMap.PancakeLeftIn, RobotMap.PancakeLeftOut);
+	static DoubleSolenoid rightPancake = new DoubleSolenoid (RobotMap.PancakeRightIn, RobotMap.PancakeRightOut);
+	
+    private static final double P = 100,
+    	I = 0,
+    	D = 0;
+	
+	
 	// Initialize your subsystem here
     public DriveTrain() {
-    	super("DriveTrain", 100, 0, 0);
+    	//(String Name,P value,I value,D value) all in ticks because we're using encoder
+    	super("DriveTrain", P, I, D);
     	setAbsoluteTolerance(2);
         // Use these to get going:
         // setSetpoint() -  Sets where the PID controller should move the system
@@ -49,10 +58,6 @@ public class DriveTrain extends PIDSubsystem {
     public static void arcadeDrive(double throttle, double turn){
     	double left = throttle+turn;
     	double right = throttle-turn;
-    	leftFront.set(left);
-    	leftRear.set(left);
-    	rightFront.set(right);
-    	rightRear.set(right);
     	if (left > 1){
     		left = 1;
     	}
@@ -65,6 +70,11 @@ public class DriveTrain extends PIDSubsystem {
     	if (right < -1){
     		right = -1;
     	}
+    	leftFront.set(left);
+    	leftRear.set(left);
+    	rightFront.set(right);
+    	rightRear.set(right);
+    	
     	
     	
     }
