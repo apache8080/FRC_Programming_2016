@@ -1,15 +1,18 @@
 package org.usfirst.frc.team3256.robot.commands;
 
+import org.usfirst.frc.team3256.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class leftTurnWheelTurn extends Command {
+public class RightTwoWheelTurn extends Command {
 
-    public leftTurnWheelTurn() {
+    public RightTwoWheelTurn() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(Robot.drivetrain);
     }
 
     // Called just before this Command runs the first time
