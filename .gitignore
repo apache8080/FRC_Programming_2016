@@ -53,4 +53,9 @@ Temporary Items
 2016Robot/bin/
 
 .project
-.metadata
+.metadata/*
+RemoteSystemsTempFiles/.project
+2016Robot/sysProps.xml
+2016Robot/build.properties
+2016Robot/.project
+2016Robot/.classpath
