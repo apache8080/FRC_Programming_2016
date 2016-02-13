@@ -30,7 +30,7 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-		oi = new OI();
+		oi = new OI(0);
 		drivetrain = new DriveTrain();
 		compressor = new Compressor(0);
 		compressor.setClosedLoopControl(true);
