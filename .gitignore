@@ -53,5 +53,5 @@ Temporary Items
 2016Robot/bin/
 
 .project
-.metadata
+.metadata/*
 RemoteSystemsTempFiles/.project
