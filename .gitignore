@@ -56,3 +56,4 @@ Temporary Items
 .metadata/*
 RemoteSystemsTempFiles/.project
 2016Robot/sysProps.xml
+2016Robot/build.properties
