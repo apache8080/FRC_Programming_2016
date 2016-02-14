@@ -9,6 +9,9 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team3256.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3256.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team3256.robot.subsystems.Hanger;
+import org.usfirst.frc.team3256.robot.subsystems.Intake;
+import org.usfirst.frc.team3256.robot.subsystems.Shooter;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -22,6 +25,9 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static DriveTrain drivetrain;
 	public static Compressor compressor;
+	public static Hanger hanger;
+	public static Intake intake;
+	public static Shooter shooter;
 	
     Command autonomousCommand;
 
@@ -34,6 +40,9 @@ public class Robot extends IterativeRobot {
 		drivetrain = new DriveTrain();
 		compressor = new Compressor(0);
 		compressor.setClosedLoopControl(true);
+		hanger = new Hanger();
+		intake = new Intake();
+		shooter = new Shooter();
     }
 	
 	public void disabledPeriodic() {
