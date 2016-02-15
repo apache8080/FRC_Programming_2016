@@ -82,9 +82,8 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         //Scheduler.getInstance().run();
-    	System.out.println("/////////////////////////////////////////");
-    	System.out.println(oi.getLeftY());
-    	System.out.println(oi.getRightY());
+    	System.out.println("out");
+    	System.err.println("err");
     	drivetrain.tankDrive(oi.getLeftY(),oi.getRightY());
     }
     

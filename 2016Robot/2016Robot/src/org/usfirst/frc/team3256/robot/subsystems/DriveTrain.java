@@ -55,11 +55,6 @@ public class DriveTrain extends PIDSubsystem {
     }
     
     public static void tankDrive(double left, double right){
-    	//determine which motor to reverse later. Left is reversed for now
-    	leftFront.set(-left);
-    	leftRear.set(-left);
-    	rightFront.set(right);
-    	rightRear.set(right);
     	//clipping values
     	if (Math.abs(right)<0.1) {
     		right = 0;
@@ -67,6 +62,12 @@ public class DriveTrain extends PIDSubsystem {
     	if (Math.abs(left)<0.1) {
     		left = 0;
     	}
+    	
+    	//determine which motor to reverse later. Left is reversed for now
+    	leftFront.set(-left);
+    	leftRear.set(-left);
+    	rightFront.set(right);
+    	rightRear.set(right);
     }
     public static void arcadeDrive(double throttle, double turn){
     	double left = throttle+turn;
