@@ -1,6 +1,10 @@
 package org.usfirst.frc.team3256.robot.subsystems;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
+
 import org.usfirst.frc.team3256.robot.RobotMap;
+
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -19,6 +23,8 @@ public class DriveTrain extends PIDSubsystem {
 	
 	static DoubleSolenoid leftPancake = new DoubleSolenoid (RobotMap.PancakeLeftIn, RobotMap.PancakeLeftOut);
 	static DoubleSolenoid rightPancake = new DoubleSolenoid (RobotMap.PancakeRightIn, RobotMap.PancakeRightOut);
+	
+	static AnalogGyro gyro = new AnalogGyro(0);
 	
     private static final double P = 100,
     	I = 0,
@@ -41,6 +47,28 @@ public class DriveTrain extends PIDSubsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
    
+    public static void initGyro(){
+    	gyro.initGyro();
+    }
+    
+    public static void resetGyro(){
+    	gyro.reset();
+    }
+    
+    public static double getAngle(){
+    	double factor = 1;
+    	return gyro.getAngle()*(factor);
+    }
+    
+    public static void calibrateGyro(){
+    	gyro.calibrate();
+    }
+    public static void sensitivityGyro(){
+    	double sensitivity = 0.25;
+    	gyro.setSensitivity(sensitivity);
+    }
+    
+    
     //shift transmissions
     public static void shiftPancake(boolean getRightBumper){
     	//test later which is which
@@ -64,10 +92,10 @@ public class DriveTrain extends PIDSubsystem {
     	}
     	
     	//determine which motor to reverse later. Left is reversed for now
-    	leftFront.set(-left);
-    	leftRear.set(-left);
-    	rightFront.set(right);
-    	rightRear.set(right);
+    	leftFront.set(left);
+    	leftRear.set(left);
+    	rightFront.set(-right);
+    	rightRear.set(-right);
     }
     public static void arcadeDrive(double throttle, double turn){
     	double left = throttle+turn;

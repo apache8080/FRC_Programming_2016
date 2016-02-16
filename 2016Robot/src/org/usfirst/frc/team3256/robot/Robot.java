@@ -66,6 +66,11 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
+        
+        DriveTrain.initGyro();
+        DriveTrain.calibrateGyro();
+        DriveTrain.resetGyro();
+        DriveTrain.sensitivityGyro();
     }
 
     /**
@@ -81,9 +86,8 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         //Scheduler.getInstance().run();
-    	System.out.println("out");
-    	System.err.println("err");
     	drivetrain.tankDrive(oi.getLeftY(),oi.getRightY());
+    	System.out.println(DriveTrain.getAngle());
     }
     
     /**

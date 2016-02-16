@@ -28,11 +28,15 @@ public class RobotMap {
 			rightDriveEncoderB = 1,
 			leftDriveEncoderA = 2,
 			leftDriveEncoderB = 3;
+	
 	//actuators
 	//tune port values
 	public static final int PancakeLeftIn = 0;
 	public static final int PancakeLeftOut = 1;
 	public static final int PancakeRightIn = 2;
 	public static final int PancakeRightOut = 3;
+	
+	//Global Variables
+	public static double gyroPos;
 	
 }
