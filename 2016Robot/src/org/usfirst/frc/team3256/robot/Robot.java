@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team3256.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team3256.robot.subsystems.Hanger;
@@ -28,6 +29,8 @@ public class Robot extends IterativeRobot {
 	public static Intake intake;
 	public static Shooter shooter;
 	
+	//SmartDashboard dash;
+	
     Command autonomousCommand;
 
     /**
@@ -42,6 +45,11 @@ public class Robot extends IterativeRobot {
 		hanger = new Hanger();
 		intake = new Intake();
 		shooter = new Shooter();
+		
+		//dash = new SmartDashboard();
+		
+		DriveTrain.initGyro();
+        DriveTrain.calibrateGyro();
     }
 	
 	public void disabledPeriodic() {
@@ -65,12 +73,10 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (autonomousCommand != null) autonomousCommand.cancel();
+        //if (autonomousCommand != null) autonomousCommand.cancel();
         
-        DriveTrain.initGyro();
-        DriveTrain.calibrateGyro();
         DriveTrain.resetGyro();
-        DriveTrain.sensitivityGyro();
+        //DriveTrain.sensitivityGyro();
     }
 
     /**
@@ -87,7 +93,10 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         //Scheduler.getInstance().run();
     	drivetrain.tankDrive(oi.getLeftY(),oi.getRightY());
+    	drivetrain.shiftPancake(OI.getRightBumper());
     	System.out.println(DriveTrain.getAngle());
+    	SmartDashboard.putString("Test", "Hello");
+    	//SmartDashboard.putNumber("Gyro", DriveTrain.getAngle());
     }
     
     /**

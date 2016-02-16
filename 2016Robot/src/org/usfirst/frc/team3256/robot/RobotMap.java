@@ -31,10 +31,9 @@ public class RobotMap {
 	
 	//actuators
 	//tune port values
-	public static final int PancakeLeftIn = 0;
-	public static final int PancakeLeftOut = 1;
-	public static final int PancakeRightIn = 2;
-	public static final int PancakeRightOut = 3;
+	public static final int ShifterIn = 0;
+	public static final int ShifterOut = 1;
+	
 	
 	//Global Variables
 	public static double gyroPos;

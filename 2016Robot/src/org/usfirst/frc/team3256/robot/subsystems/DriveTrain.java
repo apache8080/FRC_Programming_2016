@@ -21,8 +21,7 @@ public class DriveTrain extends PIDSubsystem {
 	static Encoder rightEncoder = new Encoder(RobotMap.rightDriveEncoderA, RobotMap.rightDriveEncoderB);
 	static Encoder leftEncoder = new Encoder(RobotMap.leftDriveEncoderA, RobotMap.leftDriveEncoderB);
 	
-	static DoubleSolenoid leftPancake = new DoubleSolenoid (RobotMap.PancakeLeftIn, RobotMap.PancakeLeftOut);
-	static DoubleSolenoid rightPancake = new DoubleSolenoid (RobotMap.PancakeRightIn, RobotMap.PancakeRightOut);
+	static DoubleSolenoid shifterPancake = new DoubleSolenoid (RobotMap.ShifterIn, RobotMap.ShifterOut);
 	
 	static AnalogGyro gyro = new AnalogGyro(0);
 	
@@ -56,29 +55,29 @@ public class DriveTrain extends PIDSubsystem {
     }
     
     public static double getAngle(){
-    	double factor = 1;
+    	double factor = 360.0/350.0;
     	return gyro.getAngle()*(factor);
     }
     
     public static void calibrateGyro(){
     	gyro.calibrate();
     }
+    
+    /*
     public static void sensitivityGyro(){
     	double sensitivity = 0.25;
     	gyro.setSensitivity(sensitivity);
     }
-    
+    */
     
     //shift transmissions
     public static void shiftPancake(boolean getRightBumper){
     	//test later which is which
     	if (getRightBumper){
-    	rightPancake.set(DoubleSolenoid.Value.kReverse);
-    	leftPancake.set(DoubleSolenoid.Value.kReverse);
+    		shifterPancake.set(DoubleSolenoid.Value.kReverse);
     	}
     	else{
-    	rightPancake.set(DoubleSolenoid.Value.kForward);
-    	leftPancake.set(DoubleSolenoid.Value.kForward);
+    		shifterPancake.set(DoubleSolenoid.Value.kForward);
     	}
     }
     
