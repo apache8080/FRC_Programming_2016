@@ -20,6 +20,13 @@ public class Intake extends Subsystem{
 	
 	}
 	
+	public void incrementIn(){
+    
+	}
+	
+	public void incrementOut(){
+		
+	}
 	//folds and brings in intake
 	public void rotateIntakeIn(){
 	
