@@ -24,6 +24,25 @@ public class Shooter extends Subsystem{
 
 	}
 	
+	//reloads ball
+	public void winchMotor(){
+		
+	}
+	
+	//shoots or launches ball
+	public void launchBall(){
+		
+	}
+	
+	//engages ball actuators
+	public void engageActuators(){
+	}
+	
+	//disengages ball actuators 
+    public void disengageActuators(){
+    } 
+	
+	
 	//based on if the catapult is pulled back via limit switch
 	public boolean isWinched(){
 		return true;
