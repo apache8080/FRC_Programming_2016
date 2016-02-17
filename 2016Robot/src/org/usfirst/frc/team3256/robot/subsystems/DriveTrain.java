@@ -81,6 +81,15 @@ public class DriveTrain extends PIDSubsystem {
     	}
     }
     
+    public void shiftDown(){
+    	shifterPancake.set(DoubleSolenoid.Value.kReverse);
+    }
+    public void shiftUp(){
+    	shifterPancake.set(DoubleSolenoid.Value.kForward);
+    }
+    
+
+    
     public static void tankDrive(double left, double right){
     	//clipping values
     	if (Math.abs(right)<0.1) {

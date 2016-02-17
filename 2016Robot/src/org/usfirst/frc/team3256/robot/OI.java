@@ -2,9 +2,12 @@ package org.usfirst.frc.team3256.robot;
 
 import edu.wpi.first.wpilibj.buttons.Button;
 
+import org.usfirst.frc.team3256.robot.commands.*;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -17,16 +20,20 @@ public class OI {
 	
 	public OI(int port) {
         joystick = new Joystick(port);
+        
+        SmartDashboard.putData("EngageBallActuators", new EngageBallActuators());
+        SmartDashboard.putData("Shift Up", new ShiftUp());
+        SmartDashboard.putData("Shift Down", new ShiftDown());
     }
 	
-	Button buttonA = new JoystickButton(joystick, 1);
-    Button buttonB = new JoystickButton(joystick, 2);
-    Button buttonX = new JoystickButton(joystick, 3);
-    Button buttonY = new JoystickButton(joystick, 4);
-    Button leftBumper = new JoystickButton(joystick,5);
-    Button rightBumper = new JoystickButton(joystick,6);
-    Button buttonLeftStick = new JoystickButton(joystick, 7);
-    Button buttonRightStick = new JoystickButton(joystick, 6);
+	static Button buttonA = new JoystickButton(joystick, 1);
+	static Button buttonB = new JoystickButton(joystick, 2);
+	static Button buttonX = new JoystickButton(joystick, 3);
+	static Button buttonY = new JoystickButton(joystick, 4);
+	static Button leftBumper = new JoystickButton(joystick,5);
+	static Button rightBumper = new JoystickButton(joystick,6);
+	static Button buttonLeftStick = new JoystickButton(joystick, 7);
+	static Button buttonRightStick = new JoystickButton(joystick, 6);
     
 	//double check values
 	public static double getLeftY(){return joystick.getRawAxis(1);}

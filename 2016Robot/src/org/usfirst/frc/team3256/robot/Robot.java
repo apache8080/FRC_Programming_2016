@@ -13,6 +13,8 @@ import org.usfirst.frc.team3256.robot.subsystems.Hanger;
 import org.usfirst.frc.team3256.robot.subsystems.Intake;
 import org.usfirst.frc.team3256.robot.subsystems.Shooter;
 
+import org.usfirst.frc.team3256.robot.commands.*;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -32,24 +34,32 @@ public class Robot extends IterativeRobot {
 	//SmartDashboard dash;
 	
     Command autonomousCommand;
+    Command ShiftUp;
+    Command ShiftDown;
 
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-		oi = new OI(0);
-		drivetrain = new DriveTrain();
+    	drivetrain = new DriveTrain();
 		compressor = new Compressor(0);
 		compressor.setClosedLoopControl(true);
 		hanger = new Hanger();
 		intake = new Intake();
 		shooter = new Shooter();
 		
-		//dash = new SmartDashboard();
+		ShiftUp = new ShiftUp();
+		ShiftDown = new ShiftDown();
+		
+		oi = new OI(0);
 		
 		DriveTrain.initGyro();
         DriveTrain.calibrateGyro();
+        
+        SmartDashboard.putData("ShiftUp", ShiftUp);
+        SmartDashboard.putData("ShiftDown", ShiftDown);
+        //SmartDashboard.putData("autonomousCommand", autonomousCommand);
     }
 	
 	public void disabledPeriodic() {
@@ -58,7 +68,11 @@ public class Robot extends IterativeRobot {
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
-        if (autonomousCommand != null) autonomousCommand.start();
+        //if (autonomousCommand != null) autonomousCommand.start();
+        ShiftUp.start();
+        ShiftDown.start();
+        ShiftUp.start();
+        ShiftDown.start();
     }
 
     /**
@@ -66,6 +80,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        
     }
 
     public void teleopInit() {
@@ -84,19 +99,23 @@ public class Robot extends IterativeRobot {
      * You can use it to reset subsystems before shutting down.
      */
     public void disabledInit(){
-
+    	SmartDashboard.putString("Test", "Hello");
     }
 
     /**
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        //Scheduler.getInstance().run();
-    	drivetrain.tankDrive(oi.getLeftY(),oi.getRightY());
-    	drivetrain.shiftPancake(OI.getRightBumper());
+        Scheduler.getInstance().run();
+    	
+        OI.buttonA.whenPressed(new ShiftDown());
+        OI.buttonB.whenPressed(new ShiftUp());
+        
+    	DriveTrain.tankDrive(OI.getLeftY(),OI.getRightY());
+    	
     	System.out.println(DriveTrain.getAngle());
-    	SmartDashboard.putString("Test", "Hello");
-    	//SmartDashboard.putNumber("Gyro", DriveTrain.getAngle());
+    	
+    	SmartDashboard.putNumber("Gyro", DriveTrain.getAngle());
     }
     
     /**
