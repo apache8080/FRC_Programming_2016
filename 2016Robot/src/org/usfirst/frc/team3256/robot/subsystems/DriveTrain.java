@@ -46,29 +46,26 @@ public class DriveTrain extends PIDSubsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
    
+    //initializes gyro
     public static void initGyro(){
     	gyro.initGyro();
     }
     
+    //resets gyro value
     public static void resetGyro(){
     	gyro.reset();
     }
     
+    //gets gyro angle
     public static double getAngle(){
     	double factor = 360.0/350.0;
     	return gyro.getAngle()*(factor);
     }
     
+    //calibrates gyro
     public static void calibrateGyro(){
     	gyro.calibrate();
     }
-    
-    /*
-    public static void sensitivityGyro(){
-    	double sensitivity = 0.25;
-    	gyro.setSensitivity(sensitivity);
-    }
-    */
     
     //shift transmissions
     public static void shiftPancake(boolean getRightBumper){
@@ -81,15 +78,42 @@ public class DriveTrain extends PIDSubsystem {
     	}
     }
     
+    //shifts to low gear
     public void shiftDown(){
     	shifterPancake.set(DoubleSolenoid.Value.kReverse);
     }
+    
+    //shifts to high gear
     public void shiftUp(){
     	shifterPancake.set(DoubleSolenoid.Value.kForward);
     }
     
+    //sets left sides motor power
+    public void setLeftMotorSpeed(int speed){
+    	
+    }
 
+    //sets right sides motor power
+    public void setRightMotorSpeed(int speed){
+    	
+    }
     
+    //gets right encoder value
+    public int getRightEncoder(){
+		return 0;
+    }
+    
+    //gets left encoder value
+    public int getLeftEncoder(){
+    	return 0;
+    }
+    
+    //resets encoders
+    public void resetEncoders(){
+    	
+    }
+    
+    //tankdrive
     public static void tankDrive(double left, double right){
     	//clipping values
     	if (Math.abs(right)<0.1) {
@@ -105,6 +129,8 @@ public class DriveTrain extends PIDSubsystem {
     	rightFront.set(-right);
     	rightRear.set(-right);
     }
+    
+    //arcadedrive
     public static void arcadeDrive(double throttle, double turn){
     	double left = throttle+turn;
     	double right = throttle-turn;

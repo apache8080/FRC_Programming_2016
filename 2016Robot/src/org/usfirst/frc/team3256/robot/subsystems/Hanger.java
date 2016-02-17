@@ -9,5 +9,19 @@ public class Hanger extends Subsystem{
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	//brings hanger in
+	public void incrementIn(){
+		
+	}
+	
+	//brings hanger out
+	public void incrementOut(){
+		
+	}
+	
+	//winches hanger motor
+	public void winchMotor(){
+		
+	}
 }
