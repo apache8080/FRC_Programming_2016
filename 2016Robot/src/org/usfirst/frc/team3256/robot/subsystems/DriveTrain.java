@@ -132,8 +132,6 @@ public class DriveTrain extends PIDSubsystem {
     	if (Math.abs(left)<0.1) {
     		left = 0;
     	}
-    	
-    	//determine which motor to reverse later. Left is reversed for now
     	leftFront.set(left);
     	leftRear.set(left);
     	rightFront.set(-right);

@@ -9,9 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class LeftTwoWheelGyroTurn extends Command {
-	double robotRadius;
-	double pi = 3.1415926535897932384626;
-	double robotCircum = 2*pi*robotRadius;
+	
 	int speed;
 	int angle;
 	

@@ -9,27 +9,32 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ReAlign extends Command {
-	int leftMotorFactor;
-	int rightMotorFactor;
 
-    public ReAlign(int lMotorFactor, int rMotorFactor) {
+	int speed;
+
+    public ReAlign(int speed) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drivetrain);
-    	leftMotorFactor = lMotorFactor;
-    	rightMotorFactor = rMotorFactor;
+    	this.speed=speed;
+    
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	DriveTrain.getAngle();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	DriveTrain.setLeftMotorSpeed(leftMotorFactor);
-    	DriveTrain.setRightMotorSpeed(rightMotorFactor);
-    	
+    	if (DriveTrain.getAngle()<0){
+    	DriveTrain.setLeftMotorSpeed(speed);
+    	DriveTrain.setRightMotorSpeed(-speed);
+    	}
+   		
+    	if (DriveTrain.getAngle()>0){
+    		DriveTrain.setLeftMotorSpeed(-speed);
+    		DriveTrain.setRightMotorSpeed(speed);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -41,8 +46,10 @@ public class ReAlign extends Command {
     		return false;
     }
 
-    // Called once after isFinished returns true
+    // Called once after isfinished returns true
     protected void end() {
+    	DriveTrain.setLeftMotorSpeed(0);
+    	DriveTrain.setRightMotorSpeed(0);
     }
 
     // Called when another command which requires one or more of the same

@@ -11,9 +11,6 @@ public class RightTwoWheelGyroTurn extends Command {
 	
 	int speed;
 	int angle; 
-	double robotRadius;
-	double pi = 3.1415926535897932384626;
-	double robotCircum = 2*pi*robotRadius;
 
     public RightTwoWheelGyroTurn(int speed, int angle) {
         // Use requires() here to declare subsystem dependencies
