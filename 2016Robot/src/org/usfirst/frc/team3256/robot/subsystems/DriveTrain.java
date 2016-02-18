@@ -117,7 +117,7 @@ public class DriveTrain extends PIDSubsystem {
     }
    public static double inchesToTicks(double distance){
     	double pi = 3.1415926535897932384626;
-    	double ticksPerRotation = 1;
+    	double ticksPerRotation = 256;
     	double ticks = (distance/2/pi*ticksPerRotation);
     	return ticks;
     }
