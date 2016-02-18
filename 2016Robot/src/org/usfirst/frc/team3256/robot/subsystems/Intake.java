@@ -1,9 +1,17 @@
 package org.usfirst.frc.team3256.robot.subsystems;
 
+import org.usfirst.frc.team3256.robot.RobotMap;
+
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Intake extends Subsystem{
-
+	
+	static VictorSP intakePivotMotor = new VictorSP(RobotMap.intakePivotMotor);
+	static VictorSP intakeRollerMotor = new VictorSP(RobotMap.intakeRollerMotor);
+	static Encoder intakePivotEncoder = new Encoder(RobotMap.intakePivotEncoderA, RobotMap.intakePivotEncoderB);;
+	
 	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
@@ -11,30 +19,33 @@ public class Intake extends Subsystem{
 	}
 	
 	//rolls intake in
-	public void intake (){
-	
+	public static void intake (){
+		intakeRollerMotor.set(100);
 	}
 	
 	//rolls intake out
-	public void outake (){
-	
+	public static void outake (){
+		intakeRollerMotor.set(-100);
 	}
 	
-	public void incrementIn(){
-    
+	public static void stopIntake(){
+		intakeRollerMotor.set(0);
 	}
 	
-	public void incrementOut(){
-		
-	}
-	//folds and brings in intake
-	public void rotateIntakeIn(){
-	
+	public static void incrementIn(int speed){
+		intakePivotMotor.set(speed);
 	}
 	
-	//folds and brings out intake
-	public void rotateIntakeOut(){
-		
+	public static void incrementOut(int speed){
+		intakePivotMotor.set(-speed);
 	}
 	
+	public static void resetEncoder(){
+		intakePivotEncoder.reset();
+	}
+	
+	public static int getEncoderValue(){
+		int ticks = intakePivotEncoder.get();
+		return ticks;
+	}
 }
