@@ -32,13 +32,13 @@ public class RightTwoWheelTurn extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	DriveTrain.setLeftMotorSpeed(-speed);
-    	DriveTrain.setRightMotorSpeed(speed);
+    	DriveTrain.setLeftMotorSpeed(speed);
+    	DriveTrain.setRightMotorSpeed(-speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (DriveTrain.getLeftEncoder()<=-turnFactor && DriveTrain.getRightEncoder()>=turnFactor){
+    	if (DriveTrain.getLeftEncoder()>=turnFactor && DriveTrain.getRightEncoder()<=-turnFactor){
     		return true;
     	}
     	else
