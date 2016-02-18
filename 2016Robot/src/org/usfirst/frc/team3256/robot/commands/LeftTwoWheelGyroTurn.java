@@ -8,45 +8,41 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class RightTwoWheelTurn extends Command {
+public class LeftTwoWheelGyroTurn extends Command {
 	double robotRadius;
 	double pi = 3.1415926535897932384626;
 	double robotCircum = 2*pi*robotRadius;
-	double arc;
-	double turnFactorInches;
-	double turnFactorTicks;
 	int speed;
-    public RightTwoWheelTurn(int speed, double degrees) {
+	int angle;
+	
+    public LeftTwoWheelGyroTurn(int speed, int angle) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drivetrain);
-    	turnFactorInches = robotCircum*arc/2;
-    	arc = degrees/360;
-    	this.speed=speed;
-    	
-    	turnFactorTicks=DriveTrain.inchesToTicks(turnFactorInches);
+    	this.speed = speed;
+    	this.angle = angle; 
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	DriveTrain.resetEncoders();
     	DriveTrain.resetGyro();
     }
+    
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	DriveTrain.setLeftMotorSpeed(speed);
-    	DriveTrain.setRightMotorSpeed(-speed);
+    	DriveTrain.setLeftMotorSpeed(-speed);
+    	DriveTrain.setRightMotorSpeed(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (DriveTrain.getLeftEncoder()>=turnFactorTicks && DriveTrain.getRightEncoder()<=-turnFactorTicks){
+    	if (DriveTrain.getAngle()<=angle){
     		return true;
     	}
     	else
     		return false;
-        
+      
     }
 
     // Called once after isFinished returns true
