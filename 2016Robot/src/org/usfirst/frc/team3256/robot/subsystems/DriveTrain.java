@@ -89,28 +89,31 @@ public class DriveTrain extends PIDSubsystem {
     }
     
     //sets left sides motor power
-    public void setLeftMotorSpeed(int speed){
-    	
+    public static void setLeftMotorSpeed(int speed){
+    	leftFront.set(speed);
+    	leftRear.set(speed);
     }
 
     //sets right sides motor power
-    public void setRightMotorSpeed(int speed){
-    	
+    public static void setRightMotorSpeed(int speed){
+    	rightFront.set(speed);
+    	rightRear.set(speed);
     }
     
     //gets right encoder value
-    public int getRightEncoder(){
-		return 0;
+    public static int getRightEncoder(){
+		return rightEncoder.get();
     }
     
     //gets left encoder value
-    public int getLeftEncoder(){
-    	return 0;
+    public static int getLeftEncoder(){
+    	return leftEncoder.get();
     }
     
     //resets encoders
-    public void resetEncoders(){
-    	
+    public static void resetEncoders(){
+    	rightEncoder.reset();
+    	leftEncoder.reset();
     }
     
     //tankdrive

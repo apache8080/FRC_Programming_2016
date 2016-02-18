@@ -21,7 +21,9 @@ public class RobotMap {
 	public static final int leftFrontMotor = 0,
 			leftRearMotor = 1,
 			rightFrontMotor = 2,
-			rightRearMotor = 3;
+			rightRearMotor = 3,
+			winchMotor = 4,
+			pivotMotor = 5;
 	
 	//encoders
 	public static final int rightDriveEncoderA = 0,
@@ -37,5 +39,6 @@ public class RobotMap {
 	
 	//Global Variables
 	public static double gyroPos;
+	
 	
 }

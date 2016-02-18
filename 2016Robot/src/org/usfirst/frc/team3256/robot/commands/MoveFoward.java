@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3256.robot.commands;
 
 import org.usfirst.frc.team3256.robot.Robot;
+import org.usfirst.frc.team3256.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -8,24 +9,38 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class MoveFoward extends Command {
+	int speed;
+	double leftPosition;
+	double rightPosition;
 
-    public MoveFoward() {
+    public MoveFoward(int power, double lPos, double rPos) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drivetrain);
+    	speed = power;
+    	leftPosition = lPos;
+    	rightPosition = rPos;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	DriveTrain.resetEncoders();
+    	DriveTrain.resetGyro();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	DriveTrain.setRightMotorSpeed(speed);
+    	DriveTrain.setLeftMotorSpeed(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+    	if (DriveTrain.getLeftEncoder()>leftPosition && DriveTrain.getRightEncoder()>rightPosition){
+    		return true;
+    	}
+    	else 
+    		return false;
     }
 
     // Called once after isFinished returns true
