@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3256.robot.commands;
 
 import org.usfirst.frc.team3256.robot.Robot;
+import org.usfirst.frc.team3256.robot.subsystems.Hanger;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -8,11 +9,13 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class WinchUp extends Command {
-
-    public WinchUp() {
+	double winchMotorPos;
+	
+    public WinchUp(double winchMotorPosition) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.hanger);
+    	winchMotorPos=winchMotorPosition;
     }
 
     // Called just before this Command runs the first time
@@ -21,11 +24,16 @@ public class WinchUp extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Hanger.winchMotor(winchMotorPos);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+    	if (Hanger.getMotorPos(winchMotorPos)>=winchMotorPos){
+    		return true;
+    	}
+    	else 
+    		return false;
     }
 
     // Called once after isFinished returns true
