@@ -10,16 +10,15 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class MoveFoward extends Command {
 	int speed;
-	double leftPosition;
-	double rightPosition;
+	double Pos;
 
-    public MoveFoward(int power, double lPos, double rPos) {
+    public MoveFoward(int speed, double Pos) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drivetrain);
-    	speed = power;
-    	leftPosition = lPos;
-    	rightPosition = rPos;
+    	this.speed = speed;
+    	this.Pos = Pos;
+    	DriveTrain.inchesToTicks(Pos);
     }
 
     // Called just before this Command runs the first time
@@ -30,13 +29,14 @@ public class MoveFoward extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	DriveTrain.setRightMotorSpeed(speed);
     	DriveTrain.setLeftMotorSpeed(speed);
+    	DriveTrain.setRightMotorSpeed(speed);
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (DriveTrain.getLeftEncoder()>leftPosition && DriveTrain.getRightEncoder()>rightPosition){
+    	if (DriveTrain.getLeftEncoder()>=Pos && DriveTrain.getRightEncoder()>=Pos){
     		return true;
     	}
     	else 
@@ -45,6 +45,8 @@ public class MoveFoward extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	DriveTrain.setLeftMotorSpeed(0);;
+    	DriveTrain.setRightMotorSpeed(0);
     }
 
     // Called when another command which requires one or more of the same

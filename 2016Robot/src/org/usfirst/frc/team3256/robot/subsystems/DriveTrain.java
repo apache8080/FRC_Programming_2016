@@ -115,6 +115,13 @@ public class DriveTrain extends PIDSubsystem {
     	rightEncoder.reset();
     	leftEncoder.reset();
     }
+   public static double inchesToTicks(double distance){
+    	double pi = 3.1415926535897932384626;
+    	double ticksPerRotation = 1;
+    	double ticks = (distance/2/pi*ticksPerRotation);
+    	return ticks;
+    }
+    
     
     //tankdrive
     public static void tankDrive(double left, double right){
