@@ -11,18 +11,22 @@ import edu.wpi.first.wpilibj.command.Command;
 public class LeftTwoWheelTurn extends Command {
 	double robotRadius;
 	double pi = 3.1415926535897932384626;
-	double robotCircum;
+	double robotCircum = 2*pi*robotRadius;
 	double arc;
-	double turnFactor = robotCircum/arc/2;
+	double turnFactorInches;
+	double turnFactorTicks;
 	int speed;
 	
-    public LeftTwoWheelTurn(double arc, int speed) {
+    public LeftTwoWheelTurn(int speed, double degrees) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drivetrain);
-    	this.arc=arc;
+    	
     	this.speed=speed;
-    	DriveTrain.inchesToTicks(turnFactor);
+    	
+    	arc = degrees/360;
+    	turnFactorInches = robotCircum*arc/2;
+    	turnFactorTicks = DriveTrain.inchesToTicks(turnFactorInches);
     	
     }
 
@@ -40,7 +44,7 @@ public class LeftTwoWheelTurn extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (DriveTrain.getLeftEncoder()<=-turnFactor && DriveTrain.getRightEncoder()>=turnFactor){
+    	if (DriveTrain.getLeftEncoder()<=-turnFactorTicks && DriveTrain.getRightEncoder()>=turnFactorTicks){
     		return true;
     	}
     	else

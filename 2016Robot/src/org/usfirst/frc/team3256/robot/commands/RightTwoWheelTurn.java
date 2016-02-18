@@ -13,15 +13,18 @@ public class RightTwoWheelTurn extends Command {
 	double pi = 3.1415926535897932384626;
 	double robotCircum;
 	double arc;
-	double turnFactor = robotCircum/arc/2;
+	double turnFactorInches;
+	double turnFactorTicks;
 	int speed;
-    public RightTwoWheelTurn(double arc, int speed) {
+    public RightTwoWheelTurn(int speed, double degrees) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drivetrain);
-    	this.arc=arc;
+    	turnFactorInches = robotCircum*arc/2;
+    	arc = degrees/360;
     	this.speed=speed;
-    	DriveTrain.inchesToTicks(turnFactor);
+    	
+    	turnFactorTicks=DriveTrain.inchesToTicks(turnFactorInches);
     }
 
     // Called just before this Command runs the first time
@@ -38,7 +41,7 @@ public class RightTwoWheelTurn extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (DriveTrain.getLeftEncoder()>=turnFactor && DriveTrain.getRightEncoder()<=-turnFactor){
+    	if (DriveTrain.getLeftEncoder()>=turnFactorTicks && DriveTrain.getRightEncoder()<=-turnFactorTicks){
     		return true;
     	}
     	else
