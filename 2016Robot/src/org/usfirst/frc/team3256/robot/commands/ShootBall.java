@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3256.robot.commands;
 
 import org.usfirst.frc.team3256.robot.Robot;
+import org.usfirst.frc.team3256.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -13,12 +14,12 @@ public class ShootBall extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.shooter);
+    	setTimeout(1);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.shooter.engageActuators(); 
-    	Robot.shooter.disengageActuators();
+    	Shooter.disengageWinch();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -29,7 +30,7 @@ public class ShootBall extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true

@@ -9,31 +9,30 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class WinchUp extends Command {
-	double winchMotorPos;
+
 	
-    public WinchUp(double winchMotorPosition) {
+    public WinchUp() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.hanger);
-    	winchMotorPos=winchMotorPosition;
+    	setTimeout(1);
+   
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Hanger.winchMotor();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Hanger.winchMotor(winchMotorPos);
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (Hanger.getMotorPos(winchMotorPos)>=winchMotorPos){
-    		return true;
-    	}
-    	else 
-    		return false;
+    	return isTimedOut();
+    	
     }
 
     // Called once after isFinished returns true

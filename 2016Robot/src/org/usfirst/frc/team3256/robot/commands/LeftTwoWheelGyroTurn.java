@@ -10,10 +10,10 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class LeftTwoWheelGyroTurn extends Command {
 	
-	int speed;
+	double speed;
 	int angle;
 	
-    public LeftTwoWheelGyroTurn(int speed, int angle) {
+    public LeftTwoWheelGyroTurn(double speed, int angle) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drivetrain);

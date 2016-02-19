@@ -89,13 +89,13 @@ public class DriveTrain extends PIDSubsystem {
     }
     
     //sets left sides motor power
-    public static void setLeftMotorSpeed(int speed){
+    public static void setLeftMotorSpeed(double speed){
     	leftFront.set(speed);
     	leftRear.set(speed);
     }
 
     //sets right sides motor power
-    public static void setRightMotorSpeed(int speed){
+    public static void setRightMotorSpeed(double speed){
     	rightFront.set(speed);
     	rightRear.set(speed);
     }

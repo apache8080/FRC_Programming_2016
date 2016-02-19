@@ -15,8 +15,8 @@ public class RightTwoWheelTurn extends Command {
 	double arc;
 	double turnFactorInches;
 	double turnFactorTicks;
-	int speed;
-    public RightTwoWheelTurn(int speed, double degrees) {
+	double speed;
+    public RightTwoWheelTurn(double speed, double degrees) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drivetrain);

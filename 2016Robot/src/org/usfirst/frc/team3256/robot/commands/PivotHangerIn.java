@@ -1,47 +1,38 @@
 package org.usfirst.frc.team3256.robot.commands;
 
 import org.usfirst.frc.team3256.robot.Robot;
-import org.usfirst.frc.team3256.robot.subsystems.Intake;
+import org.usfirst.frc.team3256.robot.subsystems.Hanger;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class IncrementIn extends Command {
-	
-	int speed;
-	int ticks;
-	public IncrementIn(int speed, int ticks) {
+public class PivotHangerIn extends Command {
+
+    public PivotHangerIn() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.intake); 
-    	this.speed=speed;
-    	this.ticks=ticks;
-    }
+    	requires(Robot.hanger);   
+    	setTimeout(1);
+    	}
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Hanger.incrementIn();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.intake.incrementIn(speed);
-    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if (Intake.getEncoderValue()>=ticks){
-        	return true;
-        }
-        else
-        	return false;
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Intake.incrementIn(0);
     }
 
     // Called when another command which requires one or more of the same

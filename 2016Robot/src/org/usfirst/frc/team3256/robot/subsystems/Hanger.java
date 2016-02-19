@@ -15,22 +15,18 @@ public class Hanger extends Subsystem{
 	}
 	
 	//brings hanger in
-	public void incrementIn(){
-		pivotMotor.setPosition(69);
+	public static void incrementIn(){
+		pivotMotor.set(1);
 	}
 	
 	//brings hanger out
-	public void incrementOut(){
-		pivotMotor.setPosition(69);
+	public static void incrementOut(){
+		pivotMotor.set(-1);
 	}
 	
 	//winches hanger motor
-	public static void winchMotor(double pos){
-		winchMotor.setPosition(pos);
-	}
-	
-	public static double getMotorPos(double pos){
-		return pos;
-		
+	public static void winchMotor(){
+		winchMotor.set(1);
 	}
 }
+	

@@ -20,12 +20,12 @@ public class Intake extends Subsystem{
 	
 	//rolls intake in
 	public static void intake (){
-		intakeRollerMotor.set(100);
+		intakeRollerMotor.set(1);
 	}
 	
 	//rolls intake out
 	public static void outake (){
-		intakeRollerMotor.set(-100);
+		intakeRollerMotor.set(-1);
 	}
 	
 	public static void stopIntake(){

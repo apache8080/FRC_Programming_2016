@@ -24,8 +24,10 @@ public class RobotMap {
 			rightRearMotor = 3,
 			intakePivotMotor = 4,
 			intakeRollerMotor = 5,
-			winchMotor = 4,
-			pivotMotor = 5;
+			winchMotor = 6,
+			pivotMotor = 7,
+			catapultWinch = 8;
+			
 	
 	//encoders
 	public static final int rightDriveEncoderA = 0,
@@ -36,13 +38,19 @@ public class RobotMap {
 			intakePivotEncoderB = 5;
 	
 	//actuators
-	//tune port values
 	public static final int ShifterIn = 0;
 	public static final int ShifterOut = 1;
+	public static final int winchEngage = 2;
+	public static final int winchDisengage = 3;
+	public static final int ballHolderEngage = 4;
+	public static final int ballHolderDisengage = 5;
 	
 	
 	//Global Variables
 	public static double gyroPos;
+	
+	//Sensors
+	public static final int catapultLimitSwitch = 0;
 	
 	
 }

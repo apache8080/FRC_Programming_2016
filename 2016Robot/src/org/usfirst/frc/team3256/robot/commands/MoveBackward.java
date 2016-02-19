@@ -9,10 +9,10 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class MoveBackward extends Command {
-	int speed;
+	double speed;
 	double Pos;
 	
-    public MoveBackward(int speed, double Pos) {
+    public MoveBackward(double speed, double Pos) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drivetrain);
