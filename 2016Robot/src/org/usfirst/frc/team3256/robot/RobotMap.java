@@ -22,6 +22,8 @@ public class RobotMap {
 			leftRearMotor = 1,
 			rightFrontMotor = 2,
 			rightRearMotor = 3,
+			intakePivotMotor = 4,
+			intakeRollerMotor = 5;
 			winchMotor = 4,
 			pivotMotor = 5;
 	
@@ -29,7 +31,9 @@ public class RobotMap {
 	public static final int rightDriveEncoderA = 0,
 			rightDriveEncoderB = 1,
 			leftDriveEncoderA = 2,
-			leftDriveEncoderB = 3;
+			leftDriveEncoderB = 3,
+			intakePivotEncoderA = 4,
+			intakePivotEncoderB = 5;
 	
 	//actuators
 	//tune port values
