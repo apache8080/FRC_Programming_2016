@@ -23,7 +23,7 @@ public class RobotMap {
 			rightFrontMotor = 2,
 			rightRearMotor = 3,
 			intakePivotMotor = 4,
-			intakeRollerMotor = 5;
+			intakeRollerMotor = 5,
 			winchMotor = 4,
 			pivotMotor = 5;
 	
