@@ -134,6 +134,9 @@ public class Robot extends IterativeRobot {
     	System.out.println(DriveTrain.getAngle());
     	
     	SmartDashboard.putNumber("Gyro", DriveTrain.getAngle());
+    	SmartDashboard.putBoolean("BallIn", true);
+    	SmartDashboard.putBoolean("Distance", true);
+    	SmartDashboard.putBoolean("Angle", false);
     }
     
     /**
