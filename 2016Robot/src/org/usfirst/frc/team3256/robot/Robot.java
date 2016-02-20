@@ -31,11 +31,19 @@ public class Robot extends IterativeRobot {
 	public static Intake intake;
 	public static Shooter shooter;
 	
-	//SmartDashboard dash;
-	
+
     Command autonomousCommand;
+	//Dashboard
+	//SmartDashboard dash;
+    //DriveTrain
     Command ShiftUp;
     Command ShiftDown;
+    //Intake
+    Command IntakeIncrementIn;
+    Command IntakeIncrementOut;
+    Command IntakeRollers;
+    Command OuttakeRollers;
+    
 
     /**
      * This function is run when the robot is first started up and should be
@@ -48,9 +56,12 @@ public class Robot extends IterativeRobot {
 		hanger = new Hanger();
 		intake = new Intake();
 		shooter = new Shooter();
-		
 		ShiftUp = new ShiftUp();
 		ShiftDown = new ShiftDown();
+		IntakeIncrementIn = new IntakeIncrementIn(100,100);
+		IntakeIncrementOut = new IntakeIncrementOut(-100,100);
+		IntakeRollers = new IntakeRollers();
+		OuttakeRollers = new OuttakeRollers();
 		
 		oi = new OI(0);
 		
@@ -69,10 +80,10 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         // schedule the autonomous command (example)
         //if (autonomousCommand != null) autonomousCommand.start();
-        ShiftUp.start();
+       /* ShiftUp.start();
         ShiftDown.start();
         ShiftUp.start();
-        ShiftDown.start();
+        ShiftDown.start();*/
     }
 
     /**
@@ -91,6 +102,7 @@ public class Robot extends IterativeRobot {
         //if (autonomousCommand != null) autonomousCommand.cancel();
         
         DriveTrain.resetGyro();
+        ShiftUp.start();//Automatically puts robot in high gear
         //DriveTrain.sensitivityGyro();
     }
 
@@ -108,8 +120,14 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
     	
-        OI.buttonA.whenPressed(new ShiftDown());
-        OI.buttonB.whenPressed(new ShiftUp());
+        if (OI.getRightBumper()){
+        	ShiftDown.start();
+        }
+        else 
+        	ShiftUp.start();
+        
+        OI.buttonA.whenActive(new IntakeRollers());
+        OI.buttonY.whenActive(new OuttakeRollers());
         
     	DriveTrain.tankDrive(OI.getLeftY(),OI.getRightY());
     	

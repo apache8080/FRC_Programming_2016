@@ -45,7 +45,7 @@ public class MoveFoward extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	DriveTrain.setLeftMotorSpeed(0);;
+    	DriveTrain.setLeftMotorSpeed(0);
     	DriveTrain.setRightMotorSpeed(0);
     }
 

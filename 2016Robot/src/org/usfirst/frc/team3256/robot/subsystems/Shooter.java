@@ -13,7 +13,7 @@ public class Shooter extends Subsystem{
 	static DoubleSolenoid winchActuator = new DoubleSolenoid(RobotMap.winchEngage, RobotMap.winchDisengage);
 	static DoubleSolenoid ballActuator = new DoubleSolenoid(RobotMap.ballHolderEngage, RobotMap.ballHolderDisengage);
 	static DigitalInput catapultLimitSwitch = new DigitalInput(RobotMap.catapultLimitSwitch);
-//	static DigitalInput
+	static DigitalInput ballIR = new DigitalInput(RobotMap.ballIR);
 	
 	@Override
 	protected void initDefaultCommand() {
@@ -45,7 +45,7 @@ public class Shooter extends Subsystem{
     	ballActuator.set(DoubleSolenoid.Value.kReverse);
     } 
 	
-	
+		
 	//based on if the catapult is pulled back via limit switch
 	public boolean isWinched(){
 		boolean catapultStatus = catapultLimitSwitch.get();
@@ -53,10 +53,10 @@ public class Shooter extends Subsystem{
 	}
 	
 	//based on if the ball is detected via IR Breaker
-	/*public boolean isLoaded(){
-		boolean ballStatus = 
+	public boolean isLoaded(){
+		boolean ballStatus = ballIR.get();
 		return ballStatus;
-	}*/
+	}
 	
 
 }

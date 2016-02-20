@@ -33,9 +33,8 @@ public class OI {
 	static Button leftBumper = new JoystickButton(joystick,5);
 	static Button rightBumper = new JoystickButton(joystick,6);
 	static Button buttonLeftStick = new JoystickButton(joystick, 7);
-	static Button buttonRightStick = new JoystickButton(joystick, 6);
+	static Button buttonRightStick = new JoystickButton(joystick, 8);
     
-	//double check values
 	public static double getLeftY(){return joystick.getRawAxis(1);}
     public static double getLeftX(){return joystick.getRawAxis(2);}
     public static double getRightY(){return joystick.getRawAxis(5);}
@@ -43,6 +42,8 @@ public class OI {
     public static double getRightTrigger() {return joystick.getRawAxis(3);}
     public static boolean getButtonA(){return joystick.getRawButton(1);}
     public static boolean getButtonB(){return joystick.getRawButton(2);}
+    public static boolean getButtonX(){return joystick.getRawButton(100);}
+    public static boolean getButtonY(){return joystick.getRawButton(100);}
     public static boolean getLeftBumper(){return joystick.getRawButton(5);}
     public static boolean getRightBumper(){return joystick.getRawButton(6);}
     

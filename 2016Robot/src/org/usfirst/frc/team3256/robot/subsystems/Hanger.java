@@ -6,8 +6,8 @@ import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Hanger extends Subsystem{
-	static VictorSP winchMotor = new VictorSP(RobotMap.winchMotor);
-	static VictorSP pivotMotor = new VictorSP(RobotMap.pivotMotor);
+	static VictorSP winchMotors = new VictorSP(RobotMap.winchMotors);
+	static VictorSP pivotMotors = new VictorSP(RobotMap.hangerPivotMotors);
 	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
@@ -16,17 +16,18 @@ public class Hanger extends Subsystem{
 	
 	//brings hanger in
 	public static void incrementIn(){
-		pivotMotor.set(1);
+		pivotMotors.set(1);
 	}
 	
 	//brings hanger out
 	public static void incrementOut(){
-		pivotMotor.set(-1);
+		pivotMotors.set(-1);
 	}
 	
 	//winches hanger motor
 	public static void winchMotor(){
-		winchMotor.set(1);
+		winchMotors.set(1);
+	
 	}
 }
 	

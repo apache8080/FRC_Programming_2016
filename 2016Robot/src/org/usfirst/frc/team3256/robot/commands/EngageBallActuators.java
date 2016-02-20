@@ -14,11 +14,13 @@ public class EngageBallActuators extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.shooter);
+    	setTimeout(1);
+    	
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Shooter.disengageBallActuators();
+    	Shooter.engageBallActuators();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -29,7 +31,7 @@ public class EngageBallActuators extends Command {
     protected boolean isFinished() {
         return isTimedOut();
     }
-
+    	
     // Called once after isFinished returns true
     protected void end() {
     }

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3256.robot.commands;
 
+import org.usfirst.frc.team3256.robot.OI;
 import org.usfirst.frc.team3256.robot.Robot;
 import org.usfirst.frc.team3256.robot.subsystems.Intake;
 
@@ -8,9 +9,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class OutakeRollers extends Command {
+public class OuttakeRollers extends Command {
 
-    public OutakeRollers() {
+    public OuttakeRollers() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.intake);
@@ -18,16 +19,20 @@ public class OutakeRollers extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Intake.outake();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Intake.outake();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isTimedOut();
+        if (OI.getButtonY()){
+        	return true;
+        }
+        else
+        	return false;
     }
 
     // Called once after isFinished returns true

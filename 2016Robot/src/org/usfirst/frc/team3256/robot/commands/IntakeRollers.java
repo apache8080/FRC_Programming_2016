@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3256.robot.commands;
 
+import org.usfirst.frc.team3256.robot.OI;
 import org.usfirst.frc.team3256.robot.Robot;
 import org.usfirst.frc.team3256.robot.subsystems.Intake;
 
@@ -19,17 +20,20 @@ public class IntakeRollers extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Intake.intake();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
+    	Intake.intake();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isTimedOut();
+        if (OI.getButtonA()){
+        	return false;
+        }
+        else 
+        	return true;
     }
 
     // Called once after isFinished returns true
