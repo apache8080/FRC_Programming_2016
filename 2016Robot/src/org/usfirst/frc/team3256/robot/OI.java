@@ -21,9 +21,9 @@ public class OI {
 	public OI(int port) {
         joystick = new Joystick(port);
         
-        SmartDashboard.putData("EngageBallActuators", new EngageBallActuators());
-        SmartDashboard.putData("Shift Up", new ShiftUp());
-        SmartDashboard.putData("Shift Down", new ShiftDown());
+        //SmartDashboard.putData("EngageBallActuators", new EngageBallActuators());
+        //SmartDashboard.putData("Shift Up", new ShiftUp());
+        //SmartDashboard.putData("Shift Down", new ShiftDown());
     }
 	
 	static Button buttonA = new JoystickButton(joystick, 1);

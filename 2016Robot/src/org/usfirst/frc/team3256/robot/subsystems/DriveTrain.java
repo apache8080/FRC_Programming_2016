@@ -7,6 +7,7 @@ import org.usfirst.frc.team3256.robot.RobotMap;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.VictorSP;
 /**
  *
@@ -21,7 +22,7 @@ public class DriveTrain extends PIDSubsystem {
 	static Encoder rightEncoder = new Encoder(RobotMap.rightDriveEncoderA, RobotMap.rightDriveEncoderB);
 	static Encoder leftEncoder = new Encoder(RobotMap.leftDriveEncoderA, RobotMap.leftDriveEncoderB);
 	
-	static DoubleSolenoid shifterPancake = new DoubleSolenoid (RobotMap.ShifterIn, RobotMap.ShifterOut);
+	static DoubleSolenoid shifterPancake = new DoubleSolenoid (RobotMap.ShifterIn,RobotMap.ShifterOut);
 	
 	static AnalogGyro gyro = new AnalogGyro(0);
 	
@@ -59,7 +60,7 @@ public class DriveTrain extends PIDSubsystem {
     //gets gyro angle
     public static double getAngle(){
     	double factor = 360.0/350.0;
-    	return gyro.getAngle()*(factor);
+    	return gyro.getAngle()*factor;
     }
     
     //calibrates gyro
@@ -72,7 +73,7 @@ public class DriveTrain extends PIDSubsystem {
     	//test later which is which
     	if (getRightBumper){
     		shifterPancake.set(DoubleSolenoid.Value.kReverse);
-    	}
+     	}
     	else{
     		shifterPancake.set(DoubleSolenoid.Value.kForward);
     	}

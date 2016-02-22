@@ -2,6 +2,7 @@
 package org.usfirst.frc.team3256.robot;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -31,10 +32,10 @@ public class Robot extends IterativeRobot {
 	public static Intake intake;
 	public static Shooter shooter;
 	
+	public static DoubleSolenoid solenoidUno;
 
     Command autonomousCommand;
-	//Dashboard
-	//SmartDashboard dash;
+	
     //DriveTrain
     Command ShiftUp;
     Command ShiftDown;
@@ -63,13 +64,17 @@ public class Robot extends IterativeRobot {
 		IntakeRollers = new IntakeRollers();
 		OuttakeRollers = new OuttakeRollers();
 		
+		solenoidUno = new DoubleSolenoid(0,7);
+		
 		oi = new OI(0);
 		
 		DriveTrain.initGyro();
         DriveTrain.calibrateGyro();
+
+        SmartDashboard.putString("DistanceText", "Distance");
+        SmartDashboard.putString("AngleText", "Angle");
+        SmartDashboard.putString("BallStatusText", "Ball Status");
         
-        SmartDashboard.putData("ShiftUp", ShiftUp);
-        SmartDashboard.putData("ShiftDown", ShiftDown);
         //SmartDashboard.putData("autonomousCommand", autonomousCommand);
     }
 	
@@ -100,9 +105,15 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         //if (autonomousCommand != null) autonomousCommand.cancel();
+    	
+    	solenoidUno.set(DoubleSolenoid.Value.kReverse);
+		shooter.engageBallActuators();
+		shooter.engageWinch();
         
+    	
+    	
         DriveTrain.resetGyro();
-        ShiftUp.start();//Automatically puts robot in high gear
+        //ShiftUp.start();//Automatically puts robot in high gear
         //DriveTrain.sensitivityGyro();
     }
 
@@ -111,7 +122,7 @@ public class Robot extends IterativeRobot {
      * You can use it to reset subsystems before shutting down.
      */
     public void disabledInit(){
-    	SmartDashboard.putString("Test", "Hello");
+
     }
 
     /**
@@ -119,24 +130,26 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-    	
+        
         if (OI.getRightBumper()){
         	ShiftDown.start();
         }
         else 
         	ShiftUp.start();
-        
-        OI.buttonA.whenActive(new IntakeRollers());
-        OI.buttonY.whenActive(new OuttakeRollers());
+       
+        //OI.buttonA.whenActive(new IntakeRollers());
+       // OI.buttonY.whenActive(new OuttakeRollers());
         
     	DriveTrain.tankDrive(OI.getLeftY(),OI.getRightY());
-    	
-    	System.out.println(DriveTrain.getAngle());
     	
     	SmartDashboard.putNumber("Gyro", DriveTrain.getAngle());
     	SmartDashboard.putBoolean("BallIn", true);
     	SmartDashboard.putBoolean("Distance", true);
     	SmartDashboard.putBoolean("Angle", false);
+    	
+    	SmartDashboard.putNumber("DistanceAway", 12.34);
+    	SmartDashboard.putNumber("AngleOff", 2.345);
+   
     }
     
     /**

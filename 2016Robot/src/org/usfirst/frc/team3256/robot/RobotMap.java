@@ -46,11 +46,13 @@ public class RobotMap {
 	public static final int ballHolderDisengage = 5;
 	
 	//Sensors
-	public static final int catapultLimitSwitch = 0;
-	public static final int ballIR = 1;
+	public static final int catapultLimitSwitch = 6;
+	public static final int ballIR = 7;
 	
 	//Global Variables
 	public static double gyroPos;
+	
+	public static String cameraIP = "10.32.56.11";
 	
 
 	

@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.vision.AxisCamera;
 
 public class Camera extends Subsystem{
 
+	AxisCamera cam = new AxisCamera(RobotMap.cameraIP);
+	
 	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
@@ -14,11 +16,11 @@ public class Camera extends Subsystem{
 	}
 	//gets distance from camera
 	public double getDistance(){
-		return 69;
+		return 100;
 	}
 	//gets angle from camera
 	public double getAngle(){
-		return 69;
+		return 100;
 	}
 	
 	

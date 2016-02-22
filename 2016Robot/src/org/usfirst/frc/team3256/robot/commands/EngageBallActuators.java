@@ -15,7 +15,6 @@ public class EngageBallActuators extends Command {
         // eg. requires(chassis);
     	requires(Robot.shooter);
     	setTimeout(1);
-    	
     }
 
     // Called just before this Command runs the first time
@@ -29,7 +28,7 @@ public class EngageBallActuators extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isTimedOut();
+        return true;
     }
     	
     // Called once after isFinished returns true
