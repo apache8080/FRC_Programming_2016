@@ -2,15 +2,17 @@ package org.usfirst.frc.team3256.robot.subsystems;
 
 import org.usfirst.frc.team3256.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 
 public class Intake extends Subsystem{
 	
 	static VictorSP intakePivotMotor = new VictorSP(RobotMap.intakePivotMotor);
 	static VictorSP intakeRollerMotor = new VictorSP(RobotMap.intakeRollerMotor);
-	static Encoder intakePivotEncoder = new Encoder(RobotMap.intakePivotEncoderA, RobotMap.intakePivotEncoderB);;
+	static Encoder intakePivotEncoder = new Encoder(RobotMap.intakePivotEncoderA, RobotMap.intakePivotEncoderB);
 	
 	@Override
 	protected void initDefaultCommand() {

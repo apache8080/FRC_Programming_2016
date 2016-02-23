@@ -17,7 +17,6 @@ public class OI {
 	
 	static Joystick joystick = new Joystick(0);
 	
-	
 	public OI(int port) {
         joystick = new Joystick(port);
         
@@ -47,8 +46,4 @@ public class OI {
     public static boolean getLeftBumper(){return joystick.getRawButton(5);}
     public static boolean getRightBumper(){return joystick.getRawButton(6);}
     
-    
-	
-		
 }
-

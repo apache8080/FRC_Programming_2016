@@ -107,13 +107,11 @@ public class Robot extends IterativeRobot {
         //if (autonomousCommand != null) autonomousCommand.cancel();
     	
     	solenoidUno.set(DoubleSolenoid.Value.kReverse);
-		shooter.engageBallActuators();
-		shooter.engageWinch();
+		Shooter.engageBallActuators();
+		Shooter.engageWinch();
         
-    	
-    	
         DriveTrain.resetGyro();
-        //ShiftUp.start();//Automatically puts robot in high gear
+        
         //DriveTrain.sensitivityGyro();
     }
 
@@ -131,17 +129,20 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         
-        if (OI.getRightBumper()){
+        DriveTrain.tankDrive(OI.getLeftY(),OI.getRightY());
+        
+        /*
+        if (OI.getRightBumper())
         	ShiftDown.start();
-        }
         else 
         	ShiftUp.start();
+        */
+        OI.rightBumper.whenPressed(ShiftUp);
+        OI.rightBumper.whenReleased(ShiftDown);
        
-        //OI.buttonA.whenActive(new IntakeRollers());
-       // OI.buttonY.whenActive(new OuttakeRollers());
+        OI.buttonA.whileHeld(IntakeRollers);
+      //  OI.buttonA.whenReleased(StopRollers);
         
-    	DriveTrain.tankDrive(OI.getLeftY(),OI.getRightY());
-    	
     	SmartDashboard.putNumber("Gyro", DriveTrain.getAngle());
     	SmartDashboard.putBoolean("BallIn", true);
     	SmartDashboard.putBoolean("Distance", true);
@@ -149,7 +150,7 @@ public class Robot extends IterativeRobot {
     	
     	SmartDashboard.putNumber("DistanceAway", 12.34);
     	SmartDashboard.putNumber("AngleOff", 2.345);
-   
+    	
     }
     
     /**

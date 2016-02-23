@@ -29,16 +29,11 @@ public class IntakeRollers extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if (OI.getButtonA()){
-        	return false;
-        }
-        else 
-        	return true;
+       	return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Intake.stopIntake();
     }
 
     // Called when another command which requires one or more of the same
