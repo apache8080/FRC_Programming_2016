@@ -25,7 +25,8 @@ import org.usfirst.frc.team3256.robot.commands.*;
  */
 public class Robot extends IterativeRobot {
 
-	public static OI oi;
+	public OI joy1;
+	public OI joy2;
 	public static DriveTrain drivetrain;
 	public static Compressor compressor;
 	public static Hanger hanger;
@@ -44,6 +45,7 @@ public class Robot extends IterativeRobot {
     Command IntakeIncrementOut;
     Command IntakeRollers;
     Command OuttakeRollers;
+    Command StopRollers;
     
 
     /**
@@ -63,10 +65,12 @@ public class Robot extends IterativeRobot {
 		IntakeIncrementOut = new IntakeIncrementOut(-100,100);
 		IntakeRollers = new IntakeRollers();
 		OuttakeRollers = new OuttakeRollers();
+		StopRollers = new StopRollers();
 		
 		solenoidUno = new DoubleSolenoid(0,7);
 		
-		oi = new OI(0);
+		joy1 = new OI(0);
+		joy2 = new OI(1);
 		
 		DriveTrain.initGyro();
         DriveTrain.calibrateGyro();
@@ -137,11 +141,13 @@ public class Robot extends IterativeRobot {
         else 
         	ShiftUp.start();
         */
-        OI.rightBumper.whenPressed(ShiftUp);
-        OI.rightBumper.whenReleased(ShiftDown);
+        joy1.rightBumper.whenPressed(ShiftUp);
+        joy1.rightBumper.whenReleased(ShiftDown);
        
-        OI.buttonA.whileHeld(IntakeRollers);
-      //  OI.buttonA.whenReleased(StopRollers);
+        joy2.buttonA.whileHeld(IntakeRollers);
+        joy2.buttonY.whileHeld(OuttakeRollers);
+        joy2.buttonA.whenReleased(StopRollers);
+        joy2.buttonY.whenReleased(StopRollers);
         
     	SmartDashboard.putNumber("Gyro", DriveTrain.getAngle());
     	SmartDashboard.putBoolean("BallIn", true);
