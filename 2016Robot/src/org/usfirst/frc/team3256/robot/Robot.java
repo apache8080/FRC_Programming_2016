@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team3256.robot;
 
 import edu.wpi.first.wpilibj.Compressor;
@@ -7,6 +6,8 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.networktables2.type.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team3256.robot.subsystems.DriveTrain;
@@ -15,6 +16,7 @@ import org.usfirst.frc.team3256.robot.subsystems.Intake;
 import org.usfirst.frc.team3256.robot.subsystems.Shooter;
 
 import org.usfirst.frc.team3256.robot.commands.*;
+import org.usfirst.frc.team3256.robot.RobotMap;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -32,7 +34,8 @@ public class Robot extends IterativeRobot {
 	public static Hanger hanger;
 	public static Intake intake;
 	public static Shooter shooter;
-	
+	public static NetworkTable networkTable;
+	public static double[] roboRealmData;
 	public static DoubleSolenoid solenoidUno;
 
     Command autonomousCommand;
@@ -53,9 +56,10 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
+    	networkTable = NetworkTable.getTable("Smartdashboard");
+    	networkTable.initialize();
     	drivetrain = new DriveTrain();
 		compressor = new Compressor(0);
-		compressor.setClosedLoopControl(true);
 		hanger = new Hanger();
 		intake = new Intake();
 		shooter = new Shooter();
@@ -66,6 +70,8 @@ public class Robot extends IterativeRobot {
 		IntakeRollers = new IntakeRollers();
 		OuttakeRollers = new OuttakeRollers();
 		StopRollers = new StopRollers();
+		
+		compressor.setClosedLoopControl(true);
 		
 		solenoidUno = new DoubleSolenoid(0,7);
 		
@@ -110,6 +116,8 @@ public class Robot extends IterativeRobot {
         // this line or comment it out.
         //if (autonomousCommand != null) autonomousCommand.cancel();
     	
+    	
+    	
     	solenoidUno.set(DoubleSolenoid.Value.kReverse);
 		Shooter.engageBallActuators();
 		Shooter.engageWinch();
@@ -134,6 +142,11 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
         
         DriveTrain.tankDrive(OI.getLeftY(),OI.getRightY());
+       
+		RobotMap.photoCenterOfGravityX = networkTable.getNumber("COG_X", 0.0);
+        double cog_y = networkTable.getNumber("COG_Y", 0.0);
+        SmartDashboard.putNumber("Object X-Value", cog_x);
+        SmartDashboard.putNumber("Object Y-Value", cog_y);
         
         /*
         if (OI.getRightBumper())

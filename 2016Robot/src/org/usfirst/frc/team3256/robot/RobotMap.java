@@ -51,6 +51,9 @@ public class RobotMap {
 	
 	//Global Variables
 	public static double gyroPos;
+	public static double photoCenterOfGravityX;
+	public static double photoCenterOfGravityY;
+	
 	
 	public static String cameraIP = "10.32.56.11";
 	
