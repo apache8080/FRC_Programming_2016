@@ -10,14 +10,10 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class IntakeIncrementIn extends Command {
 	
-	int speed;
-	int ticks;
-	public IntakeIncrementIn(int speed, int ticks) {
+	public IntakeIncrementIn() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.intake); 
-    	this.speed=speed;
-    	this.ticks=ticks;
     }
 
     // Called just before this Command runs the first time
@@ -27,22 +23,17 @@ public class IntakeIncrementIn extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.intake.incrementIn(speed);
+    	Intake.incrementIn(5);
     	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if (Intake.getEncoderValue()>=ticks){
-        	return true;
-        }
-        else
-        	return false;
+    	return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Intake.incrementIn(0);
     }
 
     // Called when another command which requires one or more of the same

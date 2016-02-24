@@ -42,6 +42,10 @@ public class Intake extends Subsystem{
 		intakePivotMotor.set(-speed);
 	}
 	
+	public static void pivotStop(){
+		intakePivotMotor.set(0);
+	}
+	
 	public static void resetEncoder(){
 		intakePivotEncoder.reset();
 	}

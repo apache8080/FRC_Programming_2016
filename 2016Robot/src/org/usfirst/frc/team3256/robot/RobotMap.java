@@ -45,6 +45,10 @@ public class RobotMap {
 	public static final int ballHolderEngage = 2;
 	public static final int ballHolderDisengage = 5;
 	
+	//joysticks
+	public static final int Joystick1 = 0;
+	public static final int Joystick2 = 1;
+	
 	//Sensors
 	public static final int catapultLimitSwitch = 6;
 	public static final int ballIR = 7;

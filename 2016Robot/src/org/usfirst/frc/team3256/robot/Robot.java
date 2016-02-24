@@ -27,8 +27,6 @@ import org.usfirst.frc.team3256.robot.RobotMap;
  */
 public class Robot extends IterativeRobot {
 
-	public OI joy1;
-	public OI joy2;
 	public static DriveTrain drivetrain;
 	public static Compressor compressor;
 	public static Hanger hanger;
@@ -46,9 +44,13 @@ public class Robot extends IterativeRobot {
     //Intake
     Command IntakeIncrementIn;
     Command IntakeIncrementOut;
+    Command StopIntakePivot;
     Command IntakeRollers;
     Command OuttakeRollers;
     Command StopRollers;
+    //Shooter
+    Command ShootBall;
+    Command ReEngageWinch;
     
 
     /**
@@ -58,25 +60,25 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
     	networkTable = NetworkTable.getTable("Smartdashboard");
     	networkTable.initialize();
+    	//subsystems
     	drivetrain = new DriveTrain();
 		compressor = new Compressor(0);
 		hanger = new Hanger();
 		intake = new Intake();
 		shooter = new Shooter();
+		//commands
 		ShiftUp = new ShiftUp();
 		ShiftDown = new ShiftDown();
-		IntakeIncrementIn = new IntakeIncrementIn(100,100);
-		IntakeIncrementOut = new IntakeIncrementOut(-100,100);
+		IntakeIncrementIn = new IntakeIncrementIn();
+		IntakeIncrementOut = new IntakeIncrementOut();
+		StopIntakePivot = new StopIntakePivot();
 		IntakeRollers = new IntakeRollers();
 		OuttakeRollers = new OuttakeRollers();
 		StopRollers = new StopRollers();
+		ShootBall = new ShootBall();
+		ReEngageWinch = new ReEngageWinch();
 		
 		compressor.setClosedLoopControl(true);
-		
-		solenoidUno = new DoubleSolenoid(0,7);
-		
-		joy1 = new OI(0);
-		joy2 = new OI(1);
 		
 		DriveTrain.initGyro();
         DriveTrain.calibrateGyro();
@@ -84,8 +86,6 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putString("DistanceText", "Distance");
         SmartDashboard.putString("AngleText", "Angle");
         SmartDashboard.putString("BallStatusText", "Ball Status");
-        
-        //SmartDashboard.putData("autonomousCommand", autonomousCommand);
     }
 	
 	public void disabledPeriodic() {
@@ -96,9 +96,7 @@ public class Robot extends IterativeRobot {
         // schedule the autonomous command (example)
         //if (autonomousCommand != null) autonomousCommand.start();
        /* ShiftUp.start();
-        ShiftDown.start();
-        ShiftUp.start();
-        ShiftDown.start();*/
+        * */
     }
 
     /**
@@ -115,13 +113,8 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         //if (autonomousCommand != null) autonomousCommand.cancel();
-    	
-    	
-    	
-    	solenoidUno.set(DoubleSolenoid.Value.kReverse);
-		Shooter.engageBallActuators();
-		Shooter.engageWinch();
-        
+ 
+        Intake.stopIntake();
         DriveTrain.resetGyro();
         
         //DriveTrain.sensitivityGyro();
@@ -145,25 +138,28 @@ public class Robot extends IterativeRobot {
         RobotMap.photoCenterOfGravityX = networkTable.getNumber("COG_X", 0.0);
 		RobotMap.photoCenterOfGravityY = networkTable.getNumber("COG_Y", 0.0);
         
-        DriveTrain.tankDrive(OI.getLeftY(),OI.getRightY());
-      
-        SmartDashboard.putNumber("Object X-Value", RobotMap.photoCenterOfGravityX);
-        SmartDashboard.putNumber("Object Y-Value", RobotMap.photoCenterOfGravityY);
+/*-----------------------------------------Operator Controls-----------------------------------------*/
+		//Drivetrain
+        DriveTrain.tankDrive(OI.getLeftY1(),OI.getRightY1());
+        OI.rightBumper1.whenPressed(ShiftUp);
+        OI.rightBumper1.whenReleased(ShiftDown);
         
-        /*
-        if (OI.getRightBumper())
-        	ShiftDown.start();
-        else 
-        	ShiftUp.start();
-        */
-        joy1.rightBumper.whenPressed(ShiftUp);
-        joy1.rightBumper.whenReleased(ShiftDown);
+        //Shooting
+        OI.rightBumper2.whenPressed(ShootBall);
+        OI.leftBumper2.whenPressed(ReEngageWinch);
        
-        joy2.buttonA.whileHeld(IntakeRollers);
-        joy2.buttonY.whileHeld(OuttakeRollers);
-        joy2.buttonA.whenReleased(StopRollers);
-        joy2.buttonY.whenReleased(StopRollers);
+        //Intake
+        OI.buttonA2.whileHeld(IntakeRollers);
+        OI.buttonY2.whileHeld(OuttakeRollers);
+        OI.buttonA2.whenReleased(StopRollers);
+        OI.buttonY2.whenReleased(StopRollers);
         
+        OI.buttonB2.whileHeld(IntakeIncrementIn);
+        OI.buttonX2.whileHeld(IntakeIncrementOut);
+        OI.buttonB2.whenReleased(StopIntakePivot);
+        OI.buttonX2.whenReleased(StopIntakePivot);
+        
+        //Update Dashboard
     	SmartDashboard.putNumber("Gyro", DriveTrain.getAngle());
     	SmartDashboard.putBoolean("BallIn", true);
     	SmartDashboard.putBoolean("Distance", true);
