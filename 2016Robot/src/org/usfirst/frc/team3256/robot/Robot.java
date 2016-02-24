@@ -141,12 +141,14 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         
+        //updates global variables
+        RobotMap.photoCenterOfGravityX = networkTable.getNumber("COG_X", 0.0);
+		RobotMap.photoCenterOfGravityY = networkTable.getNumber("COG_Y", 0.0);
+        
         DriveTrain.tankDrive(OI.getLeftY(),OI.getRightY());
-       
-		RobotMap.photoCenterOfGravityX = networkTable.getNumber("COG_X", 0.0);
-        double cog_y = networkTable.getNumber("COG_Y", 0.0);
-        SmartDashboard.putNumber("Object X-Value", cog_x);
-        SmartDashboard.putNumber("Object Y-Value", cog_y);
+      
+        SmartDashboard.putNumber("Object X-Value", RobotMap.photoCenterOfGravityX);
+        SmartDashboard.putNumber("Object Y-Value", RobotMap.photoCenterOfGravityY);
         
         /*
         if (OI.getRightBumper())
