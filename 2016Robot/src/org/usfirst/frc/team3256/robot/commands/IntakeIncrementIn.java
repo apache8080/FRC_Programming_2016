@@ -23,7 +23,7 @@ public class IntakeIncrementIn extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Intake.incrementIn(5);
+    	Intake.incrementIn(.7);
     	
     }
 

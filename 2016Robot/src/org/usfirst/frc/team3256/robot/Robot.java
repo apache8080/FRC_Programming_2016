@@ -159,6 +159,7 @@ public class Robot extends IterativeRobot {
         OI.buttonB2.whenReleased(StopIntakePivot);
         OI.buttonX2.whenReleased(StopIntakePivot);
         
+        
         //Update Dashboard
     	SmartDashboard.putNumber("Gyro", DriveTrain.getAngle());
     	SmartDashboard.putBoolean("BallIn", true);

@@ -12,9 +12,10 @@ public class Intake extends Subsystem{
 	
 	static VictorSP intakePivotMotor = new VictorSP(RobotMap.intakePivotMotor);
 	static VictorSP intakeRollerMotor = new VictorSP(RobotMap.intakeRollerMotor);
+	//using either encoder or potentiometer (not both)
 	static Encoder intakePivotEncoder = new Encoder(RobotMap.intakePivotEncoderA, RobotMap.intakePivotEncoderB);
-	
 	@Override
+	
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
 		
@@ -22,23 +23,23 @@ public class Intake extends Subsystem{
 	
 	//rolls intake in
 	public static void intake (){
-		intakeRollerMotor.set(1);
+		intakeRollerMotor.set(.75);
 	}
 	
 	//rolls intake out
-	public static void outake (){
-		intakeRollerMotor.set(-1);
+	public static void outake(){
+		intakeRollerMotor.set(-.75);
 	}
 	
 	public static void stopIntake(){
 		intakeRollerMotor.set(0);
 	}
-	
-	public static void incrementIn(int speed){
+		
+	public static void incrementIn(double speed){
 		intakePivotMotor.set(speed);
 	}
 	
-	public static void incrementOut(int speed){
+	public static void incrementOut(double speed){
 		intakePivotMotor.set(-speed);
 	}
 	
@@ -54,4 +55,6 @@ public class Intake extends Subsystem{
 		int ticks = intakePivotEncoder.get();
 		return ticks;
 	}
+	
+	
 }
