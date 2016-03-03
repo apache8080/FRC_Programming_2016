@@ -141,7 +141,8 @@ public class Robot extends IterativeRobot {
         
 /*-----------------------------------------Operator Controls-----------------------------------------*/
 		//Drivetrain
-        DriveTrain.tankDrive(OI.getLeftY1(),OI.getRightY1());
+        //DriveTrain.tankDrive(OI.getLeftY1(),OI.getRightY1());
+        DriveTrain.arcadeDrive(OI.getLeftY1(), OI.getRightX1());
         OI.rightBumper1.whenPressed(ShiftUp);
         OI.rightBumper1.whenReleased(ShiftDown);
         

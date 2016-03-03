@@ -10,12 +10,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 
 public class Intake extends PIDSubsystem{
-	
-	static VictorSP intakeRightPivotMotor = new VictorSP(RobotMap.intakePivotMotorRight);
 	static VictorSP intakeRollerMotor = new VictorSP(RobotMap.intakeRollerMotor);
-	static VictorSP intakeLeftPivotMotor = new VictorSP(RobotMap.intakePivotMotorLeft);
-	//using either encoder or potentiometer (not both)
+	static VictorSP intakePivotMotors = new VictorSP(RobotMap.intakePivotMotors);
+	
 	static AnalogPotentiometer intakePivotPot = new AnalogPotentiometer(RobotMap.intakePotPort, RobotMap.intakePotFactor, RobotMap.intakePotOffset);
+
 	
 	public static final int intakePos = 0;
 	public static final int stowPos = 1;
@@ -49,18 +48,16 @@ public class Intake extends PIDSubsystem{
 	}
 		
 	public static void incrementIn(double speed){
-		intakeLeftPivotMotor.set(speed);
-		intakeRightPivotMotor.set(-speed);
+		intakePivotMotors.set(speed);
+
 	}
 	
 	public static void incrementOut(double speed){
-		intakeLeftPivotMotor.set(-speed);
-		intakeRightPivotMotor.set(speed);
+		intakePivotMotors.set(-speed);
 	}
 	
 	public static void pivotStop(){
-		intakeLeftPivotMotor.set(0);
-		intakeRightPivotMotor.set(0);
+		intakePivotMotors.set(0);
 	}
 	
 	public static double getPotValue(){

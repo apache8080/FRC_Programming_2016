@@ -127,10 +127,10 @@ public class DriveTrain extends PIDSubsystem {
     //tankdrive
     public static void tankDrive(double left, double right){
     	//clipping values
-    	if (Math.abs(right)<0.1) {
+    	if (Math.abs(right)<0.2) {
     		right = 0;
     	}
-    	if (Math.abs(left)<0.1) {
+    	if (Math.abs(left)<0.2) {
     		left = 0;
     	}
     	leftFront.set(left);
@@ -141,8 +141,23 @@ public class DriveTrain extends PIDSubsystem {
     
     //arcadedrive
     public static void arcadeDrive(double throttle, double turn){
-    	double left = throttle+turn;
-    	double right = throttle-turn;
+    	
+    	if (Math.abs(throttle)<0.2) {
+    		throttle = 0;
+    	}
+    	if (Math.abs(turn)<0.2) {
+    		turn = 0;
+    	}
+    	
+    	double left = throttle-turn;
+    	double right = throttle+turn;
+    	
+    	System.out.println("throttle: " + throttle);
+    	System.out.println("turn: " + turn);
+    	System.out.println("right: " + right);
+    	System.out.println("left: " + left);
+    	
+    	
     	if (left > 1){
     		left = 1;
     	}
@@ -157,8 +172,8 @@ public class DriveTrain extends PIDSubsystem {
     	}
     	leftFront.set(left);
     	leftRear.set(left);
-    	rightFront.set(right);
-    	rightRear.set(right);
+    	rightFront.set(-right);
+    	rightRear.set(-right);
     }
     protected double returnPIDInput() {
         // Return your input value for the PID loop
