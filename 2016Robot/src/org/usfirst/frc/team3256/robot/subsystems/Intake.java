@@ -5,16 +5,29 @@ import org.usfirst.frc.team3256.robot.RobotMap;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 
-public class Intake extends Subsystem{
+public class Intake extends PIDSubsystem{
 	
-	static VictorSP intakePivotMotor = new VictorSP(RobotMap.intakePivotMotor);
+	static VictorSP intakeRightPivotMotor = new VictorSP(RobotMap.intakePivotMotorRight);
 	static VictorSP intakeRollerMotor = new VictorSP(RobotMap.intakeRollerMotor);
+	static VictorSP intakeLeftPivotMotor = new VictorSP(RobotMap.intakePivotMotorLeft);
 	//using either encoder or potentiometer (not both)
-	static Encoder intakePivotEncoder = new Encoder(RobotMap.intakePivotEncoderA, RobotMap.intakePivotEncoderB);
-	@Override
+	static AnalogPotentiometer intakePivotPot = new AnalogPotentiometer(RobotMap.intakePotPort, RobotMap.intakePotFactor, RobotMap.intakePotOffset);
+	
+	public static final int intakePos = 0;
+	public static final int stowPos = 1;
+	private static final double P = 1,
+	    	I = 0,
+	    	D = 0;
+	
+	public Intake(){
+		super("IntakePivot", P, I, D);
+		getPIDController().setContinuous(false);
+		
+	}
 	
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
@@ -36,25 +49,37 @@ public class Intake extends Subsystem{
 	}
 		
 	public static void incrementIn(double speed){
-		intakePivotMotor.set(speed);
+		intakeLeftPivotMotor.set(speed);
+		intakeRightPivotMotor.set(-speed);
 	}
 	
 	public static void incrementOut(double speed){
-		intakePivotMotor.set(-speed);
+		intakeLeftPivotMotor.set(-speed);
+		intakeRightPivotMotor.set(speed);
 	}
 	
 	public static void pivotStop(){
-		intakePivotMotor.set(0);
+		intakeLeftPivotMotor.set(0);
+		intakeRightPivotMotor.set(0);
 	}
 	
-	public static void resetEncoder(){
-		intakePivotEncoder.reset();
+	public static double getPotValue(){
+		return intakePivotPot.get();
 	}
 	
-	public static int getEncoderValue(){
-		int ticks = intakePivotEncoder.get();
-		return ticks;
+
+	@Override
+	protected double returnPIDInput() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
+
+	@Override
+	protected void usePIDOutput(double output) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	
 	
 }

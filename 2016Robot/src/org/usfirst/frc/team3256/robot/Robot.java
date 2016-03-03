@@ -86,6 +86,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putString("DistanceText", "Distance");
         SmartDashboard.putString("AngleText", "Angle");
         SmartDashboard.putString("BallStatusText", "Ball Status");
+        SmartDashboard.putNumber("IntakePotValue",Intake.getPotValue());
     }
 	
 	public void disabledPeriodic() {

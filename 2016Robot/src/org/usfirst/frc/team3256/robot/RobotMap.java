@@ -22,7 +22,8 @@ public class RobotMap {
 			leftRearMotor = 1,
 			rightFrontMotor = 2,
 			rightRearMotor = 3,
-			intakePivotMotor = 8,
+			intakePivotMotorLeft = 8,
+			intakePivotMotorRight = 8,
 			intakeRollerMotor = 7,
 			winchMotors = 6,
 			hangerPivotMotors = 4,
@@ -36,6 +37,11 @@ public class RobotMap {
 			leftDriveEncoderB = 3,
 			intakePivotEncoderA = 4,
 			intakePivotEncoderB = 5;
+	
+	//pot constants
+	public static final int intakePotPort = 0;
+	public static final int intakePotFactor = 360;
+	public static final int intakePotOffset = 0;
 	
 	//actuators
 	public static final int ShifterIn = 3;
