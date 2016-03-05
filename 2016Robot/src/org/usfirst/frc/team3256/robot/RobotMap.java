@@ -55,8 +55,8 @@ public class RobotMap {
 	public static final int Joystick2 = 1;
 	
 	//Sensors
-	public static final int catapultLimitSwitch = 6;
-	public static final int ballIR = 7;
+	public static final int catapultLimitSwitch = 5;
+	public static final int ballIR = 6;
 	
 	//Global Variables
 	public static double gyroPos;
@@ -64,8 +64,8 @@ public class RobotMap {
 	public static double photoCenterOfGravityY;
 	
 	
-	public static String cameraIP = "10.32.56.11";
-	
+	public static String shooterCameraIP = "10.32.56.11";
+	public static String intakeCameraName = "cam1";
 
 	
 }

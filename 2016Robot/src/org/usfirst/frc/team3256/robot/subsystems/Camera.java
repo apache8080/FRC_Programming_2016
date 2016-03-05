@@ -4,10 +4,11 @@ import org.usfirst.frc.team3256.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.vision.AxisCamera;
+import edu.wpi.first.wpilibj.vision.USBCamera;
 
 public class Camera extends Subsystem{
 
-	AxisCamera cam = new AxisCamera(RobotMap.cameraIP);
+	USBCamera intakeCam = new USBCamera(RobotMap.intakeCameraName);
 	
 	@Override
 	protected void initDefaultCommand() {
@@ -15,13 +16,15 @@ public class Camera extends Subsystem{
 		
 	}
 	//gets distance from camera
-	public double getDistance(){
+	public double getShootingDistance(){
 		return 100;
 	}
 	//gets angle from camera
-	public double getAngle(){
+	public double getShootingAngle(){
 		return 100;
 	}
+	
+	
 	
 	
 

@@ -23,9 +23,12 @@ public class Shooter extends Subsystem{
 	
 	//pulls the catapult back
 	public static void winchBack(){
-		catapultWinch.set(-1);
+		catapultWinch.set(-.75);
 	}
 	
+	public static void stopWinchBack(){
+		catapultWinch.set(0);
+	}
 	//releases the winch and shoots the ball via pancake actuator
 	public static void disengageWinch(){
 		winchActuator.set(DoubleSolenoid.Value.kForward);
@@ -49,14 +52,12 @@ public class Shooter extends Subsystem{
 		
 	//based on if the catapult is pulled back via limit switch
 	public static boolean isWinched(){
-		boolean catapultStatus = catapultLimitSwitch.get();
-		return catapultStatus;
+		return catapultLimitSwitch.get();
 	}
 	
 	//based on if the ball is detected via IR Breaker
 	public static boolean isLoaded(){
-		boolean ballStatus = ballIR.get();
-		return ballStatus;
+		return !ballIR.get();
 	}
 	
 

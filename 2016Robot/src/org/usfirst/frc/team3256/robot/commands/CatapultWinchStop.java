@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ReEngageWinch extends Command {
+public class CatapultWinchStop extends Command {
 
-    public ReEngageWinch() {
+    public CatapultWinchStop() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.shooter);
@@ -22,15 +22,15 @@ public class ReEngageWinch extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Shooter.disengageWinch();
+    	Shooter.stopWinchBack();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return true;
     }
-    
-	// Called once after isFinished returns true
+
+    // Called once after isFinished returns true
     protected void end() {
     }
 
