@@ -89,12 +89,12 @@ public class DriveTrain extends PIDSubsystem {
     
     //shifts to low gear
     public void shiftDown(){
-    	shifterPancake.set(DoubleSolenoid.Value.kReverse);
+    	shifterPancake.set(DoubleSolenoid.Value.kForward);
     }
     
     //shifts to high gear
     public void shiftUp(){
-    	shifterPancake.set(DoubleSolenoid.Value.kForward);
+    	shifterPancake.set(DoubleSolenoid.Value.kReverse);
     }
     
     //sets left sides motor power
@@ -192,10 +192,9 @@ public class DriveTrain extends PIDSubsystem {
         // Use output to drive your system, like a motor
         // e.g. yourMotor.set(output);
     	if (output < 0) output = 0;
-    	System.out.println("Output: " + output);
-    	leftFront.set(-output);
-    	rightFront.set(output);
-    	leftRear.set(-output);
-    	rightRear.set(output);
+    	//leftFront.pidWrite(-output);
+    	//rightFront.pidWrite(output);
+    	//leftRear.pidWrite(-output);
+    	//rightRear.pidWrite(output);
     }
 }

@@ -71,7 +71,6 @@ public class RobotMap {
 	
 	
 	public static String shooterCameraIP = "10.32.56.11";
-	public static String intakeCameraName = "cam1";
 
 	
 }

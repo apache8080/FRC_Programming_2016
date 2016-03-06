@@ -80,7 +80,7 @@ public class Robot extends IterativeRobot {
 		
 	    //commands
 		MoveForward = new MoveFoward(0.5, 50);
-		PIDMoveForward = new PIDMoveForward(20);
+		PIDMoveForward = new PIDMoveForward(60);
 		MoveBackward = new MoveBackward(0.5, 20);
 		ShiftUp = new ShiftUp();
 		ShiftDown = new ShiftDown();
@@ -121,6 +121,7 @@ public class Robot extends IterativeRobot {
         * */
     	
     	Scheduler.getInstance().add(ShiftDown);
+    	
     	Scheduler.getInstance().add(PIDMoveForward);
     	//Scheduler.getInstance().add(MoveBackward);
     }
@@ -165,25 +166,32 @@ public class Robot extends IterativeRobot {
         //Drivetrain
         DriveTrain.arcadeDrive(OI.getLeftY1(), OI.getRightX1());
         //DriveTrain.tankDrive(OI.getLeftY1(),OI.getRightY1());
-        OI.rightBumper1.whenPressed(ShiftUp);
-        OI.rightBumper1.whenReleased(ShiftDown);
+        OI.rightBumper1.whenPressed(ShiftDown);
+        OI.rightBumper1.whenReleased(ShiftUp);
         
-        //Shooting
+        //Shooting67m77
+        OI.leftBumper2.whileHeld(CatapultWinch);
+        OI.leftBumper2.whenReleased(CatapultWinchStop);
+        OI.rightBumper2.whileHeld(ShootBall);
+        OI.rightBumper2.whenReleased(ReEngageWinch);
         
-        if (OI.getRightTrigger2()&&Shooter.isWinched()){
+        if (OI.getRightTrigger2()/*&&Shooter.isWinched()*/){
         	Scheduler.getInstance().add(ShootBall);
         } else {
         	Scheduler.getInstance().add(ReEngageWinch);
         }
         
-        OI.buttonA1.whileHeld(CatapultWinch);
-        OI.buttonA1.whenReleased(CatapultWinchStop);
+        if (OI.getLeftTrigger2()/*&&Shooter.isWinched()*/){
+        	Scheduler.getInstance().add(CatapultWinch);
+        } else {
+        	Scheduler.getInstance().add(CatapultWinchStop);
+        }
         
-        if (shooter.isLoaded())
-        	Scheduler.getInstance().add(EngageBallActuators);
-        else
-        	Scheduler.getInstance().add(DisengageBallActuators);
-        
+        //if (shooter.isLoaded())
+        	//Scheduler.getInstance().add(EngageBallActuators);
+        //else
+        	//Scheduler.getInstance().add(DisengageBallActuators);
+
         //Intake
         OI.buttonA2.whileHeld(IntakeRollers);
         OI.buttonY2.whileHeld(OuttakeRollers);
@@ -194,19 +202,23 @@ public class Robot extends IterativeRobot {
         OI.buttonX2.whileHeld(IntakeIncrementOut);
         OI.buttonB2.whenReleased(StopIntakePivot);
         OI.buttonX2.whenReleased(StopIntakePivot);
+
         
 /*-----------------------------------------Update Dashboard-----------------------------------------*/
         
+        SmartDashboard.putBoolean("isWinched", shooter.isWinched());
+        SmartDashboard.putBoolean("isLoaded", shooter.isLoaded());
+        
     	SmartDashboard.putNumber("Gyro", DriveTrain.getAngle());
     	
-    	SmartDashboard.putBoolean("BallIn", Shooter.isLoaded());
+    	SmartDashboard.putBoolean("BallIn", shooter.isLoaded());
     	SmartDashboard.putBoolean("Distance", false);
     	SmartDashboard.putBoolean("Angle", false);
     	
     	SmartDashboard.putNumber("DistanceAway", 12.34);
     	SmartDashboard.putNumber("AngleOff", 2.345);
     	
-    	SmartDashboard.putNumber("IntakePotValue",Intake.getPotValue());
+    	SmartDashboard.putNumber("IntakePotValue",intake.getPotValue());
     	
     	SmartDashboard.putNumber("EncoderLeft", DriveTrain.getLeftEncoder());
     	SmartDashboard.putNumber("EncoderRight", DriveTrain.getRightEncoder());

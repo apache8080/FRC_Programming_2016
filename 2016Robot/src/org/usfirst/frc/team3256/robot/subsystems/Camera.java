@@ -7,8 +7,6 @@ import edu.wpi.first.wpilibj.vision.AxisCamera;
 import edu.wpi.first.wpilibj.vision.USBCamera;
 
 public class Camera extends Subsystem{
-
-	USBCamera intakeCam = new USBCamera(RobotMap.intakeCameraName);
 	
 	@Override
 	protected void initDefaultCommand() {

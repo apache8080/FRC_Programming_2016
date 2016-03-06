@@ -41,22 +41,23 @@ public class Shooter extends Subsystem{
 	
 	//engages ball holding actuators
 	public static void engageBallActuators(){
-		ballActuator.set(DoubleSolenoid.Value.kForward);
+		ballActuator.set(DoubleSolenoid.Value.kReverse);
 	}
 	
 	//disengages ball holding actuators 
     public static void disengageBallActuators(){
-    	ballActuator.set(DoubleSolenoid.Value.kReverse);
+    	ballActuator.set(DoubleSolenoid.Value.kForward);
     } 
 	
 		
 	//based on if the catapult is pulled back via limit switch
 	public static boolean isWinched(){
-		return catapultLimitSwitch.get();
+		return !catapultLimitSwitch.get();
 	}
 	
 	//based on if the ball is detected via IR Breaker
 	public static boolean isLoaded(){
+		System.out.println("isLoaded: " + !ballIR.get());
 		return !ballIR.get();
 	}
 	
