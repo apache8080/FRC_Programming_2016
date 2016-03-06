@@ -16,9 +16,8 @@ public class MoveBackward extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drivetrain);
-    	this.speed=speed;
-    	this.Pos=Pos;
-    	DriveTrain.inchesToTicks(Pos);
+    	this.speed= -speed;
+    	this.Pos=DriveTrain.inchesToTicks(Pos);
     }
 
     // Called just before this Command runs the first time
@@ -30,12 +29,12 @@ public class MoveBackward extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	DriveTrain.setLeftMotorSpeed(speed);
-    	DriveTrain.setRightMotorSpeed(speed);
+    	DriveTrain.setRightMotorSpeed(-speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if (DriveTrain.getLeftEncoder()>Pos && DriveTrain.getRightEncoder()>Pos){
+        if (Math.abs(DriveTrain.getLeftEncoder())>Pos && Math.abs(DriveTrain.getRightEncoder())>Pos){
         	return true;
         }
         else 

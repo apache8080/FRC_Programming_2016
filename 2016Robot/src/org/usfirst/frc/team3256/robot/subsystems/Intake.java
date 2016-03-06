@@ -5,6 +5,7 @@ import org.usfirst.frc.team3256.robot.RobotMap;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -13,7 +14,7 @@ import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 public class Intake extends PIDSubsystem{
 	static VictorSP intakeRollerMotor = new VictorSP(RobotMap.intakeRollerMotor);
 	static VictorSP intakePivotMotors = new VictorSP(RobotMap.intakePivotMotors);
-	
+	static Relay intakeSpike = new Relay(RobotMap.SpikePort);
 	static AnalogPotentiometer intakePivotPot = new AnalogPotentiometer(RobotMap.intakePotPort, RobotMap.intakePotFactor, RobotMap.intakePotOffset);
 	
 	public static final int intakePos = 0;

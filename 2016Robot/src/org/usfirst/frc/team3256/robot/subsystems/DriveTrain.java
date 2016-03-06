@@ -1,12 +1,14 @@
 package org.usfirst.frc.team3256.robot.subsystems;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team3256.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.VictorSP;
 /**
@@ -26,16 +28,22 @@ public class DriveTrain extends PIDSubsystem {
 	
 	static AnalogGyro gyro = new AnalogGyro(0);
 	
-    private static final double P = 100,
-    	I = 0,
-    	D = 0;
+	static double pi = 3.1415926535897932384626;
+	static double ticksPerRotation = 1920; //encoder is 256 ticks/rotations
+		
+    private static final double P = 1,
+    	I = 0.000,
+    	D = 0.0;
 	
 	
 	// Initialize your subsystem here
     public DriveTrain() {
     	//(String Name,P value,I value,D value) all in ticks because we're using encoder
-    	super("DriveTrain", P, I, D);
-    	setAbsoluteTolerance(2);
+    	super("DriveTrain", P, I, D);	
+    	setAbsoluteTolerance(0.2);
+    	getPIDController().setContinuous(false);
+    	
+    	enable();
         // Use these to get going:
         // setSetpoint() -  Sets where the PID controller should move the system
         //                  to
@@ -117,10 +125,7 @@ public class DriveTrain extends PIDSubsystem {
     	leftEncoder.reset();
     }
    public static double inchesToTicks(double distance){
-    	double pi = 3.1415926535897932384626;
-    	double ticksPerRotation = 256;
-    	double ticks = (distance/2/pi*ticksPerRotation);
-    	return ticks;
+    	return (distance/(6*pi)*ticksPerRotation);
     }
     
     
@@ -179,16 +184,18 @@ public class DriveTrain extends PIDSubsystem {
         // Return your input value for the PID loop
         // e.g. a sensor, like a potentiometer:
         // yourPot.getAverageVoltage() / kYourMaxVoltage;
-    	return rightEncoder.get();
+    	return Math.abs(rightEncoder.get());
     	
     }
     
     protected void usePIDOutput(double output) {
         // Use output to drive your system, like a motor
         // e.g. yourMotor.set(output);
-    	leftFront.pidWrite(output);
-    	rightFront.pidWrite(output);
-    	
-    	
+    	if (output < 0) output = 0;
+    	System.out.println("Output: " + output);
+    	leftFront.set(-output);
+    	rightFront.set(output);
+    	leftRear.set(-output);
+    	rightRear.set(output);
     }
 }

@@ -8,46 +8,37 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class MoveFoward extends Command {
-	double speed;
+public class PIDMoveForward extends Command {
+	
 	double Pos;
 
-    public MoveFoward(double speed, double Pos) {
+    public PIDMoveForward(double Pos) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drivetrain);
-    	this.speed = speed;
     	this.Pos = DriveTrain.inchesToTicks(Pos);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	DriveTrain.resetEncoders();
-    	DriveTrain.resetGyro();
+    	Robot.drivetrain.setSetpoint(Pos);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	DriveTrain.setLeftMotorSpeed(speed);
-    	DriveTrain.setRightMotorSpeed(-speed);
-    	System.out.println("Encoder: " + Math.abs(DriveTrain.getLeftEncoder()));
-    	System.out.println("Encoder: " + Math.abs(DriveTrain.getRightEncoder()));
-    	System.out.println("Pos" + Pos);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (Math.abs(DriveTrain.getLeftEncoder())>=Pos || Math.abs(DriveTrain.getRightEncoder())>=Pos){
-    		return true;
-    	}
-    	else 
-    		return false;
+    	return Math.abs(Robot.drivetrain.getSetpoint()-Robot.drivetrain.getPosition())<1000;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	DriveTrain.setLeftMotorSpeed(0);
+    	System.out.println("out");
     	DriveTrain.setRightMotorSpeed(0);
+    	DriveTrain.setLeftMotorSpeed(0);
     }
 
     // Called when another command which requires one or more of the same

@@ -42,6 +42,9 @@ public class RobotMap {
 	public static final int intakePotFactor = 360;
 	public static final int intakePotOffset = 0;
 	
+	//gyro
+	public static final int gyro2Port = 0;
+	
 	//actuators
 	public static final int ShifterIn = 3;
 	public static final int ShifterOut = 4;
@@ -50,12 +53,15 @@ public class RobotMap {
 	public static final int ballHolderEngage = 2;
 	public static final int ballHolderDisengage = 5;
 	
+	//relays
+	public static final int SpikePort = 0;
+	
 	//joysticks
 	public static final int Joystick1 = 0;
 	public static final int Joystick2 = 1;
 	
 	//Sensors
-	public static final int catapultLimitSwitch = 5;
+	public static final int catapultLimitSwitch = 9;
 	public static final int ballIR = 6;
 	
 	//Global Variables

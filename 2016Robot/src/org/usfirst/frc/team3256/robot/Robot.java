@@ -44,6 +44,10 @@ public class Robot extends IterativeRobot {
     //DriveTrain
     Command ShiftUp;
     Command ShiftDown;
+    Command MoveForward;
+    Command MoveBackward;
+    Command PIDMoveForward;
+
     //Intake
     Command IntakeIncrementIn;
     Command IntakeIncrementOut;
@@ -75,6 +79,9 @@ public class Robot extends IterativeRobot {
 		shooter = new Shooter();
 		
 	    //commands
+		MoveForward = new MoveFoward(0.5, 50);
+		PIDMoveForward = new PIDMoveForward(20);
+		MoveBackward = new MoveBackward(0.5, 20);
 		ShiftUp = new ShiftUp();
 		ShiftDown = new ShiftDown();
 		IntakeIncrementIn = new IntakeIncrementIn();
@@ -89,10 +96,6 @@ public class Robot extends IterativeRobot {
 		CatapultWinchStop = new CatapultWinchStop();
 		EngageBallActuators = new EngageBallActuators();
 		DisengageBallActuators = new DisengageBallActuators();
-		
-		//actuators
-		ShiftUp.start();
-		ReEngageWinch.start();
 		
 		//compressor
 		compressor.setClosedLoopControl(true);
@@ -116,6 +119,10 @@ public class Robot extends IterativeRobot {
         //if (autonomousCommand != null) autonomousCommand.start();
        /* ShiftUp.start();
         * */
+    	
+    	Scheduler.getInstance().add(ShiftDown);
+    	Scheduler.getInstance().add(PIDMoveForward);
+    	//Scheduler.getInstance().add(MoveBackward);
     }
 
     /**
@@ -163,19 +170,12 @@ public class Robot extends IterativeRobot {
         
         //Shooting
         
-        if (OI.getRightTrigger2()/*&& Shooter.isLoaded()*/){
+        if (OI.getRightTrigger2()&&Shooter.isWinched()){
         	Scheduler.getInstance().add(ShootBall);
         } else {
         	Scheduler.getInstance().add(ReEngageWinch);
         }
         
-        /*
-        if (OI.getLeftTrigger2()/*&& !Shooter.isLoaded()){
-        	CatapultWinch.start();
-        } else {
-        	CatapultWinchStop.start();
-        }
-        */
         OI.buttonA1.whileHeld(CatapultWinch);
         OI.buttonA1.whenReleased(CatapultWinchStop);
         
@@ -198,15 +198,18 @@ public class Robot extends IterativeRobot {
 /*-----------------------------------------Update Dashboard-----------------------------------------*/
         
     	SmartDashboard.putNumber("Gyro", DriveTrain.getAngle());
-    	SmartDashboard.putBoolean("BallIn", true);
-    	SmartDashboard.putBoolean("Distance", true);
+    	
+    	SmartDashboard.putBoolean("BallIn", Shooter.isLoaded());
+    	SmartDashboard.putBoolean("Distance", false);
     	SmartDashboard.putBoolean("Angle", false);
-    	SmartDashboard.putBoolean("IR Breaker", Shooter.isLoaded());
     	
     	SmartDashboard.putNumber("DistanceAway", 12.34);
     	SmartDashboard.putNumber("AngleOff", 2.345);
     	
     	SmartDashboard.putNumber("IntakePotValue",Intake.getPotValue());
+    	
+    	SmartDashboard.putNumber("EncoderLeft", DriveTrain.getLeftEncoder());
+    	SmartDashboard.putNumber("EncoderRight", DriveTrain.getRightEncoder());
     	
     	//updates global variables
         RobotMap.photoCenterOfGravityX = networkTable.getNumber("COG_X", 0.0);

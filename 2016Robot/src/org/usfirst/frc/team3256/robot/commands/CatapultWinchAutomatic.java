@@ -8,13 +8,12 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ShootBall extends Command {
+public class CatapultWinchAutomatic extends Command {
 
-    public ShootBall() {
+    public CatapultWinchAutomatic() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.shooter);
-    	setTimeout(1);
     }
 
     // Called just before this Command runs the first time
@@ -23,12 +22,16 @@ public class ShootBall extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Shooter.engageWinch();
+    	Shooter.winchBack();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isTimedOut();
+        if(Shooter.isWinched()){
+        	return true;
+        }
+        else
+        	return false;
     }
 
     // Called once after isFinished returns true
