@@ -143,6 +143,8 @@ public class Robot extends IterativeRobot {
  
         Intake.stopIntake();
         DriveTrain.resetGyro();
+        DriveTrain.resetEncoders();
+        
         
         //DriveTrain.sensitivityGyro();
     }
@@ -169,28 +171,30 @@ public class Robot extends IterativeRobot {
         OI.rightBumper1.whenPressed(ShiftDown);
         OI.rightBumper1.whenReleased(ShiftUp);
         
-        //Shooting67m77
+        //Shooting6
         OI.leftBumper2.whileHeld(CatapultWinch);
         OI.leftBumper2.whenReleased(CatapultWinchStop);
         OI.rightBumper2.whileHeld(ShootBall);
         OI.rightBumper2.whenReleased(ReEngageWinch);
         
-        if (OI.getRightTrigger2()/*&&Shooter.isWinched()*/){
+        /*
+        if (OI.getRightTrigger2()&&Shooter.isWinched()){
         	Scheduler.getInstance().add(ShootBall);
         } else {
         	Scheduler.getInstance().add(ReEngageWinch);
         }
         
-        if (OI.getLeftTrigger2()/*&&Shooter.isWinched()*/){
+        if (OI.getLeftTrigger2()&&Shooter.isWinched()){
         	Scheduler.getInstance().add(CatapultWinch);
         } else {
         	Scheduler.getInstance().add(CatapultWinchStop);
         }
+        */
         
-        //if (shooter.isLoaded())
-        	//Scheduler.getInstance().add(EngageBallActuators);
-        //else
-        	//Scheduler.getInstance().add(DisengageBallActuators);
+        if (Shooter.isLoaded() && Shooter.isWinched())
+        	Scheduler.getInstance().add(EngageBallActuators);
+        else
+        	Scheduler.getInstance().add(DisengageBallActuators);
 
         //Intake
         OI.buttonA2.whileHeld(IntakeRollers);
