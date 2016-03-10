@@ -186,9 +186,9 @@ public class DriveTrain extends PIDSubsystem {
         // Use output to drive your system, like a motor
         // e.g. yourMotor.set(output);
     	if (output < 0) output = 0;
-    	//leftFront.pidWrite(-output);
-    	//rightFront.pidWrite(output);
-    	//leftRear.pidWrite(-output);
-    	//rightRear.pidWrite(output);
+    	leftFront.pidWrite(-output);
+    	rightFront.pidWrite(output);
+    	leftRear.pidWrite(-output);
+    	rightRear.pidWrite(output);
     }
 }

@@ -38,7 +38,7 @@ public class Robot extends IterativeRobot {
 	public static double[] roboRealmData;
 	
 	//Axis Camera
-	AxisCamera shooterCam = new AxisCamera(RobotMap.shooterCameraIP);
+	//AxisCamera shooterCam = new AxisCamera(RobotMap.shooterCameraIP);
 
     Command autonomousCommand;
 	
@@ -65,7 +65,7 @@ public class Robot extends IterativeRobot {
     Command DisengageBallActuators;
     
     CommandGroup ShootnLoad;
-
+    
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -121,8 +121,7 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         // schedule the autonomous command (example)
         //if (autonomousCommand != null) autonomousCommand.start();
-       /* ShiftUp.start();
-        * */
+    	drivetrain.enable();
     	
     	Scheduler.getInstance().add(ShiftDown);
     	
@@ -146,12 +145,13 @@ public class Robot extends IterativeRobot {
         //if (autonomousCommand != null) autonomousCommand.cancel();
  
         Intake.stopIntake();
-        DriveTrain.resetGyro();
-        DriveTrain.resetEncoders();
-        Shooter.disengageBallActuators();
+        drivetrain.resetGyro();
+        drivetrain.resetEncoders();
+        drivetrain.disable();
+        
+        Shooter.engageBallActuators();
         Shooter.engageWinch();
         
-        //DriveTrain.sensitivityGyro();
     }
 
     /**
@@ -171,15 +171,15 @@ public class Robot extends IterativeRobot {
 /*-----------------------------------------Operator Controls-----------------------------------------*/
 		
         //Drivetrain
-        DriveTrain.arcadeDrive(OI.getLeftY1(), OI.getRightX1());
-        //DriveTrain.tankDrive(OI.getLeftY1(),OI.getRightY1());
+        drivetrain.arcadeDrive(OI.getLeftY1(), OI.getRightX1());
+        //drivetrain.tankDrive(OI.getLeftY1(),OI.getRightY1());
         OI.rightBumper1.whenPressed(ShiftDown);
         OI.rightBumper1.whenReleased(ShiftUp);
         
         //Shooting
         OI.leftBumper2.whileHeld(CatapultWinch);
         OI.leftBumper2.whenReleased(CatapultWinchStop);
-        OI.rightBumper2.whenPressed(new ShootnLoad());
+        OI.rightBumper2.whenPressed(ShootnLoad);
         OI.rightBumper2.whenReleased(ReEngageWinch);
         
         /*
@@ -196,13 +196,11 @@ public class Robot extends IterativeRobot {
         }
         */
         
-     	if (Shooter.isLoaded() && Shooter.isWinched() && !RobotMap.isShooting)
+     	if (Shooter.isLoaded() && Shooter.isWinched() && !ShootnLoad.isRunning())
         	Scheduler.getInstance().add(EngageBallActuators);
         else
-        	Scheduler.getInstance().add(DisengageBallActuators);
+        	//TODO: Scheduler.getInstance().add(DisengageBallActuators);
 
-        System.out.println("Disengage Ball Actuators" + DisengageBallActuators.isRunning());
-        
         //Intake
         OI.buttonA2.whileHeld(IntakeRollers);
         OI.buttonY2.whileHeld(OuttakeRollers);
@@ -220,7 +218,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putBoolean("isWinched", shooter.isWinched());
         SmartDashboard.putBoolean("isLoaded", shooter.isLoaded());
         
-    	SmartDashboard.putNumber("Gyro", DriveTrain.getAngle());
+    	SmartDashboard.putNumber("Gyro", drivetrain.getAngle());
     	
     	SmartDashboard.putBoolean("BallIn", shooter.isLoaded());
     	SmartDashboard.putBoolean("Distance", false);
@@ -231,14 +229,15 @@ public class Robot extends IterativeRobot {
     	
     	SmartDashboard.putNumber("IntakePotValue",intake.getPotValue());
     	
-    	SmartDashboard.putNumber("EncoderLeft", DriveTrain.getLeftEncoder());
-    	SmartDashboard.putNumber("EncoderRight", DriveTrain.getRightEncoder());
+    	SmartDashboard.putNumber("EncoderLeft", drivetrain.getLeftEncoder());
+    	SmartDashboard.putNumber("EncoderRight", drivetrain.getRightEncoder());
     	
     	//updates global variables
         RobotMap.photoCenterOfGravityX = networkTable.getNumber("COG_X", 0.0);
 		RobotMap.photoCenterOfGravityY = networkTable.getNumber("COG_Y", 0.0);
     	
-		System.out.println("ShootnLoad: " + ShootnLoad.isRunning());
+		System.out.println("ShootnLoad Running: " + ShootnLoad.isRunning());
+		
     }
     
     /**

@@ -15,11 +15,12 @@ public class ShootBall extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.shooter);
+    	setInterruptible(false);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	setTimeout(1);
+    	setTimeout(0.5);
     	Shooter.disengageWinch();
     }
 
@@ -35,16 +36,16 @@ public class ShootBall extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	System.out.println("Shootball: " + isTimedOut());
-        //return isTimedOut();
-        return true;
+    	System.out.println("Shootball: " + isTimedOut() + "##########");
+        return isTimedOut();
+        //return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
     	RobotMap.isShooting = false;
     }
-
+    
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {

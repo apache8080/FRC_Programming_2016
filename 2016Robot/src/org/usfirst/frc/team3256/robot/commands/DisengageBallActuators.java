@@ -15,13 +15,13 @@ public class DisengageBallActuators extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.shooter);
+    	setInterruptible(false);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	setTimeout(5);
+    	setTimeout(0.5);
     	Shooter.disengageBallActuators();
-    	RobotMap.isShooting = true;
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -40,8 +40,8 @@ public class DisengageBallActuators extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	System.out.println("BallActuators: " + isTimedOut());
-        //return isTimedOut();
-    	return true;
+        return isTimedOut();
+    	//return true;
     }
 
     // Called once after isFinished returns true
