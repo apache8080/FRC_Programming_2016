@@ -1,5 +1,8 @@
 package org.usfirst.frc.team3256.robot.commands;
 
+import org.usfirst.frc.team3256.robot.Robot;
+import org.usfirst.frc.team3256.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -12,9 +15,11 @@ public class ShootnLoad extends CommandGroup {
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.
+    	
     	addSequential(new DisengageBallActuators());
     	addSequential(new ShootBall());
-        // To run multiple commands at the same time,
+    	  	
+    	// To run multiple commands at the same time,
         // use addParallel()
         // e.g. addParallel(new Command1());
         //      addSequential(new Command2());
@@ -26,4 +31,9 @@ public class ShootnLoad extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     }
+    
+    protected boolean isFinished(){
+    	return false;
+    }
+    
 }

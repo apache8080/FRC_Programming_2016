@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
@@ -62,6 +63,8 @@ public class Robot extends IterativeRobot {
     Command CatapultWinchStop;
     Command EngageBallActuators;
     Command DisengageBallActuators;
+    
+    CommandGroup ShootnLoad;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -96,6 +99,7 @@ public class Robot extends IterativeRobot {
 		CatapultWinchStop = new CatapultWinchStop();
 		EngageBallActuators = new EngageBallActuators();
 		DisengageBallActuators = new DisengageBallActuators();
+		ShootnLoad = new ShootnLoad();
 		
 		//compressor
 		compressor.setClosedLoopControl(true);
@@ -144,7 +148,8 @@ public class Robot extends IterativeRobot {
         Intake.stopIntake();
         DriveTrain.resetGyro();
         DriveTrain.resetEncoders();
-        
+        Shooter.disengageBallActuators();
+        Shooter.engageWinch();
         
         //DriveTrain.sensitivityGyro();
     }
@@ -171,10 +176,10 @@ public class Robot extends IterativeRobot {
         OI.rightBumper1.whenPressed(ShiftDown);
         OI.rightBumper1.whenReleased(ShiftUp);
         
-        //Shooting6
+        //Shooting
         OI.leftBumper2.whileHeld(CatapultWinch);
         OI.leftBumper2.whenReleased(CatapultWinchStop);
-        OI.rightBumper2.whileHeld(ShootBall);
+        OI.rightBumper2.whenPressed(new ShootnLoad());
         OI.rightBumper2.whenReleased(ReEngageWinch);
         
         /*
@@ -191,11 +196,13 @@ public class Robot extends IterativeRobot {
         }
         */
         
-        if (Shooter.isLoaded() && Shooter.isWinched())
+     	if (Shooter.isLoaded() && Shooter.isWinched() && !RobotMap.isShooting)
         	Scheduler.getInstance().add(EngageBallActuators);
         else
         	Scheduler.getInstance().add(DisengageBallActuators);
 
+        System.out.println("Disengage Ball Actuators" + DisengageBallActuators.isRunning());
+        
         //Intake
         OI.buttonA2.whileHeld(IntakeRollers);
         OI.buttonY2.whileHeld(OuttakeRollers);
@@ -231,6 +238,7 @@ public class Robot extends IterativeRobot {
         RobotMap.photoCenterOfGravityX = networkTable.getNumber("COG_X", 0.0);
 		RobotMap.photoCenterOfGravityY = networkTable.getNumber("COG_Y", 0.0);
     	
+		System.out.println("ShootnLoad: " + ShootnLoad.isRunning());
     }
     
     /**

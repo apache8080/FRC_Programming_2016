@@ -57,7 +57,6 @@ public class Shooter extends Subsystem{
 	
 	//based on if the ball is detected via IR Breaker
 	public static boolean isLoaded(){
-		System.out.println("isLoaded: " + !ballIR.get());
 		return !ballIR.get();
 	}
 	

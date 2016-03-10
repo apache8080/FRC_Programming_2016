@@ -157,12 +157,6 @@ public class DriveTrain extends PIDSubsystem {
     	double left = throttle-turn;
     	double right = throttle+turn;
     	
-    	System.out.println("throttle: " + throttle);
-    	System.out.println("turn: " + turn);
-    	System.out.println("right: " + right);
-    	System.out.println("left: " + left);
-    	
-    	
     	if (left > 1){
     		left = 1;
     	}

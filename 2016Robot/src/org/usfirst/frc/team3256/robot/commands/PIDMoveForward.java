@@ -36,9 +36,6 @@ public class PIDMoveForward extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	System.out.println(Robot.drivetrain.getSetpoint());
-    	System.out.println(Robot.drivetrain.getPosition());
-    	
     	DriveTrain.setRightMotorSpeed(0);
     	DriveTrain.setLeftMotorSpeed(0);
     }
