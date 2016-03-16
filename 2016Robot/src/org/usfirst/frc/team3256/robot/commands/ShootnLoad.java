@@ -11,6 +11,9 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
  */
 public class ShootnLoad extends CommandGroup {
     
+	
+	//DO NOT USE, HAVE SKETCHY CODE IN SHOOT BALL
+	
     public  ShootnLoad() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
@@ -21,7 +24,7 @@ public class ShootnLoad extends CommandGroup {
     	
     	addSequential(new DisengageBallActuators());
     	addSequential(new ShootBall());
-    	addSequential(new CatapultWinchAutomatic());
+    	//addSequential(new CatapultWinchAutomatic());
     	
     	// To run multiple commands at the same time,
         // use addParallel()

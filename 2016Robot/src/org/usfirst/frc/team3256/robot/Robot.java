@@ -83,7 +83,7 @@ public class Robot extends IterativeRobot {
 		
 	    //commands
 		MoveForward = new MoveFoward(0.5, 50);
-		PIDMoveForward = new PIDMoveForward(60);
+		PIDMoveForward = new PIDMoveForward(80);
 		MoveBackward = new MoveBackward(0.5, 20);
 		ShiftUp = new ShiftUp();
 		ShiftDown = new ShiftDown();
@@ -118,15 +118,14 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 	}
 
-    public void autonomousInit() {
+   public void autonomousInit() {
         // schedule the autonomous command (example)
         //if (autonomousCommand != null) autonomousCommand.start();
-    	drivetrain.enable();
-    	
-    	Scheduler.getInstance().add(ShiftDown);
-    	
-    	Scheduler.getInstance().add(PIDMoveForward);
-    	//Scheduler.getInstance().add(MoveBackward);
+    	//drivetrain.enable();
+    	//drivetrain.resetEncoders();
+    	//shooter.disengageBallActuators();
+    	//Scheduler.getInstance().add(ShiftUp);
+    	//Scheduler.getInstance().add(PIDMoveForward);
     }
 
     /**
@@ -149,7 +148,7 @@ public class Robot extends IterativeRobot {
         drivetrain.resetEncoders();
         drivetrain.disable();
         
-        Shooter.engageBallActuators();
+        Shooter.disengageBallActuators();
         Shooter.engageWinch();
         
     }
@@ -171,16 +170,35 @@ public class Robot extends IterativeRobot {
 /*-----------------------------------------Operator Controls-----------------------------------------*/
 		
         //Drivetrain
-        drivetrain.arcadeDrive(OI.getLeftY1(), OI.getRightX1());
+        //Arcade drive with reversible toggle
+        if (OI.getRightBumper1()){
+        	drivetrain.arcadeDriveReverse(OI.getLeftY1(), OI.getRightX1());
+        }
+        else drivetrain.arcadeDrive(OI.getLeftY1(), OI.getRightX1());
+        
+        //Tank drive with reversible toggle
         //drivetrain.tankDrive(OI.getLeftY1(),OI.getRightY1());
-        OI.rightBumper1.whenPressed(ShiftDown);
-        OI.rightBumper1.whenReleased(ShiftUp);
+        //drivetrain.tankDriveReversable(OI.getLeftY1(), OI.getRightY1(), OI.getRightBumper1());
+        
+        //Shift Gears
+        OI.leftBumper1.whenPressed(ShiftDown);
+        OI.leftBumper1.whenReleased(ShiftUp);
+        
+        //test commands
+        //OI.buttonY1.whenPressed(EngageBallActuators);
+        //OI.buttonY1.whenReleased(DisengageBallActuators);
+        
+        //Ball Actuators
+        if (OI.getY1() && Shooter.isWinched()){
+        	Scheduler.getInstance().add(EngageBallActuators);
+        }
+        OI.buttonA1.whenPressed(DisengageBallActuators);
         
         //Shooting
         OI.leftBumper2.whileHeld(CatapultWinch);
         OI.leftBumper2.whenReleased(CatapultWinchStop);
         OI.rightBumper2.whenPressed(ShootnLoad);
-        OI.rightBumper2.whenReleased(ReEngageWinch);
+        OI.rightBumper2.whenReleased(ReEngageWinch); 
         
         /*
         if (OI.getRightTrigger2()&&Shooter.isWinched()){
@@ -200,6 +218,8 @@ public class Robot extends IterativeRobot {
         	Scheduler.getInstance().add(EngageBallActuators);
         else
         	//TODO: Scheduler.getInstance().add(DisengageBallActuators);
+        //System.out.println("isLoaded:" + Shooter.isLoaded());
+     	//System.out.println("isWinched" + Shooter.isWinched());
 
         //Intake
         OI.buttonA2.whileHeld(IntakeRollers);
@@ -211,6 +231,8 @@ public class Robot extends IterativeRobot {
         OI.buttonX2.whileHeld(IntakeIncrementOut);
         OI.buttonB2.whenReleased(StopIntakePivot);
         OI.buttonX2.whenReleased(StopIntakePivot);
+        
+        System.out.println("Intake Potentiometer Value:" + intake.getPotValue());
 
         
 /*-----------------------------------------Update Dashboard-----------------------------------------*/
@@ -236,7 +258,7 @@ public class Robot extends IterativeRobot {
         RobotMap.photoCenterOfGravityX = networkTable.getNumber("COG_X", 0.0);
 		RobotMap.photoCenterOfGravityY = networkTable.getNumber("COG_Y", 0.0);
     	
-		System.out.println("ShootnLoad Running: " + ShootnLoad.isRunning());
+		//System.out.println("ShootnLoad Running: " + ShootnLoad.isRunning());
 		
     }
     

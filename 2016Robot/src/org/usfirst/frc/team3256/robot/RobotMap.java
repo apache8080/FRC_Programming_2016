@@ -34,16 +34,16 @@ public class RobotMap {
 			rightDriveEncoderB = 1,
 			leftDriveEncoderA = 2,
 			leftDriveEncoderB = 3,
-			intakePivotEncoderA = 4,
+			intakePivotE1ncoderA = 4,
 			intakePivotEncoderB = 5;
 	
 	//pot constants
-	public static final int intakePotPort = 1;
+	public static final int intakePotPort = 0; 
 	public static final int intakePotFactor = 360;
 	public static final int intakePotOffset = 0;
 	
 	//gyro
-	public static final int gyro2Port = 0;
+	public static final int gyroPort = 1;
 	
 	//actuators
 	public static final int ShifterIn = 3;

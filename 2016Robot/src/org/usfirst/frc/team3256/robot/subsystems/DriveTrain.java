@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.buttons.Button;
 /**
  *
  */
@@ -26,7 +27,7 @@ public class DriveTrain extends PIDSubsystem {
 	
 	static DoubleSolenoid shifterPancake = new DoubleSolenoid (RobotMap.ShifterIn,RobotMap.ShifterOut);
 	
-	static AnalogGyro gyro = new AnalogGyro(0);
+	static AnalogGyro gyro = new AnalogGyro(RobotMap.gyroPort);
 	
 	static double pi = 3.1415926535897932384626;
 	static double ticksPerRotation = 1920; //encoder is 256 ticks/rotations
@@ -144,6 +145,25 @@ public class DriveTrain extends PIDSubsystem {
     	rightRear.set(-right);
     }
     
+    public static void tankDriveReversable(double left, double right, boolean rightBumper1){
+    	if (Math.abs(right)<0.2) {
+    		right = 0;
+    	}
+    	if (Math.abs(left)<0.2) {
+    		left = 0;
+    	}
+    	if (rightBumper1){
+    		leftFront.set(-left);
+    		leftRear.set(-left);
+    		rightFront.set(right);
+    		rightRear.set(right);
+    	}
+    	else 
+    		leftFront.set(left);
+    		leftRear.set(left);
+    		rightFront.set(-right);
+    		rightRear.set(-right);
+    }
     //arcadedrive
     public static void arcadeDrive(double throttle, double turn){
     	
@@ -174,6 +194,38 @@ public class DriveTrain extends PIDSubsystem {
     	rightFront.set(-right);
     	rightRear.set(-right);
     }
+    
+    public static void arcadeDriveReverse(double throttle, double turn){
+    	if (Math.abs(throttle)<0.2) {
+    		throttle = 0;
+    	}
+    	if (Math.abs(turn)<0.2) {
+    		turn = 0;
+    	}
+    	throttle = -throttle;
+    	turn = -turn;
+    	
+    	double left = throttle+turn;
+    	double right = throttle-turn;
+    	
+    	if (left > 1){
+    		left = 1;
+    	}
+    	if (left < -1){
+    		left = -1;
+    	}
+    	if (right > 1){
+    		right = 1;
+    	}
+    	if (right < -1){
+    		right = -1;
+    	}
+    		leftFront.set(left);
+        	leftRear.set(left);
+        	rightFront.set(-right);
+        	rightRear.set(-right);
+    	}
+  
     protected double returnPIDInput() {
         // Return your input value for the PID loop
         // e.g. a sensor, like a potentiometer:

@@ -22,6 +22,7 @@ public class ShootBall extends Command {
     protected void initialize() {
     	setTimeout(0.5);
     	Shooter.disengageWinch();
+    	Shooter.winchBack();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -37,13 +38,13 @@ public class ShootBall extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	System.out.println("Shootball: " + isTimedOut() + "##########");
-        return isTimedOut();
-        //return true;
+        //return isTimedOut();
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	RobotMap.isShooting = false;
+    	Shooter.stopWinchBack();
     }
     
     // Called when another command which requires one or more of the same
