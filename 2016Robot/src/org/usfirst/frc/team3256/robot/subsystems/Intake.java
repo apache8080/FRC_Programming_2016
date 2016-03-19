@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 public class Intake extends PIDSubsystem{
 	static VictorSP intakeRollerMotor = new VictorSP(RobotMap.intakeRollerMotor);
 	static VictorSP intakePivotMotors = new VictorSP(RobotMap.intakePivotMotors);
-//	static Relay intakeSpike = new Relay(RobotMap.SpikePort);
+	static Relay intakeSpike = new Relay(RobotMap.SpikePort);
 	static AnalogPotentiometer intakePivotPot = new AnalogPotentiometer(RobotMap.intakePotPort, RobotMap.intakePotFactor, RobotMap.intakePotOffset);
 	
 

@@ -62,9 +62,9 @@ public class RobotMap {
 	public static final int hangerHolderEngage = 0;
 	public static final int hangerHolderDisengage = 7;
 	
-	/*//relays
+	//relays
 	public static final int SpikePort = 0;
-	*/
+	
 	
 //-------------------------------joysticks-------------------------------
 	public static final int Joystick1 = 0;
