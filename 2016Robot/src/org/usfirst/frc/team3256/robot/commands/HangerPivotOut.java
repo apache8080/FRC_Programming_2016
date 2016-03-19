@@ -8,18 +8,18 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class PivotHangerIn extends Command {
+public class HangerPivotOut extends Command {
 
-    public PivotHangerIn() {
+    public HangerPivotOut() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.hanger);   
+    	requires(Robot.hanger);
     	setTimeout(1);
-    	}
+    }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Hanger.incrementIn();
+    	Hanger.incrementOut();
     }
 
     // Called repeatedly when this Command is scheduled to run

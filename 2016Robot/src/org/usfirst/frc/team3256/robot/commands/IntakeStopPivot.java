@@ -1,20 +1,18 @@
 package org.usfirst.frc.team3256.robot.commands;
 
-import org.usfirst.frc.team3256.robot.OI;
 import org.usfirst.frc.team3256.robot.Robot;
 import org.usfirst.frc.team3256.robot.subsystems.Intake;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-
 /**
  *
  */
-public class IntakeRollers extends Command {
+public class IntakeStopPivot extends Command {
 
-	
-    public IntakeRollers() {
+    public IntakeStopPivot() {
         // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
     	requires(Robot.intake);
     }
 
@@ -24,12 +22,12 @@ public class IntakeRollers extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Intake.intake();
+    	Intake.pivotStop();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-       	return true;
+        return true;
     }
 
     // Called once after isFinished returns true

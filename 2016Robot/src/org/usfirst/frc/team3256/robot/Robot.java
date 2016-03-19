@@ -54,10 +54,10 @@ public class Robot extends IterativeRobot {
     //Intake
     Command IntakeIncrementIn;
     Command IntakeIncrementOut;
-    Command StopIntakePivot;
-    Command IntakeRollers;
-    Command OuttakeRollers;
-    Command StopRollers;
+    Command IntakeStopPivot;
+    Command IntakeIntakeRollers;
+    Command IntakeOuttakeRollers;
+    Command IntakeStopRollers;
     //Shooter
     Command ShootBall;
     Command ReEngageWinch;
@@ -96,10 +96,10 @@ public class Robot extends IterativeRobot {
 		ShiftDown = new ShiftDown();
 		IntakeIncrementIn = new IntakeIncrementIn();
 		IntakeIncrementOut = new IntakeIncrementOut();
-		StopIntakePivot = new StopIntakePivot();
-		IntakeRollers = new IntakeRollers();
-		OuttakeRollers = new OuttakeRollers();
-		StopRollers = new StopRollers();
+		IntakeStopPivot = new IntakeStopPivot();
+		IntakeIntakeRollers = new IntakeIntakeRollers();
+		IntakeOuttakeRollers = new IntakeOuttakeRollers();
+		IntakeStopRollers = new IntakeStopRollers();
 		ShootBall = new ShootBall();
 		ReEngageWinch = new ReEngageWinch();
 		CatapultWinch = new CatapultWinch();
@@ -231,14 +231,14 @@ public class Robot extends IterativeRobot {
 
         //Intake
         OI.buttonA2.whileHeld(IntakeRollers);
-        OI.buttonY2.whileHeld(OuttakeRollers);
-        OI.buttonA2.whenReleased(StopRollers);
-        OI.buttonY2.whenReleased(StopRollers);
+        OI.buttonY2.whileHeld(IntakeOuttakeRollers);
+        OI.buttonA2.whenReleased(IntakeStopRollers);
+        OI.buttonY2.whenReleased(IntakeStopRollers);
         
         OI.buttonB2.whileHeld(IntakeIncrementIn);
         OI.buttonX2.whileHeld(IntakeIncrementOut);
-        OI.buttonB2.whenReleased(StopIntakePivot);
-        OI.buttonX2.whenReleased(StopIntakePivot);
+        OI.buttonB2.whenReleased(IntakeStopPivot);
+        OI.buttonX2.whenReleased(IntakeStopPivot);
         
         System.out.println("Intake Potentiometer Value:" + intake.getPotValue());
 
