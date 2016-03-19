@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.networktables2.type.*;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.AxisCamera;
 
@@ -35,6 +36,7 @@ public class Robot extends IterativeRobot {
 	public static Intake intake;
 	public static Shooter shooter;
 	public static NetworkTable networkTable;
+	public static SmartDashboard smartdashboard;
 	public static double[] roboRealmData;
 	
 	//Axis Camera
@@ -65,6 +67,11 @@ public class Robot extends IterativeRobot {
     Command DisengageBallActuators;
     
     CommandGroup ShootnLoad;
+    
+    //Autonomous
+    Command AutoCommand;
+    Command AutoDoNothingCommand;
+    SendableChooser AutoChooser;
     
     /**
      * This function is run when the robot is first started up and should be
@@ -100,13 +107,19 @@ public class Robot extends IterativeRobot {
 		EngageBallActuators = new EngageBallActuators();
 		DisengageBallActuators = new DisengageBallActuators();
 		ShootnLoad = new ShootnLoad();
+		AutoDoNothingCommand = new AutoDoNothingCommand();
 		
 		//compressor
 		compressor.setClosedLoopControl(true);
 		
+		AutoChooser = new SendableChooser();
+		AutoChooser.addDefault("DoNothing", AutoDoNothingCommand);
+		AutoChooser.addObject("MoveForward", PIDMoveForward);
+		smartdashboard.putData("Auto Mode Chooser", AutoChooser);
+				
 		//initialize gyro
-		DriveTrain.initGyro();
-        DriveTrain.calibrateGyro();
+		drivetrain.initGyro();
+        drivetrain.calibrateGyro();
 
         //initial dashboard info
         SmartDashboard.putString("DistanceText", "Distance");
@@ -119,13 +132,8 @@ public class Robot extends IterativeRobot {
 	}
 
    public void autonomousInit() {
-        // schedule the autonomous command (example)
-        //if (autonomousCommand != null) autonomousCommand.start();
-    	//drivetrain.enable();
-    	//drivetrain.resetEncoders();
-    	//shooter.disengageBallActuators();
-    	//Scheduler.getInstance().add(ShiftUp);
-    	//Scheduler.getInstance().add(PIDMoveForward);
+	   	AutoCommand = (Command) AutoChooser.getSelected();
+	   	AutoCommand.start();
     }
 
     /**
