@@ -11,12 +11,12 @@ import edu.wpi.first.wpilibj.command.Command;
 public class PIDMoveForward extends Command {
 	
 	double Pos;
-
     public PIDMoveForward(double Pos) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drivetrain);
     	this.Pos = DriveTrain.inchesToTicks(Pos);
+    	setInterruptible(false);
     }
 
     // Called just before this Command runs the first time
