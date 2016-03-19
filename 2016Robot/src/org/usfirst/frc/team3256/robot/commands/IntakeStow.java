@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3256.robot.commands;
 
 import org.usfirst.frc.team3256.robot.Robot;
+import org.usfirst.frc.team3256.robot.RobotMap;
 import org.usfirst.frc.team3256.robot.subsystems.Intake;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -17,7 +18,7 @@ public class IntakeStow extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.intake.setSetpoint(Intake.stowPos);
+    	Robot.intake.setSetpoint(RobotMap.stowPos);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -31,6 +32,7 @@ public class IntakeStow extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Intake.pivotStop();
     }
 
     // Called when another command which requires one or more of the same

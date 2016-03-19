@@ -70,6 +70,10 @@ public class RobotMap {
 	public static final int Joystick1 = 0;
 	public static final int Joystick2 = 1;
 	
+//-------------------------------Intake Constants-------------------------------
+	public static final int intakePos = 0;
+	public static final int stowPos = 1;
+	
 //-------------------------------Global Variables-------------------------------
 	public static double gyroPos;
 	public static double photoCenterOfGravityX;

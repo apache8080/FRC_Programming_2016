@@ -72,6 +72,7 @@ public class Robot extends IterativeRobot {
     Command AutoCommand;
     Command AutoDoNothingCommand;
     SendableChooser AutoChooser;
+    CommandGroup AutoDriveForward;
     
     /**
      * This function is run when the robot is first started up and should be
@@ -108,13 +109,14 @@ public class Robot extends IterativeRobot {
 		DisengageBallActuators = new DisengageBallActuators();
 		ShootnLoad = new ShootnLoad();
 		AutoDoNothingCommand = new AutoDoNothingCommand();
+		AutoDriveForward = new AutoDriveForward();
 		
 		//compressor
 		compressor.setClosedLoopControl(true);
 		
 		AutoChooser = new SendableChooser();
 		AutoChooser.addDefault("DoNothing", AutoDoNothingCommand);
-		AutoChooser.addObject("MoveForward", PIDMoveForward);
+		AutoChooser.addObject("MoveForward", AutoDriveForward);
 		smartdashboard.putData("Auto Mode Chooser", AutoChooser);
 				
 		//initialize gyro
@@ -134,6 +136,8 @@ public class Robot extends IterativeRobot {
    public void autonomousInit() {
 	   	AutoCommand = (Command) AutoChooser.getSelected();
 	   	AutoCommand.start();
+	   	drivetrain.enable();
+	   	intake.enable();
     }
 
     /**
@@ -155,6 +159,7 @@ public class Robot extends IterativeRobot {
         drivetrain.resetGyro();
         drivetrain.resetEncoders();
         drivetrain.disable();
+        intake.enable();
         
         Shooter.disengageBallActuators();
         Shooter.engageWinch();
@@ -230,7 +235,7 @@ public class Robot extends IterativeRobot {
      	//System.out.println("isWinched" + Shooter.isWinched());
 
         //Intake
-        OI.buttonA2.whileHeld(IntakeRollers);
+        OI.buttonA2.whileHeld(IntakeIntakeRollers);
         OI.buttonY2.whileHeld(IntakeOuttakeRollers);
         OI.buttonA2.whenReleased(IntakeStopRollers);
         OI.buttonY2.whenReleased(IntakeStopRollers);
