@@ -23,7 +23,7 @@ public class Shooter extends Subsystem{
 	
 	//pulls the catapult back
 	public static void winchBack(){
-		catapultWinch.set(-.75);
+		catapultWinch.set(-.4);
 	}
 	
 	public static void stopWinchBack(){
