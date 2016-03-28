@@ -7,12 +7,15 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class AutoDoNothingCommand extends Command{
 
+	public AutoDoNothingCommand(){
+		requires(Robot.drivetrain);
+		setInterruptible(false);
+	}
+	
 	
 	@Override
 	protected void initialize() {
 		// TODO Auto-generated method stub
-		requires(Robot.drivetrain);
-		setInterruptible(false);
 	}
 
 	@Override

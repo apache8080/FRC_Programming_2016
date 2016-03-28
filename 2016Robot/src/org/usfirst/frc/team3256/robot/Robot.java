@@ -90,7 +90,7 @@ public class Robot extends IterativeRobot {
 		shooter = new Shooter();
 		
 	    //commands
-		MoveForward = new MoveFoward(0.5, 50);
+		MoveForward = new MoveFoward(120);
 		PIDMoveForward = new PIDMoveForward(80);
 		MoveBackward = new MoveBackward(0.5, 20);
 		ShiftUp = new ShiftUp();
@@ -115,9 +115,6 @@ public class Robot extends IterativeRobot {
 		compressor.setClosedLoopControl(true);
 		
 		AutoChooser = new SendableChooser();
-		AutoChooser.addDefault("DoNothing", AutoDoNothingCommand);
-		AutoChooser.addObject("MoveForward", AutoDriveForward);
-		smartdashboard.putData("Auto Mode Chooser", AutoChooser);
 				
 		//initialize gyro
 		drivetrain.initGyro();
@@ -130,14 +127,23 @@ public class Robot extends IterativeRobot {
     }
 	
 	public void disabledPeriodic() {
+		AutoChooser.addDefault("DoNothing", AutoDoNothingCommand);
+		AutoChooser.addObject("MoveForward", AutoDriveForward);
+		AutoChooser.addObject("MotionProfilingDriveForward", MoveForward);
+		smartdashboard.putData("Auto Mode Chooser", AutoChooser);
+		
 		Scheduler.getInstance().run();
 	}
 
    public void autonomousInit() {
+	   	AutoChooser.initTable(AutoChooser.getTable());
 	   	AutoCommand = (Command) AutoChooser.getSelected();
 	   	AutoCommand.start();
-	   	drivetrain.enable();
+	   	
+	   //	drivetrain.enable();
+	   	drivetrain.disable();
 	   	intake.enable();
+	   	drivetrain.shiftDown();
     }
 
     /**
@@ -158,7 +164,7 @@ public class Robot extends IterativeRobot {
         Intake.stopIntake();
         drivetrain.resetGyro();
         drivetrain.resetEncoders();
-        drivetrain.disable();
+        //drivetrain.disable();
         intake.enable();
         
         Shooter.disengageBallActuators();

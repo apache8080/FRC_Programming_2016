@@ -6,6 +6,8 @@ public class AutoDriveForward extends CommandGroup{
 
 	public AutoDriveForward(){
 		setInterruptible(false);
+		addSequential (new ShiftDown());
 		addSequential(new PIDMoveForward(80));
+
 	}
 }

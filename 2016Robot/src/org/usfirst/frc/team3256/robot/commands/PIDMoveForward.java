@@ -22,20 +22,23 @@ public class PIDMoveForward extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	DriveTrain.resetEncoders();
-    	Robot.drivetrain.setSetpoint(Pos);
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.drivetrain.setSetpoint(Pos);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return Math.abs(Robot.drivetrain.getSetpoint()-Robot.drivetrain.getPosition())<1000;
+    	System.out.println("Error " + (Robot.drivetrain.getSetpoint()-Robot.drivetrain.getPosition()));
+    	return Math.abs(Robot.drivetrain.getSetpoint()-Robot.drivetrain.getPosition())<1; // 1/6th of the wheel rotation
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	System.out.println("Finished /////////////////////////////////////////");
     	DriveTrain.setRightMotorSpeed(0);
     	DriveTrain.setLeftMotorSpeed(0);
     }

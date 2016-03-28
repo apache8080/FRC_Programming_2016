@@ -32,10 +32,9 @@ public class DriveTrain extends PIDSubsystem {
 	static double pi = 3.1415926535897932384626;
 	static double ticksPerRotation = 1920; //encoder is 256 ticks/rotations
 		
-    private static final double P = 1,
+    private static final double P = (0.1),
     	I = 0.000,
     	D = 0.0;
-	
 	
 	// Initialize your subsystem here
     public DriveTrain() {
@@ -43,8 +42,7 @@ public class DriveTrain extends PIDSubsystem {
     	super("DriveTrain", P, I, D);	
     	setAbsoluteTolerance(0.2);
     	getPIDController().setContinuous(false);
-    	
-    	enable();
+    	  	//enable();
         // Use these to get going:
         // setSetpoint() -  Sets where the PID controller should move the system
         //                  to
@@ -89,12 +87,12 @@ public class DriveTrain extends PIDSubsystem {
     }
     
     //shifts to low gear
-    public void shiftDown(){
+    public static void shiftDown(){
     	shifterPancake.set(DoubleSolenoid.Value.kForward);
     }
     
     //shifts to high gear
-    public void shiftUp(){
+    public static void shiftUp(){
     	shifterPancake.set(DoubleSolenoid.Value.kReverse);
     }
     
@@ -237,10 +235,11 @@ public class DriveTrain extends PIDSubsystem {
     protected void usePIDOutput(double output) {
         // Use output to drive your system, like a motor
         // e.g. yourMotor.set(output);
-    	if (output < 0) output = 0;
-    	leftFront.pidWrite(-output);
+    	if (output < 0)
+    		output = 0;
+    	leftFront.pidWrite(-output * 0.94);
     	rightFront.pidWrite(output);
-    	leftRear.pidWrite(-output);
+    	leftRear.pidWrite(-output * 0.94);
     	rightRear.pidWrite(output);
     }
 }
