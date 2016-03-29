@@ -11,17 +11,17 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class MoveFoward extends Command {
-	double pos_initial;
+	double error;
 	double time_initial;
 	double time_current;
 	double speed;
 	double pos_current;
 	
-    public MoveFoward(double pos_initial) {
+    public MoveFoward(double error) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	//requires(Robot.drivetrain);
-    	this.pos_initial = pos_initial;
+    	this.error = error;
     }
 
     // Called just before this Command runs the first time
@@ -35,7 +35,7 @@ public class MoveFoward extends Command {
     protected void execute() {
     	time_current = Timer.getFPGATimestamp() - time_initial;
     	pos_current = ((Math.abs(DriveTrain.getLeftEncoder())+Math.abs(DriveTrain.getRightEncoder()))/2);
-    	speed = PIDController.driveStraight(pos_initial/12, time_current, pos_current);
+    	speed = PIDController.driveStraight(error/12, time_current, pos_current);
     	
     	if(speed<0.0){
     		speed=0.0;
