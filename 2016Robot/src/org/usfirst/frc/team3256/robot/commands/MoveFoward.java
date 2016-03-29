@@ -1,43 +1,59 @@
 package org.usfirst.frc.team3256.robot.commands;
 
+import org.usfirst.frc.team3256.robot.PIDController;
 import org.usfirst.frc.team3256.robot.Robot;
 import org.usfirst.frc.team3256.robot.subsystems.DriveTrain;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
 public class MoveFoward extends Command {
+	double error;
+	double time_initial;
+	double time_current;
 	double speed;
-	double Pos;
-
-    public MoveFoward(double speed, double Pos) {
+	double pos_current;
+	
+    public MoveFoward(double error) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.drivetrain);
-    	this.speed = speed;
-    	this.Pos = DriveTrain.inchesToTicks(Pos);
+    	//requires(Robot.drivetrain);
+    	this.error = error;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	DriveTrain.resetEncoders();
-    	DriveTrain.resetGyro();
+    	//DriveTrain.resetEncoders();
+    	//DriveTrain.resetGyro();
+    	time_initial = Timer.getFPGATimestamp();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	DriveTrain.setLeftMotorSpeed(speed);
+    	time_current = Timer.getFPGATimestamp() - time_initial;
+    	pos_current = ((Math.abs(DriveTrain.getLeftEncoder())+Math.abs(DriveTrain.getRightEncoder()))/2);
+    	speed = PIDController.driveStraight(error/12, time_current, pos_current);
+    	
+    	if(speed<0.0){
+    		speed=0.0;
+    	}
+    	if (speed > 0.875)
+    		DriveTrain.setLeftMotorSpeed(0.875);
+    	else
+    		DriveTrain.setLeftMotorSpeed(speed);
     	DriveTrain.setRightMotorSpeed(-speed);
-    	System.out.println("Encoder: " + Math.abs(DriveTrain.getLeftEncoder()));
-    	System.out.println("Encoder: " + Math.abs(DriveTrain.getRightEncoder()));
-    	System.out.println("Pos" + Pos);
+    	
+    	System.out.print("speed" + speed + "/////////////////////" + time_current + "\n");
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (Math.abs(DriveTrain.getLeftEncoder())>=Pos || Math.abs(DriveTrain.getRightEncoder())>=Pos){
+    	time_current = Timer.getFPGATimestamp() - time_initial;
+    	if (time_current > PIDController.getTimeTotal()){
     		return true;
     	}
     	else 

@@ -29,6 +29,9 @@ public class OI {
 		public static Button leftStickButton1 = new JoystickButton(joystick1, 9);
 		public static Button rightStickbutton1 = new JoystickButton(joystick1, 10);
 		
+		
+		public static boolean getY1() {return joystick1.getRawButton(4);}
+		public static boolean getRightBumper1(){return joystick1.getRawButton(6);}
 		public static double getLeftY1(){return joystick1.getRawAxis(1);}
 	    public static double getLeftX1(){return joystick1.getRawAxis(2);}
 	    public static double getRightY1(){return joystick1.getRawAxis(5);}
@@ -48,6 +51,9 @@ public class OI {
 	    public static Button leftStickButton2 = new JoystickButton(joystick2, 9);
 	    public static Button rightStickbutton2 = new JoystickButton(joystick2, 10);
 		
+
+		public static boolean getY2() {return joystick2.getRawButton(4);}
+		public static boolean getRightBumper2(){return joystick2.getRawButton(6);}
 	    public static double getLeftY2(){return joystick2.getRawAxis(1);}
 	    public static double getLeftX2(){return joystick2.getRawAxis(2);}
 	    public static double getRightY2(){return joystick2.getRawAxis(5);}

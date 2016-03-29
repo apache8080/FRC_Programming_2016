@@ -1,34 +1,35 @@
 package org.usfirst.frc.team3256.robot.commands;
 
+import org.usfirst.frc.team3256.robot.OI;
 import org.usfirst.frc.team3256.robot.Robot;
-import org.usfirst.frc.team3256.robot.subsystems.Hanger;
+import org.usfirst.frc.team3256.robot.subsystems.Intake;
 
 import edu.wpi.first.wpilibj.command.Command;
+
 
 /**
  *
  */
-public class PivotHangerOut extends Command {
+public class IntakeIntakeRollers extends Command {
 
-    public PivotHangerOut() {
+	
+    public IntakeIntakeRollers() {
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	requires(Robot.hanger);
-    	setTimeout(1);
+    	requires(Robot.intake);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Hanger.incrementOut();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Intake.intake();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isTimedOut();
+       	return true;
     }
 
     // Called once after isFinished returns true

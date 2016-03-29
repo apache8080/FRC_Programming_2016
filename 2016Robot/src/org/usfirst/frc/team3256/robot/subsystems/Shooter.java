@@ -23,7 +23,7 @@ public class Shooter extends Subsystem{
 	
 	//pulls the catapult back
 	public static void winchBack(){
-		catapultWinch.set(-.75);
+		catapultWinch.set(-.5);
 	}
 	
 	public static void stopWinchBack(){
@@ -41,12 +41,12 @@ public class Shooter extends Subsystem{
 	
 	//engages ball holding actuators
 	public static void engageBallActuators(){
-		ballActuator.set(DoubleSolenoid.Value.kReverse);
+		ballActuator.set(DoubleSolenoid.Value.kForward);
 	}
 	
 	//disengages ball holding actuators 
     public static void disengageBallActuators(){
-    	ballActuator.set(DoubleSolenoid.Value.kForward);
+    	ballActuator.set(DoubleSolenoid.Value.kReverse);
     } 
 	
 		
@@ -57,7 +57,6 @@ public class Shooter extends Subsystem{
 	
 	//based on if the ball is detected via IR Breaker
 	public static boolean isLoaded(){
-		System.out.println("isLoaded: " + !ballIR.get());
 		return !ballIR.get();
 	}
 	

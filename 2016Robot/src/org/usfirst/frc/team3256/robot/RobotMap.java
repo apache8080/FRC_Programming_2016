@@ -17,34 +17,41 @@ public class RobotMap {
     // public static int rangefinderModule = 1;
 	
 	
+//-------------------------------PWM-------------------------------
 	//motors
-	public static final int leftFrontMotor = 0,
-			leftRearMotor = 1,
-			rightFrontMotor = 2,
-			rightRearMotor = 3,
-			intakePivotMotors = 8,
-			intakeRollerMotor = 7,
-			winchMotors = 6,
-			hangerPivotMotors = 4,
-			catapultWinch = 5;
+	public static final int leftFrontMotor = 0;
+	public static final int leftRearMotor = 1;
+	public static final int	rightFrontMotor = 2;
+	public static final int	rightRearMotor = 3;
+	public static final int	intakePivotMotors = 8;
+	public static final int	intakeRollerMotor = 7;
+	public static final int	winchMotors = 6;
+	public static final int	hangerPivotMotors = 4;
+	public static final int catapultWinch = 5;
 			
-	
+//--------------------------------DIO-------------------------------
 	//encoders
-	public static final int rightDriveEncoderA = 0,
-			rightDriveEncoderB = 1,
-			leftDriveEncoderA = 2,
-			leftDriveEncoderB = 3,
-			intakePivotEncoderA = 4,
-			intakePivotEncoderB = 5;
+	public static final int rightDriveEncoderA = 0;
+	public static final int	rightDriveEncoderB = 1;
+	public static final int leftDriveEncoderA = 2;
+	public static final int	leftDriveEncoderB = 3;
+	public static final int	intakePivotE1ncoderA = 4;
+	public static final int	intakePivotEncoderB = 5;
 	
+	//Sensors
+	public static final int catapultLimitSwitch = 9;
+	public static final int ballIR = 6;
+	
+//-------------------------------Analog-------------------------------
 	//pot constants
-	public static final int intakePotPort = 1;
-	public static final int intakePotFactor = 360;
-	public static final int intakePotOffset = 0;
+	public static final int intakePotPort = 1; 
+	public static final double intakePotFactor = 360*100/2.3114120618015037; //data obtained empirically
+	public static final double intakePotOffset = -18.82139146465336; //data obtained empirically
 	
 	//gyro
-	public static final int gyro2Port = 0;
+	public static final int gyroPort = 0;
 	
+//-------------------------------PCM-------------------------------
 	//actuators
 	public static final int ShifterIn = 3;
 	public static final int ShifterOut = 4;
@@ -52,25 +59,30 @@ public class RobotMap {
 	public static final int winchDisengage = 6;
 	public static final int ballHolderEngage = 2;
 	public static final int ballHolderDisengage = 5;
+	public static final int hangerHolderEngage = 0;
+	public static final int hangerHolderDisengage = 7;
 	
 	//relays
 	public static final int SpikePort = 0;
 	
-	//joysticks
+	
+//-------------------------------joysticks-------------------------------
 	public static final int Joystick1 = 0;
 	public static final int Joystick2 = 1;
 	
-	//Sensors
-	public static final int catapultLimitSwitch = 9;
-	public static final int ballIR = 6;
+//-------------------------------Intake Constants-------------------------------
+	public static final int intakePos = 0;
+	public static final int stowPos = 1;
 	
-	//Global Variables
+//-------------------------------Global Variables-------------------------------
 	public static double gyroPos;
 	public static double photoCenterOfGravityX;
 	public static double photoCenterOfGravityY;
 	
 	
 	public static String shooterCameraIP = "10.32.56.11";
+	
+	public static boolean isShooting = false;
 
 	
 }

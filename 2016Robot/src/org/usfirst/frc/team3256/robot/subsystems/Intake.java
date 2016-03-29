@@ -17,8 +17,7 @@ public class Intake extends PIDSubsystem{
 	static Relay intakeSpike = new Relay(RobotMap.SpikePort);
 	static AnalogPotentiometer intakePivotPot = new AnalogPotentiometer(RobotMap.intakePotPort, RobotMap.intakePotFactor, RobotMap.intakePotOffset);
 	
-	public static final int intakePos = 0;
-	public static final int stowPos = 1;
+
 	private static final double P = 1,
 	    	I = 0,
 	    	D = 0;
@@ -69,12 +68,14 @@ public class Intake extends PIDSubsystem{
 	@Override
 	protected double returnPIDInput() {
 		// TODO Auto-generated method stub
-		return 0;
+		return Math.abs(intakePivotPot.get());
 	}
 
 	@Override
 	protected void usePIDOutput(double output) {
 		// TODO Auto-generated method stub
+		if (output<0) output = 0;
+		intakePivotMotors.set(output);
 		
 	}
 	

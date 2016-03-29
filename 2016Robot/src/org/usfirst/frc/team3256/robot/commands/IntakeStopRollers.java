@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class StopIntakePivot extends Command {
+public class IntakeStopRollers extends Command {
 
-    public StopIntakePivot() {
+    public IntakeStopRollers() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.intake);
@@ -22,7 +22,7 @@ public class StopIntakePivot extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Intake.pivotStop();
+    	Intake.stopIntake();
     }
 
     // Make this return true when this Command no longer needs to run execute()
