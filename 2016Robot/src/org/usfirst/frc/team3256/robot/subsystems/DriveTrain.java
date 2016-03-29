@@ -109,12 +109,12 @@ public class DriveTrain extends PIDSubsystem {
     }
     
     //gets right encoder value
-    public static int getRightEncoder(){
+    public static double getRightEncoder(){
 		return rightEncoder.get();
     }
     
     //gets left encoder value
-    public static int getLeftEncoder(){
+    public static double getLeftEncoder(){
     	return leftEncoder.get();
     }
     
