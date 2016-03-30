@@ -5,10 +5,10 @@ import org.usfirst.frc.team3256.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.Timer;
 
 public class PIDController {
-	
-	
+
+
 	public PIDController(){
-		
+
 	}
 	static double time_total;
 	static double time_cruise;
@@ -32,74 +32,108 @@ public class PIDController {
 	static double prevError;
 	static double changeError;
 	static double PID;
-	
+
 	public static double getTimeTotal(){
 		return time_total;
 	}
+
+
+	/**
+	 * This method calculates the velocity in ft/s at a specific time.
+	 * @param  time (time in seconds based off of FPGA Timestamp)
+	 * @return velocity (velocity of robot at time in ft/s)
+	 */
 	public static double calculateV(double time){
 		double time_deaccel = time_total-time_accel;
-		double returntime = 0;
-		
+		double velocity = 0;
+
 		if (time<time_accel){
-			returntime = 6*time;
+			velocity = max_accel*time;
 		}
 		else if (time > time_accel && time < time_deaccel){
-			returntime = 6;
+			velocity = max_v;
 		}
 		else {
-			returntime = 6-(6*(time-time_deaccel));
+			velocity = max_v-(max_accel*(time-time_deaccel));
 		}
-		return returntime;
+		return velocity;
 	}
-	
+
+	/**
+	 * This method calculates the acceleration in ft/s^2 at a specific time.
+	 * @param  time (time in seconds based off of FPGA Timestamp)
+	 * @return acceleration (acceleration of robot at time in ft/s^2)
+	 */
 	public static double calculateA(double time){
-		double returntime = 0;
+		double acceleration = 0;
 		double time_deaccel = time_total-time_accel;
 		if (time<time_accel){
-			returntime = 6;
+			acceleration = max_accel;
 		}
 		else if (time > time_accel && time < time_deaccel){
-			returntime = 0;
+			acceleration = 0;
 		}
 		else {
-			returntime = -6;
+			acceleration = -max_accel;
 		}
-		return returntime;
-		
+		return acceleration;
+
 	}
-	
+
+	/**
+ 	* This method calculates the position of the robot in feet at a specific time.
+ 	* @param  time (time in seconds based off of FPGA Timestamp)
+ 	* @return positon (position of robot at time in feet)
+ 	*/
 	public static double calculateS(double time){
-		double returntime = 0;
+		double position = 0;
 		double time_deaccel = time_total-time_accel;
 		if (time > time_accel && time < time_deaccel){
-			returntime = 6*time;
+			position = max_v*time;
 		}
 		else {
-			returntime = 4.5*time*time;
+			position = (max_accel/2)*time*time;
 		}
-		return returntime;
+		return position;
 	}
+
+	/**
+	 * This method calculates the PID output at a certain position based off of a setpoint.
+	 * @param setpoint (position the robot needs to be at)
+	 * @param current (position that the robot is currently at)
+	 * @return PID (motor output that the motors need to drive at)
+	 */
 	public static double calculatePID(double setpoint, double current){
 		error = setpoint-current;
 		P = kP * error;
 		sumError = sumError + error;
 		I = sumError * kI;
-		changeError = prevError = error;
+		changeError = prevError - error;
 		D = changeError * kD;
 		PID = P+I+D;
 		prevError = error;
 		return PID;
-		
-		
+
+
 	}
+
+	/**
+	 * This is the main motion profiling controller that gets called every 20ms by the MoveForward command.
+	 * @param feet (setpoint that the robot needs to achieve)
+	 * @param time (ammount time that has passed since MoveForward initialize)
+	 * @param current (the current position of the robot)
+	 * @return output (the motor value that the motor needs to be driving at)
+	 */
 	public static double driveStraight(double feet, double time, double current){
 		distance_cruise = feet-(distance_accel+distance_deaccel);
 		time_cruise = distance_cruise/6;
 		time_total = (time_cruise + time_accel + time_accel);
 		//System.out.println("Time: "+time_total+"\n");
 		//System.out.println("Velocity: "+calculateV(time)+ "////// Acceleration:" +calculateA(time)+"\n");
-		
-		double output = (kV * calculateV(time))+(kA*calculateA(time)+calculatePID(calculateS(time), current));
+		//This calculates the motor output at a specific time by getting the Velocity, Acceleration, and Position.
+		double output = (kV * calculateV(time))
+										+(kA*calculateA(time)
+										+calculatePID(calculateS(time), current));
 		//double output = 0.0;
 		return output;
 	}
