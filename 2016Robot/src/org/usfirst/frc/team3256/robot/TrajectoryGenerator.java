@@ -5,9 +5,9 @@ import org.usfirst.frc.team3256.robot.Segment;
 public class TrajectoryGenerator {
 
 	/**
-	 * This is the TrajectoryGenerator class that creates the trajectory for a certain distance, velocity, and acceleration.
-	 * The Trajectory is stored in an array.
-	 */
+	* This is the TrajectoryGenerator class that creates the trajectory for a certain distance, velocity, and acceleration.
+	* The Trajectory is stored in an array.
+	*/
 
 
 	double max_v;
@@ -22,39 +22,39 @@ public class TrajectoryGenerator {
 	double control_loop;
 
 	public TrajectoryGenerator(double distance_total,
-															double max_v, double max_accel,
-															double time_accel, double distance_accel,
-															double control_loop){
-			this.distance_total = distance_total;
-			this.max_v = max_v;
-			this.max_accel = max_accel;
-			this.time_accel = time_accel;
-			this.distance_accel = distance_accel;
-			this.control_loop = control_loop;
+	double max_v, double max_accel,
+	double time_accel, double distance_accel,
+	double control_loop){
+		this.distance_total = distance_total;
+		this.max_v = max_v;
+		this.max_accel = max_accel;
+		this.time_accel = time_accel;
+		this.distance_accel = distance_accel;
+		this.control_loop = control_loop;
 	}
 
 	/**
-	 * This method returns the total time this movement should take
-	 * @return time_total (total time to move)
-	 */
+	* This method returns the total time this movement should take
+	* @return time_total (total time to move)
+	*/
 	public double getTimeTotal(){
 		return time_total;
 	}
 
 	/**
-	 * This method returns the max velocity of the robot.
-	 * @return max_v (max velocity of robot)
-	 */
+	* This method returns the max velocity of the robot.
+	* @return max_v (max velocity of robot)
+	*/
 	public double getMaxVelocity(){
 		return max_v;
 	}
 
 
 	/**
-	 * This method calculates the velocity in ft/s at a specific time.
-	 * @param  time (time in seconds based off of FPGA Timestamp)
-	 * @return velocity (velocity of robot at time in ft/s)
-	 */
+	* This method calculates the velocity in ft/s at a specific time.
+	* @param  time (time in seconds based off of FPGA Timestamp)
+	* @return velocity (velocity of robot at time in ft/s)
+	*/
 	public double calculateV(double time){
 		double time_deaccel = time_total-time_accel;
 		double velocity = 0;
@@ -72,10 +72,10 @@ public class TrajectoryGenerator {
 	}
 
 	/**
-	 * This method calculates the acceleration in ft/s^2 at a specific time.
-	 * @param  time (time in seconds based off of FPGA Timestamp)
-	 * @return acceleration (acceleration of robot at time in ft/s^2)
-	 */
+	* This method calculates the acceleration in ft/s^2 at a specific time.
+	* @param  time (time in seconds based off of FPGA Timestamp)
+	* @return acceleration (acceleration of robot at time in ft/s^2)
+	*/
 	public double calculateA(double time){
 		double acceleration = 0;
 		double time_deaccel = time_total-time_accel;
@@ -93,10 +93,10 @@ public class TrajectoryGenerator {
 	}
 
 	/**
- 	* This method calculates the position of the robot in feet at a specific time.
- 	* @param  time (time in seconds based off of FPGA Timestamp)
- 	* @return positon (position of robot at time in feet)
- 	*/
+	* This method calculates the position of the robot in feet at a specific time.
+	* @param  time (time in seconds based off of FPGA Timestamp)
+	* @return positon (position of robot at time in feet)
+	*/
 	public double calculateS(double time){
 		double position = 0;
 		double time_deaccel = time_total-time_accel;
@@ -110,9 +110,9 @@ public class TrajectoryGenerator {
 	}
 
 	/**
-	 * This function returns an array of segments that make up the Trajectory.
-	 * @return trajectory (array of segments)
-	 */
+	* This function returns an array of segments that make up the Trajectory.
+	* @return trajectory (array of segments)
+	*/
 	public Segment[] getTrajectory(){
 		double time = 0.0;
 		List<Segment> trajectory = new ArrayList<Segment>();
