@@ -17,7 +17,7 @@ public class MoveBackward extends Command {
         // eg. requires(chassis);
     	requires(Robot.drivetrain);
     	this.speed= -speed;
-    	this.Pos=DriveTrain.inchesToTicks(Pos);
+    	this.Pos=DriveTrain.inchesToTicksLG(Pos);
     }
 
     // Called just before this Command runs the first time

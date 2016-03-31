@@ -32,10 +32,11 @@ public class MoveFoward extends Command {
 		// eg. requires(chassis);
 		requires(Robot.drivetrain);
 		double accel_max = 15;
-		double total_distance = error/12;
+		double total_distance = ((1.1*error)/12);
+		double vel_max_l = 12.0;
 		double time_accel_l = 12.0/accel_max;
 		double distance_accel_l = time_accel_l*12*0.5;
-		leftTrajectoryGenerator = new TrajectoryGenerator(total_distance, 12.0, accel_max, time_accel_l, distance_accel_l, 50);
+		leftTrajectoryGenerator = new TrajectoryGenerator(total_distance, vel_max_l, accel_max, time_accel_l, distance_accel_l, 50);
 		//Right Side needs to accelerate faster since the right side moves mechanically slower.
 		double time_accel_r = 11.5/accel_max;
 		double distance_accel_r=(time_accel_r*(11.5)*(0.5));
@@ -53,17 +54,23 @@ public class MoveFoward extends Command {
 		DriveTrain.resetEncoders();
 		//DriveTrain.resetGyro();
 		time_initial = Timer.getFPGATimestamp();
-		
+		DriveTrain.shiftUp();
 		//System.out.println(leftTrajectory.length);
-		leftDriveStraight = new MotionProfileController(leftTrajectory, 12.0, 0.01, 0, 0,0);
-		rightDriveStraight = new MotionProfileController(rightTrajectory, 11.5, 0.01, 0, 0,0);
+		leftDriveStraight = new MotionProfileController(leftTrajectory, 12.0, 0.01, 0.0, 0,0);
+		rightDriveStraight = new MotionProfileController(rightTrajectory, 11.5, 0.01, 0.0, 0,0);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		double left_speed = leftDriveStraight.getSpeed(step, DriveTrain.getLeftEncoder());
-		double right_speed = rightDriveStraight.getSpeed(step, DriveTrain.getRightEncoder());
+		double left_speed = leftDriveStraight.getSpeed(step, Math.abs(DriveTrain.getLeftEncoder()));
+		double right_speed = rightDriveStraight.getSpeed(step, Math.abs(DriveTrain.getRightEncoder()));
 		//System.out.println(left_speed + "////////////" + right_speed + "-----"+ leftTrajectoryGenerator.getTimeTotal() + "[[[[[[" + rightTrajectoryGenerator.getTimeTotal());
+		if (left_speed<0.0){
+			left_speed = 0.0;
+		}
+		if (right_speed < 0.0){
+			right_speed = 0.0;
+		}
 		DriveTrain.setLeftMotorSpeed(left_speed);
 		DriveTrain.setRightMotorSpeed(-right_speed);
 		step++;

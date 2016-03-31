@@ -15,7 +15,7 @@ public class PIDMoveForward extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drivetrain);
-    	this.Pos = DriveTrain.inchesToTicks(Pos);
+    	this.Pos = DriveTrain.inchesToTicksLG(Pos);
     	setInterruptible(false);
     }
 

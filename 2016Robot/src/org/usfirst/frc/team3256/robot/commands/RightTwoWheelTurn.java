@@ -24,7 +24,7 @@ public class RightTwoWheelTurn extends Command {
     	arc = degrees/360;
     	this.speed=speed;
     	
-    	turnFactorTicks=DriveTrain.inchesToTicks(turnFactorInches);
+    	turnFactorTicks=DriveTrain.inchesToTicksLG(turnFactorInches);
     }
 
     // Called just before this Command runs the first time

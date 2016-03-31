@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3256.robot;
 
 import org.usfirst.frc.team3256.robot.Segment;
+import org.usfirst.frc.team3256.robot.subsystems.DriveTrain;
 
 public class MotionProfileController {
 
@@ -55,20 +56,27 @@ public class MotionProfileController {
 	* @return  motor output
 	*/
 	public double calculatePID(double setpoint, double current){
-		double setpoint_ticks = ((setpoint*12)/(6*3.1415926535)*1920);
-		double error = (setpoint_ticks)-current;
+		double setpoint_ticks = DriveTrain.inchesToTicksHG((setpoint/12));
+		double error = (setpoint_ticks-current);
+		if (error < 0){
+			error = 0;
+			System.out.println("00000000000000000");
+		}
 		double P = kP*error;
 		sum_error += error;
 		double I = kI*sum_error;
-		double change_error = prev_error-error;
+		double change_error = (prev_error-error);
 		double D = kD*change_error;
 		prev_error = error;
-		System.out.println(error);
+		System.out.println("Setpoint_Ticks" + setpoint_ticks);
+		System.out.println("SetpointFeet" + setpoint);
+		System.out.println("LE:" + Math.abs(DriveTrain.getLeftEncoder()) + "----" + "RE:" + Math.abs(DriveTrain.getRightEncoder()));
+		System.out.println("Error" + error);
 		return (P+I+D);
 	}
 
 	/**
-	* This returns wether or not the robot is finished traveling the trajectory.
+	* This returns whether or not the robot is finished traveling the trajectory.
 	* @return is_finished (boolean value)
 	*/
 	public boolean isFinished(){
@@ -94,6 +102,7 @@ public class MotionProfileController {
 			//System.out.println(velocity + "\n");
 			double feed_forward = calculateFeedForward(velocity, acceleration);
 			double feedback = calculatePID(position, current_position);
+			System.out.println("Feedback" + feedback + "\n");
 			output = feed_forward+feedback;
 		}
 

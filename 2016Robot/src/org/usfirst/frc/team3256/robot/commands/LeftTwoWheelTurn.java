@@ -26,7 +26,7 @@ public class LeftTwoWheelTurn extends Command {
     	
     	arc = degrees/360;
     	turnFactorInches = robotCircum*arc/2;
-    	turnFactorTicks = DriveTrain.inchesToTicks(turnFactorInches);
+    	turnFactorTicks = DriveTrain.inchesToTicksLG(turnFactorInches);
     	
     }
 

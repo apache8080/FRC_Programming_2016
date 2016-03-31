@@ -128,6 +128,10 @@ public class TrajectoryGenerator {
 			double acceleration = calculateA(time);
 			double position = calculateS(time);
 			//System.out.println(velocity + "//////////" + acceleration + "\n");
+			System.out.println("Position" + position);
+			//System.out.println("Velocity" + velocity);
+			//System.out.println("Acceleration" + acceleration);
+			System.out.println("Time" + time);
 			Segment s = new Segment(time, velocity, acceleration, position);
 			trajectory.add(s);
 			time += (1/control_loop);

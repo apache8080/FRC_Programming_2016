@@ -10,7 +10,7 @@ public class PIDMoveBackward extends Command{
 	double Pos;
 	
 	public PIDMoveBackward(double Pos){
-		this.Pos=-DriveTrain.inchesToTicks(Pos);
+		this.Pos=-DriveTrain.inchesToTicksLG(Pos);
 		requires(Robot.drivetrain);
 		setInterruptible(false);
 	}

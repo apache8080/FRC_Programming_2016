@@ -31,7 +31,8 @@ public class DriveTrain extends PIDSubsystem {
 	
 	static double pi = 3.1415926535897932384626;
 	static double wheelbase = 24.383;
-	static double ticksPerRotation = 1920; //encoder is 256 ticks/rotations
+	static double ticksPerRotationLowGear = 6400; //encoder is 256 ticks/rotations, 1920 old
+	static double ticksPerRotationHighGear = 2816; 
 		
     private static final double P = (0.1),
     	I = 0.000,
@@ -124,9 +125,12 @@ public class DriveTrain extends PIDSubsystem {
     	rightEncoder.reset();
     	leftEncoder.reset();
     }
-   public static double inchesToTicks(double distance){
-    	return (distance/(6*pi)*ticksPerRotation);
+   public static double inchesToTicksLG(double distance){
+    	return (distance/(6*pi)*ticksPerRotationLowGear);
     }
+   public static double inchesToTicksHG(double distance){
+	   return (distance/(6*pi)*ticksPerRotationHighGear);
+   }
     
     
     //tankdrive

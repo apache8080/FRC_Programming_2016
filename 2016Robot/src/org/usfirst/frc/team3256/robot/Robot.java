@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.networktables2.type.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.AxisCamera;
+import edu.wpi.first.wpilibj.vision.USBCamera;
 
 import org.usfirst.frc.team3256.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team3256.robot.subsystems.Hanger;
@@ -30,6 +31,7 @@ import org.usfirst.frc.team3256.robot.RobotMap;
  */
 public class Robot extends IterativeRobot {
 
+	public USBCamera cam1;
 	public static DriveTrain drivetrain;
 	public static Compressor compressor;
 	public static Hanger hanger;
@@ -85,6 +87,10 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
     	networkTable = NetworkTable.getTable("Smartdashboard");
     	networkTable.initialize();
+		drivetrain.resetEncoders();
+		
+		//cam1 = new USBCamera("cam1");
+		//cam1.startCapture();
     	
     	//subsystems
     	drivetrain = new DriveTrain();
@@ -151,7 +157,7 @@ public class Robot extends IterativeRobot {
 	   //	drivetrain.enable();
 	   	drivetrain.disable();
 	   	intake.enable();
-	 drivetrain.resetEncoders();
+	    drivetrain.resetEncoders();
 	   	drivetrain.shiftUp();
     }
 
