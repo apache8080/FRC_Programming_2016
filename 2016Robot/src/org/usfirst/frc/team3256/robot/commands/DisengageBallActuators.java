@@ -26,20 +26,12 @@ public class DisengageBallActuators extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	/*
-    	System.out.println("Is timed out uninitialized " + this.isTimedOut());
-    	if (this.isTimedOut())
-    	{
-    		System.out.println("DisengageActuators - creating a new timeout");
-        	setTimeout(1);
-    	}
-    	*/
+    	
     		
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	System.out.println("BallActuators: " + isTimedOut());
         return isTimedOut();
     	//return true;
     }

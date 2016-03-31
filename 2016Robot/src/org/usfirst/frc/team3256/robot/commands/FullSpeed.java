@@ -1,38 +1,37 @@
 package org.usfirst.frc.team3256.robot.commands;
 
 import org.usfirst.frc.team3256.robot.Robot;
-import org.usfirst.frc.team3256.robot.subsystems.Shooter;
+import org.usfirst.frc.team3256.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class EngageBallActuators extends Command {
+public class FullSpeed extends Command {
 
-    public EngageBallActuators() {
+    public FullSpeed() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.shooter);
-    	setTimeout(1.5);
+    	requires(Robot.drivetrain);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	}
+    }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	DriveTrain.arcadeDrive(1,0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isTimedOut();
+        return true;
     }
-    	
+
     // Called once after isFinished returns true
     protected void end() {
-    	Shooter.engageBallActuators();
     }
 
     // Called when another command which requires one or more of the same

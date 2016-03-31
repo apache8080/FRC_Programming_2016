@@ -50,6 +50,8 @@ public class Robot extends IterativeRobot {
     Command MoveForward;
     Command MoveBackward;
     Command PIDMoveForward;
+    Command FullSpeed;
+    Command StopDrive;
 
     //Intake
     Command IntakeIncrementIn;
@@ -58,10 +60,12 @@ public class Robot extends IterativeRobot {
     Command IntakeIntakeRollers;
     Command IntakeOuttakeRollers;
     Command IntakeStopRollers;
+    Command IntakePosAuto;
     //Shooter
     Command ShootBall;
     Command ReEngageWinch;
     Command CatapultWinch;
+    Command CatapultWinchAutomatic;
     Command CatapultWinchStop;
     Command EngageBallActuators;
     Command DisengageBallActuators;
@@ -90,6 +94,8 @@ public class Robot extends IterativeRobot {
 		shooter = new Shooter();
 		
 	    //commands
+		FullSpeed = new FullSpeed();
+		StopDrive = new StopDrive();
 		MoveForward = new MoveFoward(120);
 		PIDMoveForward = new PIDMoveForward(80);
 		MoveBackward = new MoveBackward(0.5, 20);
@@ -101,9 +107,11 @@ public class Robot extends IterativeRobot {
 		IntakeIntakeRollers = new IntakeIntakeRollers();
 		IntakeOuttakeRollers = new IntakeOuttakeRollers();
 		IntakeStopRollers = new IntakeStopRollers();
+		IntakePosAuto = new IntakePosAuto();
 		ShootBall = new ShootBall();
 		ReEngageWinch = new ReEngageWinch();
 		CatapultWinch = new CatapultWinch();
+		CatapultWinchAutomatic = new CatapultWinchAutomatic();
 		CatapultWinchStop = new CatapultWinchStop();
 		EngageBallActuators = new EngageBallActuators();
 		DisengageBallActuators = new DisengageBallActuators();
@@ -143,7 +151,8 @@ public class Robot extends IterativeRobot {
 	   //	drivetrain.enable();
 	   	drivetrain.disable();
 	   	intake.enable();
-	   	drivetrain.shiftDown();
+	 drivetrain.resetEncoders();
+	   	drivetrain.shiftUp();
     }
 
     /**
@@ -167,8 +176,8 @@ public class Robot extends IterativeRobot {
         //drivetrain.disable();
         intake.enable();
         
-        Shooter.disengageBallActuators();
-        Shooter.engageWinch();
+        //Shooter.disengageBallActuators();
+        //Shooter.engageWinch();
         
     }
 
@@ -188,8 +197,12 @@ public class Robot extends IterativeRobot {
         
 /*-----------------------------------------Operator Controls-----------------------------------------*/
 		
+        //OI.buttonA1.whileHeld(FullSpeed);
+        //OI.buttonA1.whenReleased(StopDrive);
+        
         //Drivetrain
         //Arcade drive with reversible toggle
+        
         if (OI.getRightBumper1()){
         	drivetrain.arcadeDriveReverse(OI.getLeftY1(), OI.getRightX1());
         }
@@ -211,13 +224,10 @@ public class Robot extends IterativeRobot {
         if (OI.getY1() && Shooter.isWinched()){
         	Scheduler.getInstance().add(EngageBallActuators);
         }
-        OI.buttonA1.whenPressed(DisengageBallActuators);
         
         //Shooting
-        OI.leftBumper2.whileHeld(CatapultWinch);
-        OI.leftBumper2.whenReleased(CatapultWinchStop);
+       // OI.leftBumper2.whenPressed(CatapultWinchAutomatic);
         OI.rightBumper2.whenPressed(ShootnLoad);
-        OI.rightBumper2.whenReleased(ReEngageWinch); 
         
         /*
         if (OI.getRightTrigger2()&&Shooter.isWinched()){
@@ -235,7 +245,7 @@ public class Robot extends IterativeRobot {
         
      	if (Shooter.isLoaded() && Shooter.isWinched() && !ShootnLoad.isRunning())
         	Scheduler.getInstance().add(EngageBallActuators);
-        else
+        
         	//TODO: Scheduler.getInstance().add(DisengageBallActuators);
         //System.out.println("isLoaded:" + Shooter.isLoaded());
      	//System.out.println("isWinched" + Shooter.isWinched());
@@ -246,12 +256,13 @@ public class Robot extends IterativeRobot {
         OI.buttonA2.whenReleased(IntakeStopRollers);
         OI.buttonY2.whenReleased(IntakeStopRollers);
         
-        OI.buttonB2.whileHeld(IntakeIncrementIn);
-        OI.buttonX2.whileHeld(IntakeIncrementOut);
-        OI.buttonB2.whenReleased(IntakeStopPivot);
+        OI.buttonB2.whenPressed(IntakePosAuto);
+        OI.buttonX2.whileHeld(IntakeIncrementIn);
+       // OI.buttonB2.whenReleased(IntakeStopPivot);
         OI.buttonX2.whenReleased(IntakeStopPivot);
         
-        System.out.println("Intake Potentiometer Value:" + intake.getPotValue());
+       // System.out.println("Intake Potentiometer Value:" + intake.getPotValue());
+        System.out.println(DriveTrain.getLeftEncoder() + "----" + DriveTrain.getRightEncoder());
 
         
 /*-----------------------------------------Update Dashboard-----------------------------------------*/
@@ -278,6 +289,7 @@ public class Robot extends IterativeRobot {
 		RobotMap.photoCenterOfGravityY = networkTable.getNumber("COG_Y", 0.0);
     	
 		//System.out.println("ShootnLoad Running: " + ShootnLoad.isRunning());
+		//System.out.println(Shooter.isLoaded() + "-----" + Intake.isIntakePosL() + "-----" + Intake.isIntakePosR());
 		
     }
     

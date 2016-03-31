@@ -7,10 +7,10 @@ public class Segment {
 	*/
 	
 
-	private double time;
-	private double velocity;
-	private double acceleration;
-	private double positon;
+	double time;
+	double velocity;
+	double acceleration;
+	double positon;
 
 	public Segment(double time, double velocity, double acceleration, double positon){
 		this.time = time;

@@ -35,12 +35,12 @@ public class RobotMap {
 	public static final int	rightDriveEncoderB = 1;
 	public static final int leftDriveEncoderA = 2;
 	public static final int	leftDriveEncoderB = 3;
-	public static final int	intakePivotE1ncoderA = 4;
-	public static final int	intakePivotEncoderB = 5;
 	
 	//Sensors
 	public static final int catapultLimitSwitch = 9;
-	public static final int ballIR = 6;
+	public static final int ballIR = 4;
+	public static final int intakeLimitL = 7;
+	public static final int intakeLimitR = 8;
 	
 //-------------------------------Analog-------------------------------
 	//pot constants

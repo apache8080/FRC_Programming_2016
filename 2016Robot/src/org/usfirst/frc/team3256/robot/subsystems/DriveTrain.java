@@ -30,6 +30,7 @@ public class DriveTrain extends PIDSubsystem {
 	static AnalogGyro gyro = new AnalogGyro(RobotMap.gyroPort);
 	
 	static double pi = 3.1415926535897932384626;
+	static double wheelbase = 24.383;
 	static double ticksPerRotation = 1920; //encoder is 256 ticks/rotations
 		
     private static final double P = (0.1),
@@ -223,6 +224,10 @@ public class DriveTrain extends PIDSubsystem {
         	rightFront.set(-right);
         	rightRear.set(-right);
     	}
+    
+    public static double degreesToInches(double degrees){
+    	return degrees*(wheelbase*pi/360);
+    }
   
     protected double returnPIDInput() {
         // Return your input value for the PID loop

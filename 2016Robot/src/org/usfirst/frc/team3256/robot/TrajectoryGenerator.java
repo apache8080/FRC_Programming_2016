@@ -1,5 +1,8 @@
 package org.usfirst.frc.team3256.robot;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import org.usfirst.frc.team3256.robot.Segment;
 
 public class TrajectoryGenerator {
@@ -15,10 +18,10 @@ public class TrajectoryGenerator {
 	double time_accel;
 	double distance_total;
 	double distance_accel;
-	double distance_deaccel = distance_accel;
-	double distance_cruise = distance_total-(distance_accel+distance_deaccel);
-	double time_cruise = distance_cruise/max_v;
-	double time_total = (time_cruise+(time_accel+time_deaccel));
+	double distance_deaccel = 0.0;
+	double distance_cruise = 0.0;
+	double time_cruise = 0.0;
+	double time_total = 0.0;
 	double control_loop;
 
 	public TrajectoryGenerator(double distance_total,
@@ -31,6 +34,10 @@ public class TrajectoryGenerator {
 		this.time_accel = time_accel;
 		this.distance_accel = distance_accel;
 		this.control_loop = control_loop;
+		this.distance_deaccel = distance_accel;
+		this.distance_cruise = distance_total-(distance_accel+distance_deaccel);
+		this.time_cruise = distance_cruise/max_v;
+		this.time_total = (time_cruise+(time_accel+time_accel));
 	}
 
 	/**
@@ -120,7 +127,8 @@ public class TrajectoryGenerator {
 			double velocity = calculateV(time);
 			double acceleration = calculateA(time);
 			double position = calculateS(time);
-			Segment s = new Segment(time, velocity, acceleration, positon);
+			//System.out.println(velocity + "//////////" + acceleration + "\n");
+			Segment s = new Segment(time, velocity, acceleration, position);
 			trajectory.add(s);
 			time += (1/control_loop);
 		}

@@ -16,7 +16,8 @@ public class Intake extends PIDSubsystem{
 	static VictorSP intakePivotMotors = new VictorSP(RobotMap.intakePivotMotors);
 	static Relay intakeSpike = new Relay(RobotMap.SpikePort);
 	static AnalogPotentiometer intakePivotPot = new AnalogPotentiometer(RobotMap.intakePotPort, RobotMap.intakePotFactor, RobotMap.intakePotOffset);
-	
+	static DigitalInput intakeLimitSwitchL = new DigitalInput(RobotMap.intakeLimitL);
+	static DigitalInput intakeLimitSwitchR = new DigitalInput(RobotMap.intakeLimitR);
 
 	private static final double P = 1,
 	    	I = 0,
@@ -45,6 +46,10 @@ public class Intake extends PIDSubsystem{
 	
 	public static void stopIntake(){
 		intakeRollerMotor.set(0);
+	}
+	
+	public static void stopIntakePivot(){
+		intakePivotMotors.set(0);
 	}
 		
 	public static void incrementIn(double speed){
@@ -77,6 +82,14 @@ public class Intake extends PIDSubsystem{
 		if (output<0) output = 0;
 		intakePivotMotors.set(output);
 		
+	}
+	
+	public static boolean isIntakePosL(){
+		return !intakeLimitSwitchL.get();
+	}
+	
+	public static boolean isIntakePosR(){
+		return !intakeLimitSwitchR.get();
 	}
 	
 	

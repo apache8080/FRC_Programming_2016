@@ -9,16 +9,16 @@ public class MotionProfileController {
 	*/
 
 
-	private Segment[] trajectory;
-	private double max_velocity;
-	private double kV = 1/max_velocity;
-	private double kA;
-	private double kP;
-	private double kI;
-	private double kD;
-	private double prev_error;
-	private double sum_error;
-	private boolean is_finished = false;
+	Segment[] trajectory;
+	double max_velocity;
+	double kV = 0.0;
+	double kA;
+	double kP;
+	double kI;
+	double kD;
+	double prev_error;
+	double sum_error;
+	boolean is_finished = false;
 
 	public MotionProfileController(Segment[] trajectory,
 	double max_velocity,
@@ -34,6 +34,7 @@ public class MotionProfileController {
 		this.kD = kD;
 		this.prev_error = 0.0;
 		this.sum_error = 0.0;
+		this.kV = 1/max_velocity;
 
 	}
 
@@ -54,14 +55,15 @@ public class MotionProfileController {
 	* @return  motor output
 	*/
 	public double calculatePID(double setpoint, double current){
-		double error = setpoint-current;
+		double setpoint_ticks = ((setpoint*12)/(6*3.1415926535)*1920);
+		double error = (setpoint_ticks)-current;
 		double P = kP*error;
 		sum_error += error;
 		double I = kI*sum_error;
 		double change_error = prev_error-error;
 		double D = kD*change_error;
 		prev_error = error;
-
+		System.out.println(error);
 		return (P+I+D);
 	}
 
@@ -81,16 +83,17 @@ public class MotionProfileController {
 	*/
 	public double getSpeed(int step, double current_position){
 		double output;
-		if(step > trajectory.length){
+		if(step >= trajectory.length){
 			is_finished=true;
 			output = 0.0;
 		}else{
 			Segment s = trajectory[step];
-			velocity = s.getVelocity();
-			acceleration = s.getAcceleration();
-			position = s.getPosition();
-			feed_forward = calculateFeedForward(velocity, acceleration);
-			feedback = calculatePID(position, current_position);
+			double velocity = s.getVelocity();
+			double acceleration = s.getAcceleration();
+			double position = s.getPosition();
+			//System.out.println(velocity + "\n");
+			double feed_forward = calculateFeedForward(velocity, acceleration);
+			double feedback = calculatePID(position, current_position);
 			output = feed_forward+feedback;
 		}
 
