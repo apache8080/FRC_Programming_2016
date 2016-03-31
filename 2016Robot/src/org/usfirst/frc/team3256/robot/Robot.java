@@ -89,7 +89,7 @@ public class Robot extends IterativeRobot {
     	networkTable.initialize();
 		drivetrain.resetEncoders();
 		
-		//cam1 = new USBCamera("cam1");
+		cam1 = new USBCamera();
 		//cam1.startCapture();
     	
     	//subsystems
