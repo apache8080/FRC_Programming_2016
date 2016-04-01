@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3256.robot;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -31,7 +32,6 @@ import org.usfirst.frc.team3256.robot.RobotMap;
  */
 public class Robot extends IterativeRobot {
 
-	public USBCamera cam1;
 	public static DriveTrain drivetrain;
 	public static Compressor compressor;
 	public static Hanger hanger;
@@ -89,7 +89,10 @@ public class Robot extends IterativeRobot {
     	networkTable.initialize();
 		drivetrain.resetEncoders();
 		
-		//cam1 = new USBCamera("cam1");
+		CameraServer server = CameraServer.getInstance();
+		server.setQuality(50);
+		server.startAutomaticCapture("cam1");
+		//USBCamera cam1 = new USBCamera();
 		//cam1.startCapture();
     	
     	//subsystems
@@ -133,11 +136,6 @@ public class Robot extends IterativeRobot {
 		//initialize gyro
 		drivetrain.initGyro();
         drivetrain.calibrateGyro();
-
-        //initial dashboard info
-        SmartDashboard.putString("DistanceText", "Distance");
-        SmartDashboard.putString("AngleText", "Angle");
-        SmartDashboard.putString("BallStatusText", "Ball Status");
     }
 	
 	public void disabledPeriodic() {
@@ -268,32 +266,20 @@ public class Robot extends IterativeRobot {
         OI.buttonX2.whenReleased(IntakeStopPivot);
         
        // System.out.println("Intake Potentiometer Value:" + intake.getPotValue());
-        System.out.println(DriveTrain.getLeftEncoder() + "----" + DriveTrain.getRightEncoder());
 
         
 /*-----------------------------------------Update Dashboard-----------------------------------------*/
         
         SmartDashboard.putBoolean("isWinched", shooter.isWinched());
         SmartDashboard.putBoolean("isLoaded", shooter.isLoaded());
+        System.out.println("isLoaded" + shooter.isLoaded());
         
     	SmartDashboard.putNumber("Gyro", drivetrain.getAngle());
-    	
-    	SmartDashboard.putBoolean("BallIn", shooter.isLoaded());
-    	SmartDashboard.putBoolean("Distance", false);
-    	SmartDashboard.putBoolean("Angle", false);
-    	
-    	SmartDashboard.putNumber("DistanceAway", 12.34);
-    	SmartDashboard.putNumber("AngleOff", 2.345);
-    	
-    	SmartDashboard.putNumber("IntakePotValue",intake.getPotValue());
-    	
-    	SmartDashboard.putNumber("EncoderLeft", drivetrain.getLeftEncoder());
-    	SmartDashboard.putNumber("EncoderRight", drivetrain.getRightEncoder());
     	
     	//updates global variables
         RobotMap.photoCenterOfGravityX = networkTable.getNumber("COG_X", 0.0);
 		RobotMap.photoCenterOfGravityY = networkTable.getNumber("COG_Y", 0.0);
-    	
+    		
 		//System.out.println("ShootnLoad Running: " + ShootnLoad.isRunning());
 		//System.out.println(Shooter.isLoaded() + "-----" + Intake.isIntakePosL() + "-----" + Intake.isIntakePosR());
 		
