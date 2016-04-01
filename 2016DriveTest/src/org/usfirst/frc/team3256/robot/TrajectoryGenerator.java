@@ -74,7 +74,7 @@ public class TrajectoryGenerator {
 			velocity = max_v;
 		}
 		else {
-			velocity = max_v-(max_accel*(time));
+			velocity = max_v-(max_accel*(time_total-time));
 		}
 		return velocity;
 	}
@@ -113,7 +113,7 @@ public class TrajectoryGenerator {
 			position = time_accel*max_v/2 + (time-time_accel)*max_v;
 		}
 		else {
-			position = time_accel*max_v/2 + (time_deaccel-time_accel)*max_v + (time-time_deaccel)*-calculateV(time)/2;
+			position = time_accel*max_v/2 + (time_deaccel-time_accel)*max_v + (time-time_deaccel)*calculateV(time)/2;
 		}
 		
 		return position;
