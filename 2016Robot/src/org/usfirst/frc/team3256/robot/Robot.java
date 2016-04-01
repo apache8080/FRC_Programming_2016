@@ -266,24 +266,20 @@ public class Robot extends IterativeRobot {
         OI.buttonX2.whenReleased(IntakeStopPivot);
         
        // System.out.println("Intake Potentiometer Value:" + intake.getPotValue());
-        System.out.println(DriveTrain.getLeftEncoder() + "----" + DriveTrain.getRightEncoder());
 
         
 /*-----------------------------------------Update Dashboard-----------------------------------------*/
         
         SmartDashboard.putBoolean("isWinched", shooter.isWinched());
         SmartDashboard.putBoolean("isLoaded", shooter.isLoaded());
+        System.out.println("isLoaded" + shooter.isLoaded());
         
     	SmartDashboard.putNumber("Gyro", drivetrain.getAngle());
     	
     	//updates global variables
         RobotMap.photoCenterOfGravityX = networkTable.getNumber("COG_X", 0.0);
 		RobotMap.photoCenterOfGravityY = networkTable.getNumber("COG_Y", 0.0);
-    	
-		
-		System.out.println("CameraAngle" + SmartDashboard.getNumber("CameraAngle", -1));
-		System.out.println("Direction" + SmartDashboard.getNumber("Direction", -1));
-		
+    		
 		//System.out.println("ShootnLoad Running: " + ShootnLoad.isRunning());
 		//System.out.println(Shooter.isLoaded() + "-----" + Intake.isIntakePosL() + "-----" + Intake.isIntakePosR());
 		
