@@ -15,7 +15,7 @@ public class PIDMoveForward extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drivetrain);
-    	this.Pos = DriveTrain.inchesToTicksLG(Pos);
+    	this.Pos = DriveTrain.inchesToTicksHG(Pos);
     	setInterruptible(false);
     }
 
@@ -28,12 +28,14 @@ public class PIDMoveForward extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.drivetrain.setSetpoint(Pos);
+    	System.out.println("Setpoint" + Robot.drivetrain.getSetpoint());
+    	System.out.println("CurrentL"+ DriveTrain.getLeftEncoder());    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	System.out.println("Error " + (Robot.drivetrain.getSetpoint()-Robot.drivetrain.getPosition()));
-    	return Math.abs(Robot.drivetrain.getSetpoint()-Robot.drivetrain.getPosition())<1; // 1/6th of the wheel rotation
+    	return Math.abs(Robot.drivetrain.getSetpoint()-Robot.drivetrain.getPosition())<1000;
     }
 
     // Called once after isFinished returns true

@@ -23,8 +23,8 @@ public class ShootnLoad extends CommandGroup {
     	addParallel (new ShiftDown());
     	addSequential(new ShootBall());
     	addSequential(new ReEngageWinch());
-    	addSequential(new CatapultWinchAutomatic());
     	addParallel (new ShiftUp());
+    	addSequential(new CatapultWinchAutomatic());
     	
     	// To run multiple commands at the same time,
         // use addParallel()

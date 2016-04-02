@@ -29,14 +29,22 @@ public class OI {
 		public static Button leftStickButton1 = new JoystickButton(joystick1, 9);
 		public static Button rightStickbutton1 = new JoystickButton(joystick1, 10);
 		
-		
+		public static boolean getButtonX1(){
+			return joystick1.getRawButton(3);
+		}
+		public static boolean getButtonLStick1(){
+			return joystick1.getRawButton(9);
+		}
+		public static boolean getButtonRStick1(){
+			return joystick1.getRawButton(10);
+		}
 		public static boolean getY1() {return joystick1.getRawButton(4);}
 		public static boolean getRightBumper1(){return joystick1.getRawButton(6);}
 		public static double getLeftY1(){return joystick1.getRawAxis(1);}
 	    public static double getLeftX1(){return joystick1.getRawAxis(2);}
 	    public static double getRightY1(){return joystick1.getRawAxis(5);}
 	    public static double getRightX1(){return joystick1.getRawAxis(4);}
-	    public static boolean getRightTrigger1() {return joystick1.getRawAxis(3)>.5;}
+	    public static boolean getRightTrigger1() {return joystick1.getRawAxis(3)>.2;}
 	    public static boolean getLeftTrigger1() {return joystick1.getZ()>.5;}
 	    
 	    //Joysticks controls for joystick 2

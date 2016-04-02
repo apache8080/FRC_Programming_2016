@@ -56,11 +56,12 @@ public class MotionProfileController {
 	* @return  motor output
 	*/
 	public double calculatePID(double setpoint, double current){
-		double setpoint_ticks = DriveTrain.inchesToTicksHG((setpoint/12));
+		double setpoint_ticks = setpoint*12*101.86;//DriveTrain.inchesToTicksHG((setpoint*12));
+		//System.out.println("setpoint_ticks" + setpoint_ticks);
 		double error = (setpoint_ticks-current);
 		if (error < 0){
 			error = 0;
-			System.out.println("00000000000000000");
+			//System.out.println("00000000000000000");
 		}
 		double P = kP*error;
 		sum_error += error;
@@ -68,10 +69,10 @@ public class MotionProfileController {
 		double change_error = (prev_error-error);
 		double D = kD*change_error;
 		prev_error = error;
-		System.out.println("Setpoint_Ticks" + setpoint_ticks);
-		System.out.println("SetpointFeet" + setpoint);
-		System.out.println("LE:" + Math.abs(DriveTrain.getLeftEncoder()) + "----" + "RE:" + Math.abs(DriveTrain.getRightEncoder()));
-		System.out.println("Error" + error);
+		//System.out.println("Setpoint_Ticks" + setpoint_ticks);
+		//System.out.println("SetpointFeet" + setpoint);
+		//System.out.println("LE:" + Math.abs(DriveTrain.getLeftEncoder()) + "----" + "RE:" + Math.abs(DriveTrain.getRightEncoder()));
+		//System.out.println("SumError" + sum_error);
 		return (P+I+D);
 	}
 
@@ -99,10 +100,11 @@ public class MotionProfileController {
 			double velocity = s.getVelocity();
 			double acceleration = s.getAcceleration();
 			double position = s.getPosition();
+			//System.out.println("Position" + position);
 			//System.out.println(velocity + "\n");
 			double feed_forward = calculateFeedForward(velocity, acceleration);
 			double feedback = calculatePID(position, current_position);
-			System.out.println("Feedback" + feedback + "\n");
+			//System.out.println("Feedback" + feedback + "\n");
 			output = feed_forward+feedback;
 		}
 

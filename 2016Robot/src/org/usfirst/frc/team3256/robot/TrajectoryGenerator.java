@@ -16,6 +16,7 @@ public class TrajectoryGenerator {
 	double max_v;
 	double max_accel;
 	double time_accel;
+	double time_deaccel;
 	double distance_total;
 	double distance_accel;
 	double distance_deaccel = 0.0;
@@ -35,9 +36,10 @@ public class TrajectoryGenerator {
 		this.distance_accel = distance_accel;
 		this.control_loop = control_loop;
 		this.distance_deaccel = distance_accel;
-		this.distance_cruise = distance_total-(distance_accel+distance_deaccel);
+		this.distance_cruise = distance_total-distance_accel-distance_accel;
 		this.time_cruise = distance_cruise/max_v;
 		this.time_total = (time_cruise+(time_accel+time_accel));
+		this.time_deaccel = (time_total-time_accel);
 	}
 
 	/**
@@ -63,9 +65,8 @@ public class TrajectoryGenerator {
 	* @return velocity (velocity of robot at time in ft/s)
 	*/
 	public double calculateV(double time){
-		double time_deaccel = time_total-time_accel;
 		double velocity = 0;
-
+		
 		if (time<time_accel){
 			velocity = max_accel*time;
 		}
@@ -85,7 +86,6 @@ public class TrajectoryGenerator {
 	*/
 	public double calculateA(double time){
 		double acceleration = 0;
-		double time_deaccel = time_total-time_accel;
 		if (time<time_accel){
 			acceleration = max_accel;
 		}
@@ -106,13 +106,16 @@ public class TrajectoryGenerator {
 	*/
 	public double calculateS(double time){
 		double position = 0;
-		double time_deaccel = time_total-time_accel;
-		if (time > time_accel && time < time_deaccel){
-			position = max_v*time;
+		if (time<time_accel){
+			position = time*calculateV(time)/2;
+		}
+		else if (time>time_accel && time < time_deaccel){
+			position = time_accel*max_v/2 + (time-time_accel)*max_v;
 		}
 		else {
-			position = (max_accel/2)*time*time;
+			position = time_accel*max_v/2 + (time_deaccel-time_accel)*max_v + 4.8-((time_total-time)*calculateV(time_total-time)/2);
 		}
+		
 		return position;
 	}
 
@@ -127,11 +130,20 @@ public class TrajectoryGenerator {
 			double velocity = calculateV(time);
 			double acceleration = calculateA(time);
 			double position = calculateS(time);
-			//System.out.println(velocity + "//////////" + acceleration + "\n");
-			System.out.println("Position" + position);
-			//System.out.println("Velocity" + velocity);
+			//System.out.println("Velocity " + velocity);
 			//System.out.println("Acceleration" + acceleration);
+			/*System.out.println("Position " + position);
+			System.out.println("Velocity " + velocity);
+			System.out.println("Acceleration" + acceleration);
 			System.out.println("Time" + time);
+			System.out.println("distance_cruise " + distance_cruise);
+			System.out.println("distance_total " + distance_total);
+			System.out.println("distance_accel " + distance_accel);
+			System.out.println("time_total " + time_total);
+			System.out.println("time_cruise " + time_cruise);
+			System.out.println("time_accel " + time_accel);
+			System.out.println("time_deaccel " + time_deaccel);
+			System.out.println("           ");*/
 			Segment s = new Segment(time, velocity, acceleration, position);
 			trajectory.add(s);
 			time += (1/control_loop);

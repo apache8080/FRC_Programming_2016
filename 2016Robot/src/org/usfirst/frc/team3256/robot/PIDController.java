@@ -12,15 +12,15 @@ public class PIDController {
 	}
 	static double time_total;
 	static double time_cruise;
-	static double max_v=6;
-	static double max_accel=6;
-	static double time_accel = 1.0;
+	static double max_v=12;
+	static double max_accel=15;
+	static double time_accel = 12/15;
 	static double kV = 1/max_v;
-	static double kA = 0.01;
-	static double distance_accel = 3.0;
-	static double distance_deaccel = 3.0;
+	static double kA = 0.0;
+	static double distance_accel = 4.8;
+	static double distance_deaccel = 4.8;
 	static double distance_cruise;
-	static double kP = 1;
+	static double kP = 0;
 	static double kI = 0;
 	static double kD = 0;
 	static double P;
@@ -132,8 +132,8 @@ public class PIDController {
 		//System.out.println("Velocity: "+calculateV(time)+ "////// Acceleration:" +calculateA(time)+"\n");
 		//This calculates the motor output at a specific time by getting the Velocity, Acceleration, and Position.
 		double output = (kV * calculateV(time))
-										+(kA*calculateA(time)
-										+calculatePID(calculateS(time), current));
+										+(kA*calculateA(time));
+										//+calculatePID(calculateS(time), current));
 		//double output = 0.0;
 		return output;
 	}

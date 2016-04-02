@@ -79,6 +79,8 @@ public class RobotMap {
 	public static double photoCenterOfGravityX;
 	public static double photoCenterOfGravityY;
 	
+	public static double CamAngle = 0;
+	public static double CamDirection = 0;
 	
 	public static String shooterCameraIP = "10.32.56.11";
 	

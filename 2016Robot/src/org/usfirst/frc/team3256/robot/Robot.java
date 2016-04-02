@@ -72,11 +72,15 @@ public class Robot extends IterativeRobot {
     Command EngageBallActuators;
     Command DisengageBallActuators;
     
+    
     CommandGroup ShootnLoad;
     
     //Autonomous
     Command AutoCommand;
     Command AutoDoNothingCommand;
+    Command CustomPIDMoveForward;
+    Command TurnTest;
+    Command PIDTurnTest;
     SendableChooser AutoChooser;
     CommandGroup AutoDriveForward;
     
@@ -105,7 +109,7 @@ public class Robot extends IterativeRobot {
 	    //commands
 		FullSpeed = new FullSpeed();
 		StopDrive = new StopDrive();
-		MoveForward = new MoveFoward(120);
+		MoveForward = new MoveFoward(140);
 		PIDMoveForward = new PIDMoveForward(80);
 		MoveBackward = new MoveBackward(0.5, 20);
 		ShiftUp = new ShiftUp();
@@ -127,6 +131,10 @@ public class Robot extends IterativeRobot {
 		ShootnLoad = new ShootnLoad();
 		AutoDoNothingCommand = new AutoDoNothingCommand();
 		AutoDriveForward = new AutoDriveForward();
+		CustomPIDMoveForward = new CustomPIDMoveForward(120);
+		TurnTest = new TurnTest();
+		PIDTurnTest = new PIDTurnTest();
+		
 		
 		//compressor
 		compressor.setClosedLoopControl(true);
@@ -142,6 +150,9 @@ public class Robot extends IterativeRobot {
 		AutoChooser.addDefault("DoNothing", AutoDoNothingCommand);
 		AutoChooser.addObject("MoveForward", AutoDriveForward);
 		AutoChooser.addObject("MotionProfilingDriveForward", MoveForward);
+		AutoChooser.addObject("CustomPIDMoveForward", CustomPIDMoveForward);
+		AutoChooser.addObject("TurnTest", TurnTest);
+		AutoChooser.addObject("PIDTurnTest", PIDTurnTest);
 		smartdashboard.putData("Auto Mode Chooser", AutoChooser);
 		
 		Scheduler.getInstance().run();
@@ -163,6 +174,8 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
+    	RobotMap.CamAngle = SmartDashboard.getNumber("CameraAngle", 0);
+        RobotMap.CamDirection = SmartDashboard.getNumber("Direction", 0);
         Scheduler.getInstance().run();
         
     }
@@ -177,7 +190,7 @@ public class Robot extends IterativeRobot {
         Intake.stopIntake();
         drivetrain.resetGyro();
         drivetrain.resetEncoders();
-        //drivetrain.disable();
+        drivetrain.disable();
         intake.enable();
         
         //Shooter.disengageBallActuators();
@@ -201,6 +214,7 @@ public class Robot extends IterativeRobot {
         
 /*-----------------------------------------Operator Controls-----------------------------------------*/
 		
+        
         //OI.buttonA1.whileHeld(FullSpeed);
         //OI.buttonA1.whenReleased(StopDrive);
         
@@ -208,9 +222,9 @@ public class Robot extends IterativeRobot {
         //Arcade drive with reversible toggle
         
         if (OI.getRightBumper1()){
-        	drivetrain.arcadeDriveReverse(OI.getLeftY1(), OI.getRightX1());
+        	drivetrain.arcadeDriveReverse(OI.getLeftY1(), OI.getRightX1(), OI.getRightTrigger1());
         }
-        else drivetrain.arcadeDrive(OI.getLeftY1(), OI.getRightX1());
+        else drivetrain.arcadeDrive(OI.getLeftY1(), OI.getRightX1(), OI.getRightTrigger1());
         
         //Tank drive with reversible toggle
         //drivetrain.tankDrive(OI.getLeftY1(),OI.getRightY1());
@@ -219,6 +233,11 @@ public class Robot extends IterativeRobot {
         //Shift Gears
         OI.leftBumper1.whenPressed(ShiftDown);
         OI.leftBumper1.whenReleased(ShiftUp);
+        
+        //OI.buttonX1.whenPressed(new TurnTest(camAngle, camDirection));
+        if (OI.getButtonX1()){
+        	drivetrain.turnToGoal(RobotMap.CamAngle, RobotMap.CamDirection);
+        }
         
         //test commands
         //OI.buttonY1.whenPressed(EngageBallActuators);
@@ -270,10 +289,13 @@ public class Robot extends IterativeRobot {
         
 /*-----------------------------------------Update Dashboard-----------------------------------------*/
         
+        RobotMap.CamAngle = SmartDashboard.getNumber("CameraAngle", 0);
+        RobotMap.CamDirection = SmartDashboard.getNumber("Direction", 0);
+        
         SmartDashboard.putBoolean("isWinched", shooter.isWinched());
         SmartDashboard.putBoolean("isLoaded", shooter.isLoaded());
-        System.out.println("isLoaded" + shooter.isLoaded());
-        
+        //System.out.println("isLoaded" + shooter.isLoaded());
+        System.out.println("Left " + DriveTrain.getLeftEncoder() + "Right " + DriveTrain.getRightEncoder());
     	SmartDashboard.putNumber("Gyro", drivetrain.getAngle());
     	
     	//updates global variables

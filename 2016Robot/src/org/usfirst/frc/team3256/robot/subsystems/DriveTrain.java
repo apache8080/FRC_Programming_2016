@@ -30,12 +30,12 @@ public class DriveTrain extends PIDSubsystem {
 	static AnalogGyro gyro = new AnalogGyro(RobotMap.gyroPort);
 	
 	static double pi = 3.1415926535897932384626;
-	static double wheelbase = 24.383;
+	static double robotTrack = 24.383;
 	static double ticksPerRotationLowGear = 6400; //encoder is 256 ticks/rotations, 1920 old
-	static double ticksPerRotationHighGear = 2816; 
+	static double ticksPerRotationHighGear = 101.86; 
 		
-    private static final double P = (0.1),
-    	I = 0.000,
+    private static final double P = (1),
+    	I = 1,
     	D = 0.0;
 	
 	// Initialize your subsystem here
@@ -168,7 +168,7 @@ public class DriveTrain extends PIDSubsystem {
     		rightRear.set(-right);
     }
     //arcadedrive
-    public static void arcadeDrive(double throttle, double turn){
+    public static void arcadeDrive(double throttle, double turn, boolean slow){
     	
     	if (Math.abs(throttle)<0.2) {
     		throttle = 0;
@@ -192,13 +192,41 @@ public class DriveTrain extends PIDSubsystem {
     	if (right < -1){
     		right = -1;
     	}
-    	leftFront.set(left);
-    	leftRear.set(left);
-    	rightFront.set(-right);
-    	rightRear.set(-right);
+    	if (slow){
+    		leftFront.set(left/2);
+        	leftRear.set(left/2);
+        	rightFront.set(-right/2);
+        	rightRear.set(-right/2);
+    	}
+    	else{
+    		leftFront.set(left);
+    		leftRear.set(left);
+    		rightFront.set(-right);
+    		rightRear.set(-right);
+    	}
     }
     
-    public static void arcadeDriveReverse(double throttle, double turn){
+    public static boolean turnToGoal(double angle, double direction){
+    	if (angle <= 1){
+    		setLeftMotorSpeed(0);
+    		setRightMotorSpeed(0);
+    		return true;
+    	}
+    	else{
+    		if (direction == 1){
+    			setLeftMotorSpeed(0.25);
+    			setRightMotorSpeed(0.25);
+    		}
+    		else{
+    			setLeftMotorSpeed(-0.25);
+    			setRightMotorSpeed(-0.25);
+    		}
+    		return false;
+    	}
+    	
+    }
+    
+    public static void arcadeDriveReverse(double throttle, double turn, boolean slow){
     	if (Math.abs(throttle)<0.2) {
     		throttle = 0;
     	}
@@ -223,14 +251,22 @@ public class DriveTrain extends PIDSubsystem {
     	if (right < -1){
     		right = -1;
     	}
-    		leftFront.set(left);
-        	leftRear.set(left);
-        	rightFront.set(-right);
-        	rightRear.set(-right);
+    	if (slow){
+    		leftFront.set(left/2);
+    		leftRear.set(left/2);
+    		rightFront.set(-right/2);
+    		rightRear.set(-right/2);
     	}
+    	else {
+    		leftFront.set(left);
+    		leftRear.set(left);
+    		rightFront.set(-right);
+    		rightRear.set(-right);
+    	}
+    }
     
     public static double degreesToInches(double degrees){
-    	return degrees*(wheelbase*pi/360);
+    	return degrees*(robotTrack*pi/360);
     }
   
     protected double returnPIDInput() {
@@ -246,9 +282,9 @@ public class DriveTrain extends PIDSubsystem {
         // e.g. yourMotor.set(output);
     	if (output < 0)
     		output = 0;
-    	leftFront.pidWrite(-output * 0.94);
-    	rightFront.pidWrite(output);
-    	leftRear.pidWrite(-output * 0.94);
-    	rightRear.pidWrite(output);
+    	leftFront.pidWrite(output);
+    	rightFront.pidWrite(-output);
+    	leftRear.pidWrite(output );
+    	rightRear.pidWrite(-output);
     }
 }

@@ -1,6 +1,11 @@
 package org.usfirst.frc.team3256.robot.commands;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.usfirst.frc.team3256.robot.MotionProfileController;
+import org.usfirst.frc.team3256.robot.PID;
 import org.usfirst.frc.team3256.robot.PIDController;
 import org.usfirst.frc.team3256.robot.Robot;
 import org.usfirst.frc.team3256.robot.Segment;
@@ -31,6 +36,11 @@ public class MoveFoward extends Command {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.drivetrain);
+		this.error = error;
+	}
+
+	// Called just before this Command runs the first time
+	protected void initialize() {
 		double accel_max = 15;
 		double total_distance = ((1.1*error)/12);
 		double vel_max_l = 12.0;
@@ -43,41 +53,38 @@ public class MoveFoward extends Command {
 		rightTrajectoryGenerator = new TrajectoryGenerator(total_distance, 11.5, accel_max, time_accel_r, distance_accel_r, 50);
 		leftTrajectory = leftTrajectoryGenerator.getTrajectory();
 		rightTrajectory = rightTrajectoryGenerator.getTrajectory();
-		//System.out.println(leftTrajectory.length);
-		//System.out.println(rightTrajectory.length);
+		System.out.println(leftTrajectory.length);
+		System.out.println(rightTrajectory.length);
 		//System.out.println(leftTrajectoryGenerator.getTimeTotal());
-		this.error = error;
-	}
-
-	// Called just before this Command runs the first time
-	protected void initialize() {
 		DriveTrain.resetEncoders();
 		//DriveTrain.resetGyro();
 		time_initial = Timer.getFPGATimestamp();
 		DriveTrain.shiftUp();
 		//System.out.println(leftTrajectory.length);
-		leftDriveStraight = new MotionProfileController(leftTrajectory, 12.0, 0.01, 0.0, 0,0);
-		rightDriveStraight = new MotionProfileController(rightTrajectory, 11.5, 0.01, 0.0, 0,0);
+		leftDriveStraight = new MotionProfileController(leftTrajectory, 12.0, 0.01, 0.0, 0.0,0.0);
+		rightDriveStraight = new MotionProfileController(rightTrajectory, 11.75, 0.01, 0.0, 0.0,0.0);
+		step=0;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		double left_speed = leftDriveStraight.getSpeed(step, Math.abs(DriveTrain.getLeftEncoder()));
 		double right_speed = rightDriveStraight.getSpeed(step, Math.abs(DriveTrain.getRightEncoder()));
-		//System.out.println(left_speed + "////////////" + right_speed + "-----"+ leftTrajectoryGenerator.getTimeTotal() + "[[[[[[" + rightTrajectoryGenerator.getTimeTotal());
+		System.out.println(left_speed + "////////////" + right_speed + "-----"+ leftTrajectoryGenerator.getTimeTotal() + "[[[[[[" + rightTrajectoryGenerator.getTimeTotal());
 		if (left_speed<0.0){
 			left_speed = 0.0;
 		}
 		if (right_speed < 0.0){
 			right_speed = 0.0;
 		}
-		DriveTrain.setLeftMotorSpeed(left_speed);
-		DriveTrain.setRightMotorSpeed(-right_speed);
+		DriveTrain.setLeftMotorSpeed(-left_speed);
+		DriveTrain.setRightMotorSpeed(right_speed);
 		step++;
 		/*time_current = Timer.getFPGATimestamp() - time_initial;
     	pos_current = ((Math.abs(DriveTrain.getLeftEncoder())+Math.abs(DriveTrain.getRightEncoder()))/2);
     	speed = PIDController.driveStraight(error/12, time_current, pos_current);
 
+		System.out.println("speed" + speed);
     	if(speed<0.0){
     		speed=0.0;
     	}
@@ -85,11 +92,12 @@ public class MoveFoward extends Command {
     		DriveTrain.setLeftMotorSpeed(0.875);
     	else
     		DriveTrain.setLeftMotorSpeed(speed);
-    	DriveTrain.setRightMotorSpeed(-speed);
-		 */
+    		DriveTrain.setRightMotorSpeed(-speed);
+		 
 
 		//System.out.print("Left Speed " + left_speed + "/////////////////////  Right Speed " + right_speed + "\n");
-
+*/		/*double PIDOutput;
+		PIDOutput = PID.calculatePID(DriveTrain.getLeftEncoder(), DriveTrain.inchesToTicksHG(20));*/
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -101,10 +109,25 @@ public class MoveFoward extends Command {
     	}
     	else
     		return false;*/
+		/*if (DriveTrain.getLeftEncoder()>=DriveTrain.inchesToTicksHG(20)){
+			return true;
+		}
+		else {
+			return false;
+		}*/
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
+		/*List<Segment> list = new ArrayList<Segment>(Arrays.asList(leftTrajectory));
+		list.clear();
+		leftTrajectory = list.toArray(new Segment[0]);
+		List<Segment> list2 = new ArrayList<Segment>(Arrays.asList(rightTrajectory));
+		list2.clear();
+		rightTrajectory = list2.toArray(new Segment[0]);
+		DriveTrain.resetEncoders();*/
+		//step=0;
+		System.out.println("______________________Finished");
 		DriveTrain.setLeftMotorSpeed(0);
 		DriveTrain.setRightMotorSpeed(0);
 	}
